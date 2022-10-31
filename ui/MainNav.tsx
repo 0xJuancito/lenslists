@@ -10,7 +10,7 @@ export default function MainNav() {
 
     return (
       <div
-        className={`flex h-14 cursor-pointer items-center gap-3 rounded-xl px-2 hover:bg-zinc-100 ${
+        className={`flex h-14 cursor-pointer items-center gap-3 rounded-xl px-2 hover:bg-zinc-50 ${
           last ? '' : border
         }`}
       >
