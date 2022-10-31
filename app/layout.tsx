@@ -16,15 +16,16 @@ export default function RootLayout({
       <body>
         <div className="flex h-screen flex-col bg-zinc-100 text-zinc-600">
           <Header></Header>
-          <div className="container mx-auto flex max-w-screen-xl grow pt-7">
-            <div className="flex grow gap-10 px-3">
+          <div className="container mx-auto flex max-w-screen-xl pt-7">
+            <div className="flex gap-10 px-3">
+              {/* FIXME */}
               <div
-                className="flex w-64 flex-col"
-                style={{ width: '241px !important' }}
+                className="flex w-72 grow-0 flex-col"
+                style={{ minWidth: '18rem' }}
               >
                 <MainNav></MainNav>
               </div>
-              <div className="grow bg-blue-600">Content</div>
+              <div className="grow">{children}</div>
             </div>
           </div>
         </div>
