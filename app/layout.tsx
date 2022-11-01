@@ -14,9 +14,9 @@ export default function RootLayout({
         <title>Discover Lens</title>
       </head>
       <body>
-        <div className="flex h-screen flex-col bg-zinc-100 text-zinc-600">
+        <div className="flex h-full min-h-screen flex-col bg-zinc-100 text-zinc-600">
           <Header></Header>
-          <div className="container mx-auto flex max-w-screen-xl pt-7">
+          <div className="container mx-auto flex max-w-screen-xl py-7">
             <div className="flex gap-10 px-3">
               {/* FIXME */}
               <div
