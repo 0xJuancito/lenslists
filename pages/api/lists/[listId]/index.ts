@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getListById } from '@/lib/lenslists';
 import { ErrorResponse, GetListResponse } from '@/lib/responses.types';
+import { getListSchema } from '@/lib/validations';
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,6 +9,14 @@ export default async function handler(
 ) {
   if (!['GET'].includes(req.method as string)) {
     return res.status(404).json({ message: 'List not found.' });
+  }
+
+  try {
+    await getListSchema.validateAsync(req.query);
+  } catch (err: any) {
+    return res
+      .status(422)
+      .json({ message: 'Validation error.', details: err.details });
   }
 
   const listId = req.query.listId as string;
