@@ -9,7 +9,7 @@ export type ErrorResponse = {
   details?: object;
 };
 
-export type GetListResponse = {
+export type ListResponse = {
   data: {
     list: List;
   };

@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getListById } from '@/lib/lenslists';
-import { ErrorResponse, GetListResponse } from '@/lib/responses.types';
+import { ErrorResponse, ListResponse } from '@/lib/responses.types';
 import { getListSchema } from '@/lib/validations';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<GetListResponse | ErrorResponse>,
+  res: NextApiResponse<ListResponse | ErrorResponse>,
 ) {
   if (!['GET'].includes(req.method as string)) {
     return res.status(404).json({ message: 'List not found.' });
