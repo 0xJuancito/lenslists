@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getListById, updateList } from '@/lib/lenslists';
 import { ErrorResponse, ListResponse } from '@/lib/responses.types';
-import { getListSchema, upsertListSchema } from '@/lib/validations';
+import { listIdSchema, upsertListSchema } from '@/lib/validations';
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +12,7 @@ export default async function handler(
   }
 
   try {
-    await getListSchema.validateAsync(req.query);
+    await listIdSchema.validateAsync(req.query);
   } catch (err: any) {
     return res
       .status(422)

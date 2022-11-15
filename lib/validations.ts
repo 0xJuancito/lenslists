@@ -11,16 +11,12 @@ const list = {
   coverPicture: Joi.string().uri().max(1000),
 };
 
-export const getListSchema = Joi.object({
+export const listIdSchema = Joi.object({
   listId: list.id,
 });
 
-export const getOwnedListsSchema = Joi.object({
+export const userIdSchema = Joi.object({
   userId: profileId,
-});
-
-export const getListMembersSchema = Joi.object({
-  listId: list.id,
 });
 
 export const upsertListSchema = Joi.object({
