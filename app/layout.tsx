@@ -20,8 +20,8 @@ export default function RootLayout({
             <div className="flex gap-10 px-3">
               {/* FIXME */}
               <div
-                className="flex w-72 grow-0 flex-col"
-                style={{ minWidth: '18rem' }}
+                className="flex w-64 grow-0 flex-col"
+                style={{ minWidth: '16rem' }}
               >
                 <MainNav></MainNav>
               </div>

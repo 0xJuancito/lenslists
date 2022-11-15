@@ -23,7 +23,7 @@ export default function MainNav() {
   return (
     <div className="flex flex-col rounded-xl bg-white px-6 py-6 text-sm font-semibold">
       {navItem('Home', HomeIcon)}
-      {navItem('Discover', MapIcon)}
+      {navItem('Explore', MapIcon)}
       {navItem('My Lists', ListBulletIcon, true)}
     </div>
   );
