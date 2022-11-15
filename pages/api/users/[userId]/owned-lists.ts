@@ -1,10 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { countOwnedLists, getListById, getOwnedLists } from '@/lib/lenslists';
-import {
-  ErrorResponse,
-  GetListResponse,
-  GetOwnedListsResponse,
-} from '@/lib/responses.types';
+import { countOwnedLists, getOwnedLists } from '@/lib/lenslists';
+import { ErrorResponse, GetOwnedListsResponse } from '@/lib/responses.types';
 import { getOwnedListsSchema } from '@/lib/validations';
 
 export default async function handler(
