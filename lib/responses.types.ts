@@ -36,3 +36,9 @@ export type GetListMembersResponse = {
     };
   };
 };
+
+export type DeleteResponse = {
+  data: {
+    deleted: boolean;
+  };
+};

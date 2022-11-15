@@ -76,11 +76,11 @@ export const updateList = async (
 };
 
 export const deleteList = async (listId: string): Promise<void> => {
-  await knexInstance.transaction((tx) => {
-    tx<ListPinned>('listPinned').delete().where({ listId });
-    tx<ListMember>('listMembers').delete().where({ listId });
-    tx<ListFollower>('listFollowers').delete().where({ listId });
-    tx<List>('lists').delete().where({ id: listId });
+  await knexInstance.transaction(async (tx) => {
+    await tx<ListPinned>('listPinned').delete().where({ listId });
+    await tx<ListMember>('listMembers').delete().where({ listId });
+    await tx<ListFollower>('listFollowers').delete().where({ listId });
+    await tx<List>('lists').delete().where({ id: listId });
   });
 };
 
