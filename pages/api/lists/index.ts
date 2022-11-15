@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createList, getListById } from '@/lib/lenslists';
+import { createList } from '@/lib/lenslists';
 import { ErrorResponse, ListResponse } from '@/lib/responses.types';
 import { upsertListSchema } from '@/lib/validations';
 import { NewList } from '@/lib/types';

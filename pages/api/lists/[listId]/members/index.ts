@@ -10,7 +10,6 @@ import {
   MemberResponse,
 } from '@/lib/responses.types';
 import { listIdSchema, newListMemberSchema } from '@/lib/validations';
-import { NewListMember } from '@/lib/types';
 
 export default async function handler(
   req: NextApiRequest,

@@ -19,6 +19,11 @@ export const userIdSchema = Joi.object({
   userId: profileId,
 });
 
+export const listIdMemberIdSchema = Joi.object({
+  listId: list.id,
+  userId: profileId,
+});
+
 export const upsertListSchema = Joi.object({
   name: list.name,
   ownedBy: list.ownedBy,
