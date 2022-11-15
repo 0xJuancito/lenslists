@@ -10,3 +10,14 @@ export type GetListResponse = {
     list: List;
   };
 };
+
+export type GetOwnedListsResponse = {
+  data: {
+    lists: {
+      items: List[];
+      pageInfo: {
+        totalCount: number;
+      };
+    };
+  };
+};
