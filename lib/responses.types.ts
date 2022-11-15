@@ -1,4 +1,4 @@
-import { List } from '@/lib/types';
+import { List, NewListMember } from '@/lib/types';
 
 export type Member = {
   profileId: string;
@@ -40,5 +40,11 @@ export type GetListMembersResponse = {
 export type DeleteResponse = {
   data: {
     deleted: boolean;
+  };
+};
+
+export type MemberResponse = {
+  data: {
+    member: NewListMember;
   };
 };

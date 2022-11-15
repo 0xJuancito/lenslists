@@ -25,3 +25,7 @@ export const upsertListSchema = Joi.object({
   description: list.description,
   coverPicture: list.coverPicture,
 });
+
+export const newListMemberSchema = Joi.object({
+  profileId,
+});
