@@ -9,7 +9,7 @@ import { listIdSchema, upsertListSchema } from '@/lib/validations';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ListResponse | ErrorResponse>,
+  res: NextApiResponse,
 ) {
   try {
     await listIdSchema.validateAsync(req.query);
