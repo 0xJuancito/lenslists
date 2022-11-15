@@ -21,21 +21,27 @@ export default async function handler(
 
   const userId = req.query.userId as string;
 
-  const [lists, listsCount] = await Promise.all([
-    getOwnedLists(userId),
-    countOwnedLists(userId),
-  ]);
+  try {
+    const [lists, listsCount] = await Promise.all([
+      getOwnedLists(userId),
+      countOwnedLists(userId),
+    ]);
 
-  const response = {
-    data: {
-      lists: {
-        items: lists,
-        pageInfo: {
-          totalCount: listsCount,
+    const response = {
+      data: {
+        lists: {
+          items: lists,
+          pageInfo: {
+            totalCount: listsCount,
+          },
         },
       },
-    },
-  };
+    };
 
-  res.status(200).json(response);
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(500).json({
+      message: 'There was an unexpected error. Please try again later.',
+    });
+  }
 }

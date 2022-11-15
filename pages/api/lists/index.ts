@@ -22,13 +22,19 @@ export default async function handler(
     return res.status(422).json({ message: 'Validation error.', details });
   }
 
-  const list = await createList(body);
+  try {
+    const list = await createList(body);
 
-  const response = {
-    data: {
-      list,
-    },
-  };
+    const response = {
+      data: {
+        list,
+      },
+    };
 
-  res.status(200).json(response);
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(500).json({
+      message: 'There was an unexpected error. Please try again later.',
+    });
+  }
 }

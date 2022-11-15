@@ -21,25 +21,31 @@ export default async function handler(
 
   const listId = req.query.listId as string;
 
-  const [members, membersCount] = await Promise.all([
-    getListMembers(listId),
-    countListMembers(listId),
-  ]);
+  try {
+    const [members, membersCount] = await Promise.all([
+      getListMembers(listId),
+      countListMembers(listId),
+    ]);
 
-  const parsedMembers = members.map((member) => ({
-    profileId: member.profileId,
-  }));
+    const parsedMembers = members.map((member) => ({
+      profileId: member.profileId,
+    }));
 
-  const response = {
-    data: {
-      members: {
-        items: parsedMembers,
-        pageInfo: {
-          totalCount: membersCount,
+    const response = {
+      data: {
+        members: {
+          items: parsedMembers,
+          pageInfo: {
+            totalCount: membersCount,
+          },
         },
       },
-    },
-  };
+    };
 
-  res.status(200).json(response);
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(500).json({
+      message: 'There was an unexpected error. Please try again later.',
+    });
+  }
 }

@@ -21,17 +21,23 @@ export default async function handler(
 
   const listId = req.query.listId as string;
 
-  const list = await getListById(listId);
+  try {
+    const list = await getListById(listId);
 
-  if (!list) {
-    return res.status(404).json({ message: 'List not found.' });
+    if (!list) {
+      return res.status(404).json({ message: 'List not found.' });
+    }
+
+    const response = {
+      data: {
+        list,
+      },
+    };
+
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(500).json({
+      message: 'There was an unexpected error. Please try again later.',
+    });
   }
-
-  const response = {
-    data: {
-      list,
-    },
-  };
-
-  res.status(200).json(response);
 }
