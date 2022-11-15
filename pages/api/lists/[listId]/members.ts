@@ -8,7 +8,7 @@ export default async function handler(
   res: NextApiResponse<GetListMembersResponse | ErrorResponse>,
 ) {
   if (!['GET'].includes(req.method as string)) {
-    return res.status(404).json({ message: 'Members not found.' });
+    return res.status(404).json({ message: 'Endpoint not found.' });
   }
 
   try {

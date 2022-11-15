@@ -7,8 +7,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ListResponse | ErrorResponse>,
 ) {
-  if (!['GET', 'PUT'].includes(req.method as string)) {
-    return res.status(404).json({ message: 'List not found.' });
+  if (!['GET', 'PUT', 'DELETE'].includes(req.method as string)) {
+    return res.status(404).json({ message: 'Endpoint not found.' });
   }
 
   try {
