@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getListById } from '@/lib/lenslists';
+import { getListById, updateList } from '@/lib/lenslists';
 import { ErrorResponse, ListResponse } from '@/lib/responses.types';
-import { getListSchema } from '@/lib/validations';
+import { getListSchema, upsertListSchema } from '@/lib/validations';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ListResponse | ErrorResponse>,
 ) {
-  if (!['GET'].includes(req.method as string)) {
+  if (!['GET', 'PUT'].includes(req.method as string)) {
     return res.status(404).json({ message: 'List not found.' });
   }
 
@@ -22,10 +22,22 @@ export default async function handler(
   const listId = req.query.listId as string;
 
   try {
-    const list = await getListById(listId);
+    let list = await getListById(listId);
 
     if (!list) {
       return res.status(404).json({ message: 'List not found.' });
+    }
+
+    if (req.method === 'PUT') {
+      let body;
+      try {
+        body = JSON.parse(req.body);
+        await upsertListSchema.validateAsync(body);
+      } catch (err: any) {
+        const details = err.details || { message: 'Invalid JSON body.' };
+        return res.status(422).json({ message: 'Validation error.', details });
+      }
+      list = await updateList(listId, body);
     }
 
     const response = {
@@ -34,8 +46,9 @@ export default async function handler(
       },
     };
 
-    res.status(200).json(response);
+    return res.status(200).json(response);
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       message: 'There was an unexpected error. Please try again later.',
     });

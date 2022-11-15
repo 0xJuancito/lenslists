@@ -67,7 +67,12 @@ export const updateList = async (
   listId: string,
   data: UpdateList,
 ): Promise<List> => {
-  return await knexInstance<List>('lists').where({ id: listId }).update(data);
+  const lists = await knexInstance<List>('lists')
+    .where({ id: listId })
+    .update(data)
+    .returning('*');
+
+  return lists[0];
 };
 
 export const deleteList = async (listId: string): Promise<void> => {

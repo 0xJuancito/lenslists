@@ -23,7 +23,7 @@ export const getListMembersSchema = Joi.object({
   listId: list.id,
 });
 
-export const postListSchema = Joi.object({
+export const upsertListSchema = Joi.object({
   name: list.name,
   ownedBy: list.ownedBy,
   description: list.description,

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createList, getListById } from '@/lib/lenslists';
 import { ErrorResponse, ListResponse } from '@/lib/responses.types';
-import { postListSchema } from '@/lib/validations';
+import { upsertListSchema } from '@/lib/validations';
 import { NewList } from '@/lib/types';
 
 export default async function handler(
@@ -15,7 +15,7 @@ export default async function handler(
   let body: NewList;
   try {
     body = JSON.parse(req.body);
-    await postListSchema.validateAsync(body);
+    await upsertListSchema.validateAsync(body);
   } catch (err: any) {
     const details = err.details || { message: 'Invalid JSON body.' };
 
