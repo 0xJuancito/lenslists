@@ -10,7 +10,8 @@ const list = {
   name: Joi.string().max(25).required(),
   ownedBy: profileId.required(),
   description: Joi.string().max(100),
-  coverPicture: Joi.string().uri().max(1000),
+  coverPictureUrl: Joi.string().uri().max(1000),
+  pictureUrl: Joi.string().uri().max(1000),
 };
 
 export const listIdSchema = Joi.object({
@@ -41,7 +42,8 @@ export const listIdMemberIdSchema = Joi.object({
 export const upsertListSchema = Joi.object({
   name: list.name,
   description: list.description,
-  coverPicture: list.coverPicture,
+  coverPictureUrl: list.coverPictureUrl,
+  pictureUrl: list.pictureUrl,
 });
 
 export const newListMemberSchema = Joi.object({
