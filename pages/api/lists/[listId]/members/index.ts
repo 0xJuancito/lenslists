@@ -11,7 +11,7 @@ import {
   MemberResponse,
 } from '@/lib/responses.types';
 import { listIdSchema, newListMemberSchema } from '@/lib/validations';
-import { getProfileId } from '@/lib/lens';
+import { getProfile, getProfileId } from '@/lib/lens';
 
 export default async function handler(
   req: NextApiRequest,
@@ -85,8 +85,9 @@ async function addListMemberHandler(
     return res.status(422).json({ message: 'Validation error.', details });
   }
 
+  let token;
   try {
-    const token = req.headers['x-access-token'] as string;
+    token = req.headers['x-access-token'] as string;
     const ownerId = await getProfileId(token);
     const list = await getListById(listId);
     if (list?.ownedBy !== ownerId) {
@@ -97,13 +98,17 @@ async function addListMemberHandler(
   }
 
   try {
-    const listMember = await createListMember({
+    const profile = await getProfile(token, body.profileId);
+    if (!profile) {
+      return res.status(404).json({ message: 'Profile does not exist.' });
+    }
+    await createListMember({
       profileId: body.profileId,
       listId,
     });
   } catch (err: any) {
     // Do not throw any error if the user is already member of the list
-    if (!err.constraint.includes('unique')) {
+    if (!err?.constraint?.includes('unique')) {
       throw err;
     }
   }

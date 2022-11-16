@@ -5,22 +5,6 @@ const GET_DEFAULT_PROFILES = `
   query($request: DefaultProfileRequest!) {
     defaultProfile(request: $request) {
       id
-      picture {
-        ... on NftImage {
-          contractAddress
-          tokenId
-          uri
-          verified
-        }
-        ... on MediaSet {
-          original {
-            url
-            mimeType
-          }
-        }
-        __typename
-      }
-      handle
     }
   }
 `;
