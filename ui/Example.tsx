@@ -9,11 +9,11 @@ export default function Header() {
         <Image
           src="/logo.svg"
           unoptimized
-          alt="Lenscover Logo"
+          alt="Lens Lists Logo"
           width={40}
           height={40}
         />
-        <span>Lenscover</span>
+        <span>Lens Lists</span>
       </span>
     </div>
   );

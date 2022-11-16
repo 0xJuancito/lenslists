@@ -10,13 +10,13 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <Image
               className="rounded-xl bg-zinc-100"
-              src="/logo.svg"
+              src="/lenslists.png"
               unoptimized
-              alt="Lenscover Logo"
-              width={38}
+              alt="Lens Lists Logo"
+              width={220}
               height={38}
             />
-            <span className="font-semibold text-zinc-800">Lenscover</span>
+            {/* <span className="font-semibold text-zinc-800">Lens Lists</span> */}
           </div>
         </div>
       </span>

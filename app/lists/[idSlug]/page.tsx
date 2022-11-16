@@ -35,7 +35,7 @@ export default function Page() {
         </div>
         {/* Body */}
         <div className="leading-6">
-          Today I'm releasing Lenscover. Discover people on Lens, create lists
+          Today I'm releasing Lens Lists. Discover people on Lens, create lists
           and customize your feed!
         </div>
       </div>
