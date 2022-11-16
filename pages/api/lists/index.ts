@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse<ListResponse | ErrorResponse>,
 ) {
   if (!['POST'].includes(req.method as string)) {
-    return res.status(404).json({ message: 'Endpoint not found.' });
+    return res.status(404).json({ message: 'Method not allowed.' });
   }
 
   const token = req.headers['x-access-token'] as string;
