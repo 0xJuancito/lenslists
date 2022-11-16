@@ -6,6 +6,7 @@ import {
   ListResponse,
 } from '@/lib/responses.types';
 import { listIdSchema, upsertListSchema } from '@/lib/validations';
+import { getProfileId } from '@/lib/lens';
 
 export default async function handler(
   req: NextApiRequest,
@@ -67,6 +68,16 @@ async function updateListHandler(
     return res.status(404).json({ message: 'List not found.' });
   }
 
+  try {
+    const token = req.headers['x-access-token'] as string;
+    const ownerId = await getProfileId(token);
+    if (list.ownedBy !== ownerId) {
+      return res.status(403).json({ message: 'Unauthorized.' });
+    }
+  } catch (err) {
+    return res.status(403).json({ message: 'Unauthorized.' });
+  }
+
   if (req.method === 'PUT') {
     let body;
     try {
@@ -98,6 +109,16 @@ async function deleteListHandler(
 
   if (!list) {
     return res.status(404).json({ message: 'List not found.' });
+  }
+
+  try {
+    const token = req.headers['x-access-token'] as string;
+    const ownerId = await getProfileId(token);
+    if (list.ownedBy !== ownerId) {
+      return res.status(403).json({ message: 'Unauthorized.' });
+    }
+  } catch (err) {
+    return res.status(403).json({ message: 'Unauthorized.' });
   }
 
   await deleteList(listId);

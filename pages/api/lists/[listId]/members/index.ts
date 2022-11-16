@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   countListMembers,
   createListMember,
+  getListById,
   getListMembers,
 } from '@/lib/lenslists';
 import {
@@ -10,6 +11,7 @@ import {
   MemberResponse,
 } from '@/lib/responses.types';
 import { listIdSchema, newListMemberSchema } from '@/lib/validations';
+import { getProfileId } from '@/lib/lens';
 
 export default async function handler(
   req: NextApiRequest,
@@ -81,6 +83,17 @@ async function addListMemberHandler(
   } catch (err: any) {
     const details = err.details || { message: 'Invalid JSON body.' };
     return res.status(422).json({ message: 'Validation error.', details });
+  }
+
+  try {
+    const token = req.headers['x-access-token'] as string;
+    const ownerId = await getProfileId(token);
+    const list = await getListById(listId);
+    if (list?.ownedBy !== ownerId) {
+      return res.status(403).json({ message: 'Unauthorized.' });
+    }
+  } catch (err) {
+    return res.status(403).json({ message: 'Unauthorized.' });
   }
 
   try {
