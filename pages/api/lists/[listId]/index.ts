@@ -78,17 +78,15 @@ async function updateListHandler(
     return res.status(403).json({ message: 'Unauthorized.' });
   }
 
-  if (req.method === 'PUT') {
-    let body;
-    try {
-      body = JSON.parse(req.body);
-      await upsertListSchema.validateAsync(body);
-    } catch (err: any) {
-      const details = err.details || { message: 'Invalid JSON body.' };
-      return res.status(422).json({ message: 'Validation error.', details });
-    }
-    list = await updateList(listId, body);
+  let body;
+  try {
+    body = JSON.parse(req.body);
+    await upsertListSchema.validateAsync(body);
+  } catch (err: any) {
+    const details = err.details || { message: 'Invalid JSON body.' };
+    return res.status(422).json({ message: 'Validation error.', details });
   }
+  list = await updateList(listId, body);
 
   const response = {
     data: {
