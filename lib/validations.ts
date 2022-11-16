@@ -26,7 +26,6 @@ export const listIdMemberIdSchema = Joi.object({
 
 export const upsertListSchema = Joi.object({
   name: list.name,
-  ownedBy: list.ownedBy,
   description: list.description,
   coverPicture: list.coverPicture,
 });

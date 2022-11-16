@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { createList } from '@/lib/lenslists';
 import { ErrorResponse, ListResponse } from '@/lib/responses.types';
 import { upsertListSchema } from '@/lib/validations';
+import { getProfileId } from '@/lib/lens';
 import { NewList } from '@/lib/types';
 
 export default async function handler(
@@ -12,10 +13,19 @@ export default async function handler(
     return res.status(404).json({ message: 'Endpoint not found.' });
   }
 
+  const token = req.headers['x-access-token'] as string;
+  let profileId;
+  try {
+    profileId = await getProfileId(token);
+  } catch (err) {
+    return res.status(403).json({ message: 'Unauthorized.' });
+  }
+
   let body: NewList;
   try {
     body = JSON.parse(req.body);
     await upsertListSchema.validateAsync(body);
+    body.ownedBy = profileId;
   } catch (err: any) {
     const details = err.details || { message: 'Invalid JSON body.' };
 
