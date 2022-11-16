@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { countOwnedLists, getOwnedLists } from '@/lib/lenslists';
 import { ErrorResponse, GetOwnedListsResponse } from '@/lib/responses.types';
-import { userIdSchema } from '@/lib/validations';
+import { ownedLists } from '@/lib/validations';
+import { Pagination } from '@/lib/types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +13,7 @@ export default async function handler(
   }
 
   try {
-    await userIdSchema.validateAsync(req.query);
+    await ownedLists.validateAsync(req.query);
   } catch (err: any) {
     return res
       .status(422)
@@ -21,9 +22,17 @@ export default async function handler(
 
   const userId = req.query.userId as string;
 
+  const pagination: Pagination = {};
+  if (req.query.limit) {
+    pagination.limit = Number(req.query.limit);
+  }
+  if (req.query.offset) {
+    pagination.offset = Number(req.query.offset);
+  }
+
   try {
     const [lists, listsCount] = await Promise.all([
-      getOwnedLists(userId),
+      getOwnedLists(userId, pagination),
       countOwnedLists(userId),
     ]);
 

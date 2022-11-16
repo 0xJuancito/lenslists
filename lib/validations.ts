@@ -1,6 +1,8 @@
 import Joi from 'joi';
 
 const onlyNumbers = /^[0-9]*$/;
+const limit = Joi.number().min(1).max(50);
+const offset = Joi.number().min(0);
 const profileId = Joi.string().max(30).alphanum().required();
 
 const list = {
@@ -17,6 +19,18 @@ export const listIdSchema = Joi.object({
 
 export const userIdSchema = Joi.object({
   userId: profileId,
+});
+
+export const ownedLists = Joi.object({
+  userId: profileId,
+  limit,
+  offset,
+});
+
+export const listMembers = Joi.object({
+  userId: profileId,
+  limit,
+  offset,
 });
 
 export const listIdMemberIdSchema = Joi.object({

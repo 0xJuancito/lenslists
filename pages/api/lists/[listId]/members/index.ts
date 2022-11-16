@@ -10,21 +10,18 @@ import {
   GetListMembersResponse,
   MemberResponse,
 } from '@/lib/responses.types';
-import { listIdSchema, newListMemberSchema } from '@/lib/validations';
+import {
+  listIdSchema,
+  listMembers,
+  newListMemberSchema,
+} from '@/lib/validations';
 import { getProfile, getProfileId } from '@/lib/lens';
+import { Pagination } from '@/lib/types';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  try {
-    await listIdSchema.validateAsync(req.query);
-  } catch (err: any) {
-    return res
-      .status(422)
-      .json({ message: 'Validation error.', details: err.details });
-  }
-
   try {
     if (req.method === 'GET') {
       await getListMembersHandler(req, res);
@@ -45,10 +42,26 @@ async function getListMembersHandler(
   req: NextApiRequest,
   res: NextApiResponse<GetListMembersResponse | ErrorResponse>,
 ) {
+  try {
+    await listMembers.validateAsync(req.query);
+  } catch (err: any) {
+    return res
+      .status(422)
+      .json({ message: 'Validation error.', details: err.details });
+  }
+
   const listId = req.query.listId as string;
 
+  const pagination: Pagination = {};
+  if (req.query.limit) {
+    pagination.limit = Number(req.query.limit);
+  }
+  if (req.query.offset) {
+    pagination.offset = Number(req.query.offset);
+  }
+
   const [members, membersCount] = await Promise.all([
-    getListMembers(listId),
+    getListMembers(listId, pagination),
     countListMembers(listId),
   ]);
 
@@ -74,6 +87,14 @@ async function addListMemberHandler(
   req: NextApiRequest,
   res: NextApiResponse<MemberResponse | ErrorResponse>,
 ) {
+  try {
+    await listIdSchema.validateAsync(req.query);
+  } catch (err: any) {
+    return res
+      .status(422)
+      .json({ message: 'Validation error.', details: err.details });
+  }
+
   const listId = req.query.listId as string;
 
   let body: { profileId: string };
