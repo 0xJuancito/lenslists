@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function Header() {
   return (
-    <div className="item flex h-20 w-full bg-white">
+    <div className="item flex h-20 w-full border-b bg-white">
       <div className="container mx-auto flex max-w-screen-xl justify-center px-4">
         <div className="flex items-center gap-3">
           <Image

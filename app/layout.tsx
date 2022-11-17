@@ -25,7 +25,12 @@ export default function RootLayout({
         />
       </head>
       <body className="font-space">
-        <div className="flex h-full min-h-screen flex-col items-center bg-zinc-100 text-zinc-600">
+        <div
+          className="flex h-full min-h-screen flex-col items-center text-zinc-600"
+          style={{
+            background: 'linear-gradient(to bottom, #b6fbff, #93b4e4)',
+          }}
+        >
           <Header></Header>
           <div className="container mx-auto flex max-w-screen-xl py-7 px-4 lg:px-4 xl:px-4">
             <div className="w-full">{children}</div>
