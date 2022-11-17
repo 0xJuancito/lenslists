@@ -1,6 +1,6 @@
 import Card, { ICard } from '@/ui/Card';
 
-const card: ICard = {
+const list = {
   title: 'Lens Protocol',
   description:
     'A permissionless, composable, & decentralized social graph that makes building a Web3 social platform easy.',
@@ -20,13 +20,14 @@ export default function Page() {
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {cards.map(() => (
         <Card
-          title={card.title}
-          description={card.description}
-          coverPicture={card.coverPicture}
-          picture={card.picture}
-          ownedBy={card.ownedBy}
-          followers={card.followers}
-          members={card.members}
+          title={list.title}
+          description={list.description}
+          coverPicture={list.coverPicture}
+          picture={list.picture}
+          ownedBy={list.ownedBy}
+          followers={list.followers}
+          members={list.members}
+          explore={true}
         ></Card>
       ))}
     </div>

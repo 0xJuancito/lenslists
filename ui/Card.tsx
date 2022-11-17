@@ -5,9 +5,13 @@ export type ICard = {
   description: string;
   coverPicture: string;
   picture: string;
-  ownedBy: string;
-  followers: number;
-  members: number;
+  ownedBy?: string;
+  handle?: string;
+  followers?: number;
+  members?: number;
+  memberships?: number;
+  follow?: boolean;
+  explore?: boolean;
 };
 
 export default function Card({
@@ -16,8 +20,12 @@ export default function Card({
   coverPicture,
   picture,
   ownedBy,
+  handle,
   followers,
   members,
+  memberships,
+  explore,
+  follow,
 }: ICard) {
   const DESCRIPTION_MAX_LENGTH = 100;
   if (description.length >= DESCRIPTION_MAX_LENGTH) {
@@ -59,19 +67,51 @@ export default function Card({
             {title}
           </div>
           <div className="text-xs">
-            by <span className="font-bold">@{ownedBy}</span>
+            {ownedBy ? (
+              <span className="flex justify-center gap-1">
+                <span>by</span>
+                <span className="cursor-pointer font-bold hover:underline">
+                  @{ownedBy}
+                </span>
+              </span>
+            ) : (
+              ''
+            )}
+            {handle ? (
+              <span className="cursor-pointer font-bold hover:underline">
+                @{handle}
+              </span>
+            ) : (
+              ''
+            )}
           </div>
         </div>
-        {/* Followers / Members */}
+        {/* Followers / Members / Memberships */}
         <div className="flex gap-4 text-xs">
-          <span className="flex gap-1">
-            <span className="font-bold">{followers}</span>
-            <span>followers</span>
-          </span>
-          <span className="flex gap-1">
-            <span className="font-bold">{members}</span>
-            <span>members</span>
-          </span>
+          {followers !== undefined ? (
+            <span className="flex cursor-pointer gap-1 hover:underline">
+              <span className="font-bold">{followers}</span>
+              <span>followers</span>
+            </span>
+          ) : (
+            ''
+          )}
+          {members !== undefined ? (
+            <span className="flex cursor-pointer gap-1 hover:underline">
+              <span className="font-bold">{members}</span>
+              <span>members</span>
+            </span>
+          ) : (
+            ''
+          )}
+          {memberships !== undefined ? (
+            <span className="flex cursor-pointer gap-1 hover:underline">
+              <span className="font-bold">{memberships}</span>
+              <span>memberships</span>
+            </span>
+          ) : (
+            ''
+          )}
         </div>
         {/* Description */}
         <div className="flex grow items-center text-center text-sm">
@@ -81,9 +121,20 @@ export default function Card({
         </div>
         {/* Button */}
         <div>
-          <button className="mt-2 mb-1 cursor-pointer rounded-2xl bg-sky-700 px-3 py-2 text-white shadow-md hover:bg-sky-800">
-            EXPLORE
-          </button>
+          {explore ? (
+            <button className="mt-2 mb-1 cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800">
+              EXPLORE
+            </button>
+          ) : (
+            ''
+          )}
+          {follow ? (
+            <button className="mt-2 mb-1 cursor-pointer rounded-2xl bg-lime-300 px-4 py-2 text-black shadow-md hover:bg-lime-200">
+              FOLLOW
+            </button>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </div>
