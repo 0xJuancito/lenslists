@@ -1,7 +1,6 @@
 import '@/styles/dist.css';
 import React from 'react';
 import Header from '@/ui/Header';
-import MainNav from '@/ui/MainNav';
 
 export default function RootLayout({
   children,
@@ -11,22 +10,25 @@ export default function RootLayout({
   return (
     <html>
       <head>
-        <title>Discover Lens</title>
+        <title>Lens Lists</title>
+
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        ></meta>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,200;0,300;0,400;0,500;0,700;1,400;1,500&family=Space+Grotesk:wght@300;400;700&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body>
-        <div className="flex h-full min-h-screen flex-col bg-zinc-100 text-zinc-600">
+      <body className="font-space">
+        <div className="flex h-full min-h-screen flex-col items-center bg-zinc-100 text-zinc-600">
           <Header></Header>
-          <div className="container mx-auto flex max-w-screen-xl py-7">
-            <div className="flex gap-10 px-3">
-              {/* FIXME */}
-              <div
-                className="flex w-64 grow-0 flex-col"
-                style={{ minWidth: '16rem' }}
-              >
-                <MainNav></MainNav>
-              </div>
-              <div className="grow">{children}</div>
-            </div>
+          <div className="container mx-auto flex max-w-screen-xl py-7 px-4 lg:px-4 xl:px-4">
+            <div className="w-full">{children}</div>
           </div>
         </div>
       </body>
