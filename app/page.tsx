@@ -29,7 +29,7 @@ const card = (
     </div>
     {/* Body */}
     <div
-      className="mt-16 flex h-full w-full flex-col items-center gap-3 p-4 text-center"
+      className="mt-16 flex w-full grow flex-col items-center gap-3 p-4 text-center"
       style={{ wordBreak: 'break-word' }}
     >
       {/* Title */}
@@ -49,7 +49,7 @@ const card = (
       </div>
       {/* Description */}
       <div
-        className="flex h-full items-center overflow-hidden text-center text-sm"
+        className="flex grow items-center overflow-hidden text-center text-sm"
         style={{ maxHeight: '60px' }}
       >
         {description}
