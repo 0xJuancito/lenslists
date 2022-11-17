@@ -1,17 +1,19 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export type ICard = {
   title: string;
   description: string;
   coverPicture: string;
   picture: string;
-  ownedBy?: string;
   handle?: string;
   followers?: number;
   members?: number;
   memberships?: number;
   follow?: boolean;
   explore?: boolean;
+  listId?: string;
+  profileId?: string;
 };
 
 export default function Card({
@@ -19,13 +21,14 @@ export default function Card({
   description,
   coverPicture,
   picture,
-  ownedBy,
   handle,
   followers,
   members,
   memberships,
   explore,
   follow,
+  listId,
+  profileId,
 }: ICard) {
   const DESCRIPTION_MAX_LENGTH = 100;
   if (description.length >= DESCRIPTION_MAX_LENGTH) {
@@ -67,48 +70,51 @@ export default function Card({
             {title}
           </div>
           <div className="text-xs">
-            {ownedBy ? (
-              <span className="flex justify-center gap-1">
-                <span>by</span>
+            <span className="flex justify-center gap-1">
+              {listId ? <span>by</span> : ''}
+              <Link href={`/users/${profileId}/lists`}>
                 <span className="cursor-pointer font-bold hover:underline">
-                  @{ownedBy}
+                  @{handle}
                 </span>
-              </span>
-            ) : (
-              ''
-            )}
-            {handle ? (
-              <span className="cursor-pointer font-bold hover:underline">
-                @{handle}
-              </span>
-            ) : (
-              ''
-            )}
+              </Link>
+            </span>
           </div>
         </div>
         {/* Followers / Members / Memberships */}
         <div className="flex gap-4 text-xs">
           {followers !== undefined ? (
-            <span className="flex cursor-pointer gap-1 hover:underline">
-              <span className="font-bold">{followers}</span>
-              <span>followers</span>
-            </span>
+            <Link
+              href={
+                listId
+                  ? `/lists/${listId}/followers`
+                  : `/users/${profileId}/followers`
+              }
+            >
+              <span className="flex cursor-pointer gap-1 hover:underline">
+                <span className="font-bold">{followers}</span>
+                <span>followers</span>
+              </span>
+            </Link>
           ) : (
             ''
           )}
           {members !== undefined ? (
-            <span className="flex cursor-pointer gap-1 hover:underline">
-              <span className="font-bold">{members}</span>
-              <span>members</span>
-            </span>
+            <Link href={`/lists/${listId}/members`}>
+              <span className="flex cursor-pointer gap-1 hover:underline">
+                <span className="font-bold">{members}</span>
+                <span>members</span>
+              </span>
+            </Link>
           ) : (
             ''
           )}
           {memberships !== undefined ? (
-            <span className="flex cursor-pointer gap-1 hover:underline">
-              <span className="font-bold">{memberships}</span>
-              <span>memberships</span>
-            </span>
+            <Link href={`/users/${profileId}/memberships`}>
+              <span className="flex cursor-pointer gap-1 hover:underline">
+                <span className="font-bold">{memberships}</span>
+                <span>memberships</span>
+              </span>
+            </Link>
           ) : (
             ''
           )}
@@ -122,9 +128,11 @@ export default function Card({
         {/* Button */}
         <div>
           {explore ? (
-            <button className="mt-2 mb-1 cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800">
-              EXPLORE
-            </button>
+            <Link href={`/lists/${listId}/members`}>
+              <button className="mt-2 mb-1 cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800">
+                EXPLORE
+              </button>
+            </Link>
           ) : (
             ''
           )}

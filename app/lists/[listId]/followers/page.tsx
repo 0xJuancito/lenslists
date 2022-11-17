@@ -8,6 +8,7 @@ const profile = {
   picture:
     'https://lens.infura-ipfs.io/ipfs/QmY9dUwYu67puaWBMxRKW98LPbXCznPwHUbhX5NeWnCJbX',
   handle: 'lensprotocol.lens',
+  profileId: '0x0e4b',
   followers: 41086,
   memberships: 22,
 };
@@ -24,6 +25,7 @@ export default function Page() {
           coverPicture={profile.coverPicture}
           picture={profile.picture}
           handle={profile.handle}
+          profileId={profile.profileId}
           followers={profile.followers}
           memberships={profile.memberships}
           follow={true}

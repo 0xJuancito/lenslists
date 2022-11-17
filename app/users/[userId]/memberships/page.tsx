@@ -8,7 +8,8 @@ const list = {
     'https://lens.infura-ipfs.io/ipfs/bafkreifcrzlxswmv2isffdfnsl2pjd2hph5wem5c4vxlypugtrzf3gagrq',
   picture:
     'https://lens.infura-ipfs.io/ipfs/QmY9dUwYu67puaWBMxRKW98LPbXCznPwHUbhX5NeWnCJbX',
-  ownedBy: 'juancito.lens',
+  handle: 'juancito.lens',
+  profileId: '0x0e4b',
   followers: 41086,
   members: 22,
 };
@@ -24,7 +25,8 @@ export default function Page() {
           description={list.description}
           coverPicture={list.coverPicture}
           picture={list.picture}
-          ownedBy={list.ownedBy}
+          handle={list.handle}
+          profileId={list.profileId}
           followers={list.followers}
           members={list.members}
           explore={true}
