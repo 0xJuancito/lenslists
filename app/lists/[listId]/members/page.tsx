@@ -1,4 +1,4 @@
-import Card, { ICard } from '@/ui/Card';
+import Card from '@/ui/Card';
 
 const profile = {
   name: 'Lens Protocol',
