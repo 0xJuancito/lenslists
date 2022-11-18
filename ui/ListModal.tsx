@@ -1,6 +1,7 @@
 'use client';
 
 import { useScrollBlock } from '@/lib/useScrollBlock';
+import DeleteListModal from '@/ui/DeleteListModal';
 import UserListItem from '@/ui/UserListItem';
 import { useEffect, useState } from 'react';
 
@@ -13,8 +14,8 @@ export type IListModal = {
 
 export default function ListModal({ close, listId }: IListModal) {
   const [isManagingMembers, setIsManagingMembers] = useState(false);
-
   const [isSuggested, setIsSuggested] = useState(false);
+  const [showDeleteListModal, setShowDeleteListModal] = useState(false);
 
   const [blockScroll, allowScroll] = useScrollBlock();
 
@@ -73,10 +74,20 @@ export default function ListModal({ close, listId }: IListModal) {
           </button>
           <button
             className="w-28 cursor-pointer rounded-2xl bg-red-600 px-4 py-2 text-white shadow-md hover:bg-red-700 sm:w-44"
-            onClick={() => createNewList()}
+            onClick={() => setShowDeleteListModal(true)}
           >
             Delete <span className="hidden sm:inline">{' List'}</span>
           </button>
+          {showDeleteListModal ? (
+            <DeleteListModal
+              listId={listId}
+              close={() => {
+                setShowDeleteListModal(false);
+              }}
+            ></DeleteListModal>
+          ) : (
+            ''
+          )}
         </div>
       ) : (
         ''
