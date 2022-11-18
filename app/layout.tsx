@@ -1,6 +1,7 @@
 import '@/styles/dist.css';
 import React from 'react';
 import Header from '@/ui/Header';
+import ListModal from '@/ui/ListModal';
 
 export default function RootLayout({
   children,
@@ -32,6 +33,7 @@ export default function RootLayout({
           }}
         >
           <Header></Header>
+          <ListModal></ListModal>
           <div className="container mx-auto flex max-w-screen-xl py-7 px-4 lg:px-4 xl:px-4">
             <div className="w-full">{children}</div>
           </div>

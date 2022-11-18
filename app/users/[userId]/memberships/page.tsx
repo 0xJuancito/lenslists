@@ -19,8 +19,9 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export default function Page() {
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {cards.map(() => (
+      {cards.map((item, index) => (
         <Card
+          key={index}
           title={list.title}
           description={list.description}
           coverPicture={list.coverPicture}
