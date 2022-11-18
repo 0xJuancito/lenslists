@@ -1,5 +1,6 @@
 'use client';
 
+import { useScrollBlock } from '@/lib/useScrollBlock';
 import { useState } from 'react';
 
 export default function ListModal() {
@@ -9,7 +10,9 @@ export default function ListModal() {
   const [isManagingMembers, setIsManagingMembers] = useState(false);
 
   const [isMembers, setIsMembers] = useState(false);
-  const [isSuggested, setIsSuggested] = useState(true);
+  const [isSuggested, setIsSuggested] = useState(false);
+
+  const [blockScroll, allowScroll] = useScrollBlock();
 
   const NewList = (
     <div className="relative flex flex-auto flex-col gap-2 p-6">
@@ -112,24 +115,30 @@ export default function ListModal() {
           </span>
         </div>
       </div>
-      {isMembers ? Members : ''}
-      {isSuggested ? Suggested : ''}
     </div>
   );
 
   const createNewList = () => {
     setIsNewList(false);
+    setIsSuggested(true);
     setIsManagingMembers(true);
   };
 
   const hideModal = () => {
+    allowScroll();
+
     setShowModal(false);
 
     setIsNewList(true);
     setIsManagingMembers(false);
 
     setIsMembers(false);
-    setIsSuggested(true);
+    setIsSuggested(false);
+  };
+
+  const callShowModal = () => {
+    blockScroll();
+    setShowModal(true);
   };
 
   return (
@@ -137,7 +146,7 @@ export default function ListModal() {
       <button
         className="mr-1 mb-1 rounded bg-pink-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-pink-600"
         type="button"
-        onClick={() => setShowModal(true)}
+        onClick={() => callShowModal()}
       >
         Open regular modal
       </button>
@@ -152,10 +161,7 @@ export default function ListModal() {
               onClick={(e) => e.stopPropagation()}
             >
               {/*content*/}
-              <div
-                className="relative flex h-screen w-screen flex-col rounded-none border-0 bg-white shadow-lg outline-none focus:outline-none sm:h-auto sm:max-w-xl sm:rounded-lg"
-                style={{ minHeight: '650px' }}
-              >
+              <div className="relative flex h-screen w-screen flex-col rounded-none border-0 bg-white shadow-lg outline-none focus:outline-none sm:h-[650px] sm:max-w-xl sm:rounded-lg">
                 {/*header*/}
                 <div className="flex items-center justify-between rounded-t border-b border-solid border-slate-200 p-5">
                   <div className="flex items-center gap-4">
@@ -196,6 +202,10 @@ export default function ListModal() {
                 {/*body*/}
                 {isNewList ? NewList : ''}
                 {isManagingMembers ? ManagingMembers : ''}
+                <div className="overflow-y-auto">
+                  {isMembers ? Members : ''}
+                  {isSuggested ? Suggested : ''}
+                </div>
               </div>
             </div>
           </div>
