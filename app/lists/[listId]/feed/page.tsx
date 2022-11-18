@@ -88,7 +88,7 @@ export default function Page() {
   return (
     <div className="grid grid-cols-12 gap-10 text-sm">
       <div className="col-span-7">
-        {/* Card */}
+        {/* ProfileCard */}
         <div className="flex flex-col rounded-xl bg-white">
           {/* Post */}
           {posts.map(() => getPost())}

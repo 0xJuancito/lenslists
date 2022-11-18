@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export type ICard = {
+export type IProfileCard = {
   title: string;
   description: string;
   coverPicture: string;
@@ -16,7 +16,7 @@ export type ICard = {
   profileId?: string;
 };
 
-export default function Card({
+export default function ProfileCard({
   title,
   description,
   coverPicture,
@@ -29,7 +29,7 @@ export default function Card({
   follow,
   listId,
   profileId,
-}: ICard) {
+}: IProfileCard) {
   const DESCRIPTION_MAX_LENGTH = 100;
   if (description.length >= DESCRIPTION_MAX_LENGTH) {
     description = `${description.slice(0, DESCRIPTION_MAX_LENGTH)}...`;

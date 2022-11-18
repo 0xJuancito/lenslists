@@ -1,4 +1,4 @@
-import Card from '@/ui/Card';
+import ProfileCard from '@/ui/ProfileCard';
 
 const profile = {
   name: 'Lens Protocol',
@@ -19,7 +19,7 @@ export default function Page() {
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {cards.map((item, index) => (
-        <Card
+        <ProfileCard
           key={index}
           title={profile.name}
           description={profile.bio}
@@ -30,7 +30,7 @@ export default function Page() {
           followers={profile.followers}
           memberships={profile.memberships}
           follow={true}
-        ></Card>
+        ></ProfileCard>
       ))}
     </div>
   );
