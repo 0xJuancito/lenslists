@@ -1,7 +1,10 @@
 'use client';
 
 import { useScrollBlock } from '@/lib/useScrollBlock';
+import UserListItem from '@/ui/UserListItem';
 import { useState } from 'react';
+
+const suggestedUsers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export default function ListModal() {
   const [showModal, setShowModal] = useState(false);
@@ -55,11 +58,22 @@ export default function ListModal() {
     </div>
   );
 
-  const Members = <div>Members</div>;
+  const Members = (
+    <div>
+      {suggestedUsers.map((user) => (
+        <UserListItem
+          pictureUrl="/profile.jpeg"
+          name="juancito"
+          handle="juancito.lens"
+          isMember={true}
+        ></UserListItem>
+      ))}
+    </div>
+  );
 
   const Suggested = (
-    <div className="flex flex-col gap-4 px-6 pb-6 pt-2">
-      <div className="relative">
+    <div className="flex flex-col gap-4 pb-6 pt-2">
+      <div className="relative mx-6">
         <svg
           viewBox="0 0 25 25"
           aria-hidden="true"
@@ -76,7 +90,16 @@ export default function ListModal() {
           className="w-full rounded-2xl border border-zinc-300 px-3 py-3 pl-9 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
         />
       </div>
-      <div>User list</div>
+      <div>
+        {suggestedUsers.map((user) => (
+          <UserListItem
+            pictureUrl="/profile.jpeg"
+            name="juancito"
+            handle="juancito.lens"
+            isMember={false}
+          ></UserListItem>
+        ))}
+      </div>
     </div>
   );
 
@@ -96,7 +119,7 @@ export default function ListModal() {
               isMembers ? 'border-b-4 font-bold text-black' : ''
             } border-b-sky-500 py-3`}
           >
-            Members (0)
+            Members
           </span>
         </div>
         <div
