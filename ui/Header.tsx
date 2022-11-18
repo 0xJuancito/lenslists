@@ -1,13 +1,14 @@
 'use client';
 
+import LoginButton from '@/ui/LoginButton';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Header() {
   return (
     <div className="item flex h-16 w-full border-b bg-white">
-      <div className="container mx-auto flex max-w-screen-xl px-4">
-        <Link href="/" className="flex items-center">
+      <div className="container mx-auto flex max-w-screen-xl items-center justify-between px-4">
+        <Link href="/">
           <div>
             <Image
               src="/lenslists.png"
@@ -16,9 +17,9 @@ export default function Header() {
               width={174}
               height={30}
             />
-            {/* <span className="font-semibold text-zinc-800">Lens Lists</span> */}
           </div>
         </Link>
+        <LoginButton></LoginButton>
       </div>
     </div>
   );
