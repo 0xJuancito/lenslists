@@ -1,7 +1,6 @@
 import '@/styles/dist.css';
 import React from 'react';
 import Header from '@/ui/Header';
-import ListModal from '@/ui/ListModal';
 
 export default function RootLayout({
   children,

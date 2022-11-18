@@ -185,15 +185,15 @@ export default function ListModal({ close, listId }: IListModal) {
   return (
     <>
       <div
-        className="fixed inset-0 z-50 flex h-screen items-center justify-center overflow-hidden overflow-x-hidden outline-none focus:outline-none sm:h-auto sm:overflow-y-auto"
+        className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden overflow-x-hidden outline-none focus:outline-none sm:overflow-y-auto"
         onClick={() => hideModal()}
       >
         <div
-          className="relative my-6 mx-auto w-auto max-w-2xl"
+          className="relative my-6 mx-auto h-full w-auto max-w-2xl sm:h-auto"
           onClick={(e) => e.stopPropagation()}
         >
           {/*content*/}
-          <div className="relative flex h-screen w-screen flex-col rounded-none border-0 bg-white shadow-lg outline-none focus:outline-none sm:h-[650px] sm:max-w-xl sm:rounded-lg">
+          <div className="relative flex h-full w-screen flex-col rounded-none border-0 bg-white shadow-lg outline-none focus:outline-none sm:h-[650px] sm:max-w-xl sm:rounded-lg">
             {/*header*/}
             <div className="flex items-center justify-between rounded-t border-b border-solid border-slate-200 p-5">
               <div className="flex items-center gap-4">
