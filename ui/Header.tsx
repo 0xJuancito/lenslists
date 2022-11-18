@@ -1,10 +1,14 @@
 'use client';
 
+import ListModal from '@/ui/ListModal';
 import LoginButton from '@/ui/LoginButton';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Header() {
+  const [showListModal, setShowListModal] = useState(false);
+
   return (
     <div className="item flex h-16 w-full border-b bg-white">
       <div className="container mx-auto flex max-w-screen-xl items-center justify-between px-4">
@@ -20,7 +24,12 @@ export default function Header() {
           </div>
         </Link>
         <div className="flex gap-2 sm:gap-4">
-          <button className="flex cursor-pointer items-center gap-2 rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800">
+          <button
+            className="flex cursor-pointer items-center gap-2 rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
+            onClick={() => {
+              setShowListModal(true);
+            }}
+          >
             <svg
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -32,6 +41,13 @@ export default function Header() {
             </svg>
             <span className="hidden sm:block">CREATE LIST</span>
           </button>
+          {showListModal && (
+            <ListModal
+              close={() => {
+                setShowListModal(false);
+              }}
+            ></ListModal>
+          )}
           <LoginButton></LoginButton>
         </div>
       </div>

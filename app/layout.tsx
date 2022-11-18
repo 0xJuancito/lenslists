@@ -33,7 +33,6 @@ export default function RootLayout({
           }}
         >
           <Header></Header>
-          <ListModal></ListModal>
           <div className="container mx-auto flex max-w-screen-xl py-7 px-4 lg:px-4 xl:px-4">
             <div className="w-full">{children}</div>
           </div>

@@ -2,13 +2,15 @@
 
 import { useScrollBlock } from '@/lib/useScrollBlock';
 import UserListItem from '@/ui/UserListItem';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const suggestedUsers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export default function ListModal() {
-  const [showModal, setShowModal] = useState(false);
+export type IListModal = {
+  close: () => void;
+};
 
+export default function ListModal({ close }: IListModal) {
   const [isNewList, setIsNewList] = useState(true);
   const [isManagingMembers, setIsManagingMembers] = useState(false);
 
@@ -16,6 +18,10 @@ export default function ListModal() {
   const [isSuggested, setIsSuggested] = useState(false);
 
   const [blockScroll, allowScroll] = useScrollBlock();
+
+  useEffect(() => {
+    blockScroll();
+  });
 
   const NewList = (
     <div className="relative flex flex-auto flex-col gap-2 p-6">
@@ -60,8 +66,9 @@ export default function ListModal() {
 
   const Members = (
     <div>
-      {suggestedUsers.map((user) => (
+      {suggestedUsers.map((user, key) => (
         <UserListItem
+          key={key}
           pictureUrl="/profile.jpeg"
           name="juancito"
           handle="juancito.lens"
@@ -91,8 +98,9 @@ export default function ListModal() {
         />
       </div>
       <div>
-        {suggestedUsers.map((user) => (
+        {suggestedUsers.map((user, key) => (
           <UserListItem
+            key={key}
             pictureUrl="/profile.jpeg"
             name="juancito"
             handle="juancito.lens"
@@ -150,91 +158,75 @@ export default function ListModal() {
   const hideModal = () => {
     allowScroll();
 
-    setShowModal(false);
-
     setIsNewList(true);
     setIsManagingMembers(false);
 
     setIsMembers(false);
     setIsSuggested(false);
-  };
 
-  const callShowModal = () => {
-    blockScroll();
-    setShowModal(true);
+    close();
   };
 
   return (
     <>
-      <button
-        className="mr-1 mb-1 rounded bg-pink-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-pink-600"
-        type="button"
-        onClick={() => callShowModal()}
+      <div
+        className="fixed inset-0 z-50 flex h-screen items-center justify-center overflow-hidden overflow-x-hidden outline-none focus:outline-none sm:h-auto sm:overflow-y-auto"
+        onClick={() => hideModal()}
       >
-        Open regular modal
-      </button>
-      {showModal ? (
-        <>
-          <div
-            className="fixed inset-0 z-50 flex h-screen items-center justify-center overflow-hidden overflow-x-hidden outline-none focus:outline-none sm:h-auto sm:overflow-y-auto"
-            onClick={() => hideModal()}
-          >
-            <div
-              className="relative my-6 mx-auto w-auto max-w-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/*content*/}
-              <div className="relative flex h-screen w-screen flex-col rounded-none border-0 bg-white shadow-lg outline-none focus:outline-none sm:h-[650px] sm:max-w-xl sm:rounded-lg">
-                {/*header*/}
-                <div className="flex items-center justify-between rounded-t border-b border-solid border-slate-200 p-5">
-                  <div className="flex items-center gap-4">
-                    <svg
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                      className="h-9 w-9 cursor-pointer p-2 hover:rounded-full hover:bg-zinc-100"
-                      onClick={() => hideModal()}
-                    >
-                      <g>
-                        <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path>
-                      </g>
-                    </svg>
-                    <h3 className="text-2xl font-semibold text-black">
-                      {isNewList ? 'Create a new List' : ''}
-                      {isManagingMembers ? 'Add to your List' : ''}
-                    </h3>
-                  </div>
-                  {isNewList && (
-                    <button
-                      className="cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
-                      onClick={() => createNewList()}
-                    >
-                      NEXT
-                    </button>
-                  )}
-                  {isManagingMembers && (
-                    <button
-                      className="cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
-                      onClick={() => {
-                        hideModal();
-                      }}
-                    >
-                      DONE
-                    </button>
-                  )}
-                </div>
-                {/*body*/}
-                {isNewList ? NewList : ''}
-                {isManagingMembers ? ManagingMembers : ''}
-                <div className="overflow-y-auto">
-                  {isMembers ? Members : ''}
-                  {isSuggested ? Suggested : ''}
-                </div>
+        <div
+          className="relative my-6 mx-auto w-auto max-w-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/*content*/}
+          <div className="relative flex h-screen w-screen flex-col rounded-none border-0 bg-white shadow-lg outline-none focus:outline-none sm:h-[650px] sm:max-w-xl sm:rounded-lg">
+            {/*header*/}
+            <div className="flex items-center justify-between rounded-t border-b border-solid border-slate-200 p-5">
+              <div className="flex items-center gap-4">
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  className="h-9 w-9 cursor-pointer p-2 hover:rounded-full hover:bg-zinc-100"
+                  onClick={() => hideModal()}
+                >
+                  <g>
+                    <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path>
+                  </g>
+                </svg>
+                <h3 className="text-2xl font-semibold text-black">
+                  {isNewList ? 'Create a new List' : ''}
+                  {isManagingMembers ? 'Add to your List' : ''}
+                </h3>
               </div>
+              {isNewList && (
+                <button
+                  className="cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
+                  onClick={() => createNewList()}
+                >
+                  NEXT
+                </button>
+              )}
+              {isManagingMembers && (
+                <button
+                  className="cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
+                  onClick={() => {
+                    hideModal();
+                  }}
+                >
+                  DONE
+                </button>
+              )}
+            </div>
+            {/*body*/}
+            {isNewList ? NewList : ''}
+            {isManagingMembers ? ManagingMembers : ''}
+            <div className="overflow-y-auto">
+              {isMembers ? Members : ''}
+              {isSuggested ? Suggested : ''}
             </div>
           </div>
-          <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
-        </>
-      ) : null}
+        </div>
+      </div>
+      <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
     </>
   );
 }
