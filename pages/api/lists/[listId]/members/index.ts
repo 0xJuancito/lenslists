@@ -28,7 +28,7 @@ export default async function handler(
     } else if (req.method === 'POST') {
       await addListMemberHandler(req, res);
     } else {
-      return res.status(404).json({ message: 'Method not found.' });
+      return res.status(405).json({ message: 'Method not found.' });
     }
   } catch (err) {
     console.log(err);

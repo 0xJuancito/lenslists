@@ -13,7 +13,7 @@ export default async function handler(
   res: NextApiResponse<DeleteResponse | ErrorResponse>,
 ) {
   if (!['DELETE'].includes(req.method as string)) {
-    return res.status(404).json({ message: 'Method not allowed.' });
+    return res.status(405).json({ message: 'Method not allowed.' });
   }
 
   try {
