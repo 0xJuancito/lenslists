@@ -43,6 +43,7 @@ export default function Header() {
           </button>
           {showListModal && (
             <ListModal
+              listId="123"
               close={() => {
                 setShowListModal(false);
               }}

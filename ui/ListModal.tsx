@@ -8,13 +8,12 @@ const suggestedUsers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export type IListModal = {
   close: () => void;
+  listId?: string;
 };
 
-export default function ListModal({ close }: IListModal) {
-  const [isNewList, setIsNewList] = useState(true);
+export default function ListModal({ close, listId }: IListModal) {
   const [isManagingMembers, setIsManagingMembers] = useState(false);
 
-  const [isMembers, setIsMembers] = useState(false);
   const [isSuggested, setIsSuggested] = useState(false);
 
   const [blockScroll, allowScroll] = useScrollBlock();
@@ -23,44 +22,65 @@ export default function ListModal({ close }: IListModal) {
     blockScroll();
   });
 
-  const NewList = (
-    <div className="relative flex flex-auto flex-col gap-2 p-6">
-      <div className="mb-3 flex flex-col gap-2 pt-0">
-        <label className="text-sm font-bold">Name</label>
-        <input
-          type="text"
-          maxLength={25}
-          placeholder="My Awesome List"
-          className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
-        />
+  const EditList = (
+    <div className="relative flex flex-auto flex-col justify-between gap-2 py-6">
+      <div className="px-6">
+        <div className="mb-3 flex flex-col gap-2 pt-0">
+          <label className="text-sm font-bold">Name</label>
+          <input
+            type="text"
+            maxLength={25}
+            placeholder="My Awesome List"
+            className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
+          />
+        </div>
+        <div className="mb-3 flex flex-col gap-2 pt-0">
+          <label className="text-sm font-bold">Description</label>
+          <textarea
+            rows={3}
+            maxLength={100}
+            placeholder="Top 100 influencers on Lens Protocol"
+            className="relative w-full resize-none rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
+          />
+        </div>
+        <div className="mb-3 flex flex-col gap-2 pt-0">
+          <label className="text-sm font-bold">Picture URL</label>
+          <input
+            type="text"
+            maxLength={255}
+            placeholder="https://lens.infura-ipfs.io/ipfs/QmZsWaqhhinnhaMUi2vNyuZ6qJJgB"
+            className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
+          />
+        </div>
+        <div className="mb-3 flex flex-col gap-2 pt-0">
+          <label className="text-sm font-bold">Cover Picture URL</label>
+          <input
+            type="text"
+            maxLength={255}
+            placeholder="https://lens.infura-ipfs.io/ipfs/QmXsWsqhripefaMUi2vNhrhrApoSfeL"
+            className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
+          />
+        </div>
       </div>
-      <div className="mb-3 flex flex-col gap-2 pt-0">
-        <label className="text-sm font-bold">Description</label>
-        <textarea
-          rows={3}
-          maxLength={100}
-          placeholder="Top 100 influencers on Lens Protocol"
-          className="relative w-full resize-none rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
-        />
-      </div>
-      <div className="mb-3 flex flex-col gap-2 pt-0">
-        <label className="text-sm font-bold">Picture URL</label>
-        <input
-          type="text"
-          maxLength={255}
-          placeholder="https://lens.infura-ipfs.io/ipfs/QmZsWaqhhinnhaMUi2vNyuZ6qJJgB"
-          className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
-        />
-      </div>
-      <div className="mb-3 flex flex-col gap-2 pt-0">
-        <label className="text-sm font-bold">Cover Picture URL</label>
-        <input
-          type="text"
-          maxLength={255}
-          placeholder="https://lens.infura-ipfs.io/ipfs/QmXsWsqhripefaMUi2vNhrhrApoSfeL"
-          className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
-        />
-      </div>
+      {/* Button Actions */}
+      {listId ? (
+        <div className="flex justify-around border-t border-t-slate-200 pt-6">
+          <button
+            className="w-28 cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800 sm:w-44"
+            onClick={() => createNewList()}
+          >
+            <span className="hidden sm:inline">{'Manage '}</span>Members
+          </button>
+          <button
+            className="w-28 cursor-pointer rounded-2xl bg-red-600 px-4 py-2 text-white shadow-md hover:bg-red-700 sm:w-44"
+            onClick={() => createNewList()}
+          >
+            Delete <span className="hidden sm:inline">{' List'}</span>
+          </button>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 
@@ -118,13 +138,12 @@ export default function ListModal({ close }: IListModal) {
         <div
           className="flex w-1/2 cursor-pointer justify-center hover:bg-zinc-100"
           onClick={() => {
-            setIsMembers(true);
             setIsSuggested(false);
           }}
         >
           <span
             className={`${
-              isMembers ? 'border-b-4 font-bold text-black' : ''
+              isSuggested ? '' : 'border-b-4 font-bold text-black'
             } border-b-sky-500 py-3`}
           >
             Members
@@ -133,7 +152,6 @@ export default function ListModal({ close }: IListModal) {
         <div
           className="flex w-1/2 cursor-pointer justify-center hover:bg-zinc-100"
           onClick={() => {
-            setIsMembers(false);
             setIsSuggested(true);
           }}
         >
@@ -150,7 +168,6 @@ export default function ListModal({ close }: IListModal) {
   );
 
   const createNewList = () => {
-    setIsNewList(false);
     setIsSuggested(true);
     setIsManagingMembers(true);
   };
@@ -158,11 +175,9 @@ export default function ListModal({ close }: IListModal) {
   const hideModal = () => {
     allowScroll();
 
-    setIsNewList(true);
     setIsManagingMembers(false);
 
-    setIsMembers(false);
-    setIsSuggested(false);
+    setIsSuggested(true);
 
     close();
   };
@@ -182,30 +197,42 @@ export default function ListModal({ close }: IListModal) {
             {/*header*/}
             <div className="flex items-center justify-between rounded-t border-b border-solid border-slate-200 p-5">
               <div className="flex items-center gap-4">
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="h-9 w-9 cursor-pointer p-2 hover:rounded-full hover:bg-zinc-100"
-                  onClick={() => hideModal()}
-                >
-                  <g>
-                    <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path>
-                  </g>
-                </svg>
-                <h3 className="text-2xl font-semibold text-black">
-                  {isNewList ? 'Create a new List' : ''}
-                  {isManagingMembers ? 'Add to your List' : ''}
-                </h3>
+                {listId && isManagingMembers ? (
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    className="h-9 w-9 cursor-pointer p-2 hover:rounded-full hover:bg-zinc-100"
+                    onClick={() => setIsManagingMembers(false)}
+                  >
+                    <g>
+                      <path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path>
+                    </g>
+                  </svg>
+                ) : (
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    className="h-9 w-9 cursor-pointer p-2 hover:rounded-full hover:bg-zinc-100"
+                    onClick={() => hideModal()}
+                  >
+                    <g>
+                      <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path>
+                    </g>
+                  </svg>
+                )}
+                {listId ? (
+                  <h3 className="text-2xl font-semibold text-black">
+                    {isManagingMembers ? 'Manage Members' : 'Edit List'}
+                  </h3>
+                ) : (
+                  <h3 className="text-2xl font-semibold text-black">
+                    {isManagingMembers
+                      ? 'Add to your List'
+                      : 'Create a new List'}
+                  </h3>
+                )}
               </div>
-              {isNewList && (
-                <button
-                  className="cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
-                  onClick={() => createNewList()}
-                >
-                  NEXT
-                </button>
-              )}
-              {isManagingMembers && (
+              {isManagingMembers || listId ? (
                 <button
                   className="cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
                   onClick={() => {
@@ -214,15 +241,24 @@ export default function ListModal({ close }: IListModal) {
                 >
                   DONE
                 </button>
+              ) : (
+                <button
+                  className="cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
+                  onClick={() => createNewList()}
+                >
+                  NEXT
+                </button>
               )}
             </div>
             {/*body*/}
-            {isNewList ? NewList : ''}
-            {isManagingMembers ? ManagingMembers : ''}
-            <div className="overflow-y-auto">
-              {isMembers ? Members : ''}
-              {isSuggested ? Suggested : ''}
-            </div>
+            {isManagingMembers ? ManagingMembers : EditList}
+            {isManagingMembers ? (
+              <div className="overflow-y-auto">
+                {isSuggested ? Suggested : Members}
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </div>
