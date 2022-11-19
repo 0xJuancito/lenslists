@@ -1,5 +1,5 @@
-import { getDefaultProfile } from '@/lib/get-default-profile';
-import { getProfile as getProfileFromLens } from '@/lib/get-profile';
+import { getDefaultProfile } from '@/lib/server/get-default-profile';
+import { getProfile as getProfileFromLens } from '@/lib/server/get-profile';
 import jwt_decode from 'jwt-decode';
 
 export const getProfileId = async (token: string): Promise<string> => {
