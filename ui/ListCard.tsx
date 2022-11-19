@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export type IListCard = {
   title: string;
@@ -24,8 +27,13 @@ export default function ListCard({
   listId,
   ownerId,
 }: IListCard) {
+  const router = useRouter();
+
   return (
-    <div className="flex flex-col rounded-xl bg-white shadow-lg">
+    <div
+      onClick={() => router.push(`/lists/${listId}/members`)}
+      className="flex cursor-pointer flex-col rounded-xl bg-white shadow-lg hover:shadow-xl"
+    >
       {/* Cover Picture */}
       <div>
         <Image
@@ -62,7 +70,10 @@ export default function ListCard({
           <div className="text-xs">
             <span className="flex gap-1">
               by
-              <Link href={`/users/${ownerId}/lists`}>
+              <Link
+                onClick={(e) => e.stopPropagation()}
+                href={`/users/${ownerId}/lists`}
+              >
                 <span className="cursor-pointer font-bold hover:underline">
                   @{ownerHandle}
                 </span>
@@ -74,6 +85,7 @@ export default function ListCard({
         {/* Followers + Members */}
         <div className="mt-1 flex justify-center gap-4 text-xs">
           <Link
+            onClick={(e) => e.stopPropagation()}
             className="rounded-xl bg-sky-400 py-1 px-2 text-white hover:bg-sky-500"
             href={
               listId
@@ -87,6 +99,7 @@ export default function ListCard({
             </span>
           </Link>
           <Link
+            onClick={(e) => e.stopPropagation()}
             className="rounded-xl bg-sky-400 py-1 px-2 text-white hover:bg-sky-500"
             href={`/lists/${listId}/members`}
           >
@@ -105,7 +118,10 @@ export default function ListCard({
         </div>
 
         {/* Follow */}
-        <button className="mt-2 mb-1 cursor-pointer rounded-2xl bg-lens-lime px-4 py-2 text-black shadow-md hover:bg-lens-lime-hover">
+        <button
+          onClick={(e) => e.stopPropagation()}
+          className="mt-2 mb-1 cursor-pointer rounded-2xl bg-lens-lime px-4 py-2 text-black shadow-md hover:bg-lens-lime-hover"
+        >
           FOLLOW
         </button>
       </div>
