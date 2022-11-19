@@ -1,4 +1,5 @@
 import ListCard from '@/ui/ListCard';
+import Image from 'next/image';
 
 const list = {
   title: 'Lens Protocol',
@@ -19,21 +20,36 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Page() {
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-      {cards.map((item, index) => (
-        <ListCard
-          key={index}
-          title={list.title}
-          description={list.description}
-          coverPicture={list.coverPicture}
-          picture={list.picture}
-          ownerHandle={list.ownerHandle}
-          ownerId={list.ownerId}
-          followersCount={list.followersCount}
-          membersCount={list.membersCount}
-          listId={list.listId}
-        ></ListCard>
-      ))}
+    <div>
+      <div className="relative flex justify-between">
+        <Image
+          className="absolute right-24 hidden h-[400px] w-[400px] lg:inline-block"
+          src="/background.png"
+          unoptimized
+          alt="Background"
+          width={500}
+          height={500}
+        />
+        <div className="z-0 my-16 max-w-lg text-4xl font-bold text-black sm:my-32 sm:text-6xl">
+          Discover, create, and share awesome lists.
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+        {cards.map((item, index) => (
+          <ListCard
+            key={index}
+            title={list.title}
+            description={list.description}
+            coverPicture={list.coverPicture}
+            picture={list.picture}
+            ownerHandle={list.ownerHandle}
+            ownerId={list.ownerId}
+            followersCount={list.followersCount}
+            membersCount={list.membersCount}
+            listId={list.listId}
+          ></ListCard>
+        ))}
+      </div>
     </div>
   );
 }
