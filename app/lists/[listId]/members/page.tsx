@@ -1,6 +1,6 @@
-import ProfileCard from '@/ui/ProfileCard';
+import ProfileCard, { IProfileCard } from '@/ui/ProfileCard';
 
-const profile = {
+const profile: IProfileCard = {
   name: 'Lens Protocol',
   bio: 'A permissionless, composable, & decentralized social graph that makes building a Web3 social platform easy.',
   coverPicture:
@@ -9,8 +9,8 @@ const profile = {
     'https://lens.infura-ipfs.io/ipfs/QmY9dUwYu67puaWBMxRKW98LPbXCznPwHUbhX5NeWnCJbX',
   handle: 'lensprotocol.lens',
   profileId: '0x0e4b',
-  followers: 41086,
-  memberships: 22,
+  followersCount: 41086,
+  membershipsCount: 22,
 };
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -21,15 +21,14 @@ export default function Page() {
       {cards.map((item, index) => (
         <ProfileCard
           key={index}
-          title={profile.name}
-          description={profile.bio}
+          name={profile.name}
+          bio={profile.bio}
           coverPicture={profile.coverPicture}
           picture={profile.picture}
           handle={profile.handle}
           profileId={profile.profileId}
-          followers={profile.followers}
-          memberships={profile.memberships}
-          follow={true}
+          followersCount={profile.followersCount}
+          membershipsCount={profile.membershipsCount}
         ></ProfileCard>
       ))}
     </div>
