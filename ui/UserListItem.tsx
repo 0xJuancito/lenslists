@@ -48,7 +48,7 @@ export default function UserListItem({
         </button>
       ) : (
         <button
-          className="cursor-pointer rounded-2xl bg-sky-700 py-1 px-4 text-white shadow-md hover:bg-sky-800"
+          className="cursor-pointer rounded-2xl bg-sky-600 py-1 px-4 text-white shadow-md hover:bg-sky-700"
           onClick={() => toggleIsMember()}
         >
           Add

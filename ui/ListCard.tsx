@@ -74,7 +74,7 @@ export default function ListCard({
         {/* Followers + Members */}
         <div className="mt-1 flex justify-center gap-4 text-xs">
           <Link
-            className="rounded-xl bg-sky-500 py-1 px-2 text-white hover:bg-sky-600"
+            className="rounded-xl bg-sky-400 py-1 px-2 text-white hover:bg-sky-500"
             href={
               listId
                 ? `/lists/${listId}/followers`
@@ -87,7 +87,7 @@ export default function ListCard({
             </span>
           </Link>
           <Link
-            className="rounded-xl bg-sky-500 py-1 px-2 text-white hover:bg-sky-600"
+            className="rounded-xl bg-sky-400 py-1 px-2 text-white hover:bg-sky-500"
             href={`/lists/${listId}/members`}
           >
             <span className="flex cursor-pointer gap-1">

@@ -67,7 +67,7 @@ export default function ListModal({ close, listId }: IListModal) {
       {listId ? (
         <div className="flex justify-around border-t border-t-slate-200 pt-6">
           <button
-            className="w-28 cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800 sm:w-44"
+            className="w-28 cursor-pointer rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700 sm:w-44"
             onClick={() => createNewList()}
           >
             <span className="hidden sm:inline">{'Manage '}</span>Members
@@ -155,7 +155,7 @@ export default function ListModal({ close, listId }: IListModal) {
           <span
             className={`${
               isSuggested ? '' : 'border-b-4 font-bold text-black'
-            } border-b-sky-500 py-3`}
+            } border-b-sky-400 py-3`}
           >
             Members
           </span>
@@ -169,7 +169,7 @@ export default function ListModal({ close, listId }: IListModal) {
           <span
             className={`${
               isSuggested ? 'border-b-4 font-bold text-black' : ''
-            } border-b-sky-500 py-3`}
+            } border-b-sky-400 py-3`}
           >
             Suggested
           </span>
@@ -245,7 +245,7 @@ export default function ListModal({ close, listId }: IListModal) {
               </div>
               {isManagingMembers || listId ? (
                 <button
-                  className="cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
+                  className="cursor-pointer rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700"
                   onClick={() => {
                     hideModal();
                   }}
@@ -254,7 +254,7 @@ export default function ListModal({ close, listId }: IListModal) {
                 </button>
               ) : (
                 <button
-                  className="cursor-pointer rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
+                  className="cursor-pointer rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700"
                   onClick={() => createNewList()}
                 >
                   NEXT

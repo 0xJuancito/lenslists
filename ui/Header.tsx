@@ -13,19 +13,23 @@ export default function Header() {
     <div className="item flex h-16 w-full border-b bg-white">
       <div className="container mx-auto flex max-w-screen-xl items-center justify-between px-4">
         <Link href="/">
-          <div>
+          <div className="flex items-center gap-2">
             <Image
-              src="/lenslists.png"
+              // className="rounded-full bg-sky-600 p-1"
+              src="/list.svg"
               unoptimized
               alt="Lens Lists Logo"
-              width={174}
-              height={30}
+              width={40}
+              height={40}
             />
+            <span className="hidden text-3xl font-bold text-black sm:inline-block">
+              LENS LISTS
+            </span>
           </div>
         </Link>
         <div className="flex gap-2 sm:gap-4">
           <button
-            className="flex cursor-pointer items-center gap-2 rounded-2xl bg-sky-700 px-4 py-2 text-white shadow-md hover:bg-sky-800"
+            className="flex cursor-pointer items-center gap-2 rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700"
             onClick={() => {
               setShowListModal(true);
             }}
