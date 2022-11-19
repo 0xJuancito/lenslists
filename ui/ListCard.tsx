@@ -41,10 +41,10 @@ export default function ListCard({
           <Image
             unoptimized
             src={picture}
-            height={85}
-            width={85}
+            height={150}
+            width={150}
             alt="Profile Picture"
-            className="relative left-2 top-[-32px] rounded-lg border-4 border-zinc-50"
+            className="relative left-2 top-[-32px] h-[85px] w-[85px] rounded-lg border-4 border-zinc-50 sm:top-[-55px] sm:h-28 sm:w-28 xl:top-[-32px] xl:h-[85px] xl:w-[85px]"
           />
         </div>
       </div>
@@ -55,8 +55,8 @@ export default function ListCard({
         style={{ wordBreak: 'break-word' }}
       >
         {/* Title + Handle */}
-        <div className="w-full pl-[85px]">
-          <div className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-bold text-black">
+        <div className="w-full pl-[85px] sm:pl-28 xl:pl-[85px]">
+          <div className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-bold text-black sm:text-xl xl:text-lg">
             {title}
           </div>
           <div className="text-xs">
