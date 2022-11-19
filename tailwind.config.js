@@ -20,6 +20,10 @@ module.exports = {
           orange: '#F5A623',
           violet: '#7928CA',
         },
+        lens: {
+          lime: '#AAFE2C',
+          'lime-hover': '#CAFF6C',
+        },
       },
       keyframes: ({ theme }) => ({
         rerender: {
