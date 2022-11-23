@@ -1,6 +1,9 @@
+// 'use client';
+
 import '@/styles/dist.css';
 import React from 'react';
 import Header from '@/ui/Header';
+import LensProvider from '@/ui/LensProvider';
 
 export default function RootLayout({
   children,
@@ -31,10 +34,12 @@ export default function RootLayout({
             background: 'linear-gradient(to bottom, #ffffff, #c3e4ff)',
           }}
         >
-          <Header></Header>
-          <div className="container mx-auto flex max-w-screen-2xl px-4 pb-7 lg:px-4 xl:px-24">
-            <div className="w-full">{children}</div>
-          </div>
+          <LensProvider>
+            <Header></Header>
+            <div className="container mx-auto flex max-w-screen-2xl px-4 pb-7 lg:px-4 xl:px-24">
+              <div className="w-full">{children}</div>
+            </div>
+          </LensProvider>
         </div>
       </body>
     </html>
