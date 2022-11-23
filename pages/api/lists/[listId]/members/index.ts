@@ -15,7 +15,7 @@ import {
   listMembers,
   newListMemberSchema,
 } from '@/lib/validations';
-import { getProfile, getProfileId } from '@/lib/lens';
+import { getProfile, getProfileId } from '@/lib/server/lens';
 import { Pagination } from '@/lib/types';
 
 export default async function handler(

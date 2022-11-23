@@ -40,8 +40,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 export const getApolloClient = (token: string) => {
   const authLink = new ApolloLink((operation, forward) => {
-    // const token = getAuthenticationToken();
-
     // Use the setContext method to set the HTTP headers.
     operation.setContext({
       headers: {

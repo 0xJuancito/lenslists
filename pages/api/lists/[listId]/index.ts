@@ -6,7 +6,7 @@ import {
   ListResponse,
 } from '@/lib/responses.types';
 import { listIdSchema, upsertListSchema } from '@/lib/validations';
-import { getProfileId } from '@/lib/lens';
+import { getProfileId } from '@/lib/server/lens';
 
 export default async function handler(
   req: NextApiRequest,

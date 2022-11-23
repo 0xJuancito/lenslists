@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { createList } from '@/lib/lenslists';
 import { ErrorResponse, ListResponse } from '@/lib/responses.types';
 import { upsertListSchema } from '@/lib/validations';
-import { getProfileId } from '@/lib/lens';
+import { getProfileId } from '@/lib/server/lens';
 import { NewList } from '@/lib/types';
 
 export default async function handler(
