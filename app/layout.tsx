@@ -26,12 +26,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-space">
-        <div
-          className="flex h-full min-h-screen flex-col items-center text-zinc-600"
-          style={{
-            background: 'linear-gradient(to bottom, #ffffff, #c3e4ff)',
-          }}
-        >
+        <div className="flex h-full min-h-screen flex-col items-center text-zinc-600">
           <LensProvider>
             <Header></Header>
             <div className="container mx-auto flex max-w-screen-2xl px-4 pb-7 lg:px-4 xl:px-24">
