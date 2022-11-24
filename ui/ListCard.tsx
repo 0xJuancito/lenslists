@@ -72,6 +72,16 @@ export default function ListCard({
           <Link
             onClick={(e) => e.stopPropagation()}
             className="rounded-xl bg-sky-400 py-1 px-2 text-white hover:bg-sky-500"
+            href={`/lists/${listId}/members`}
+          >
+            <span className="flex cursor-pointer gap-1">
+              <span>{membersCount}</span>
+              <span>members</span>
+            </span>
+          </Link>
+          <Link
+            onClick={(e) => e.stopPropagation()}
+            className="rounded-xl bg-sky-400 py-1 px-2 text-white hover:bg-sky-500"
             href={
               listId
                 ? `/lists/${listId}/followers`
@@ -81,16 +91,6 @@ export default function ListCard({
             <span className="flex cursor-pointer gap-1">
               <span>{followersCount}</span>
               <span>followers</span>
-            </span>
-          </Link>
-          <Link
-            onClick={(e) => e.stopPropagation()}
-            className="rounded-xl bg-sky-400 py-1 px-2 text-white hover:bg-sky-500"
-            href={`/lists/${listId}/members`}
-          >
-            <span className="flex cursor-pointer gap-1">
-              <span>{membersCount}</span>
-              <span>members</span>
             </span>
           </Link>
         </div>
