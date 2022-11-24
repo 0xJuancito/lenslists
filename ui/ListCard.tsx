@@ -96,7 +96,7 @@ export default function ListCard({
         </div>
 
         {/* Description */}
-        <div className="flex grow items-center text-sm">
+        <div className="grow text-center text-sm">
           <div className="overflow-hidden" style={{ maxHeight: '60px' }}>
             {description}
           </div>
