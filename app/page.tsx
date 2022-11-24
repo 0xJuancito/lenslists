@@ -21,16 +21,16 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export default function Page() {
   return (
     <div>
-      <div className="relative flex justify-between">
-        <Image
+      <div className="flex justify-between">
+        {/* <Image
           className="absolute right-24 hidden h-[400px] w-[400px] lg:inline-block"
           src="/background.png"
           unoptimized
           alt="Background"
           width={500}
           height={500}
-        />
-        <div className="z-0 my-16 max-w-lg text-4xl font-bold text-black sm:my-32 sm:text-6xl">
+        /> */}
+        <div className="z-0 my-8 w-full text-center text-4xl font-bold text-black sm:my-16 sm:text-5xl">
           Discover, create, and share awesome lists.
         </div>
       </div>
