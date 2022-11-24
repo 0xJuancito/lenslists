@@ -6,8 +6,6 @@ const list = {
     'A permissionless, composable, & decentralized social graph that makes building a Web3 social platform easy.',
   coverPicture:
     'https://lens.infura-ipfs.io/ipfs/bafkreifcrzlxswmv2isffdfnsl2pjd2hph5wem5c4vxlypugtrzf3gagrq',
-  picture:
-    'https://lens.infura-ipfs.io/ipfs/QmY9dUwYu67puaWBMxRKW98LPbXCznPwHUbhX5NeWnCJbX',
   ownerHandle: 'juancito.lens',
   ownerId: '0x0e4b',
   followersCount: 41086,
@@ -26,7 +24,6 @@ export default function Page() {
           title={list.title}
           description={list.description}
           coverPicture={list.coverPicture}
-          picture={list.picture}
           ownerHandle={list.ownerHandle}
           ownerId={list.ownerId}
           followersCount={list.followersCount}

@@ -7,8 +7,6 @@ const list = {
     'A permissionless, composable, & decentralized social graph that makes building a Web3 social platform easy.',
   coverPicture:
     'https://lens.infura-ipfs.io/ipfs/bafkreifcrzlxswmv2isffdfnsl2pjd2hph5wem5c4vxlypugtrzf3gagrq',
-  picture:
-    'https://lens.infura-ipfs.io/ipfs/QmY9dUwYu67puaWBMxRKW98LPbXCznPwHUbhX5NeWnCJbX',
   ownerHandle: 'juancito.lens',
   ownerId: '0x0e4b',
   followersCount: 41086,
@@ -22,14 +20,6 @@ export default function Page() {
   return (
     <div>
       <div className="flex justify-between">
-        {/* <Image
-          className="absolute right-24 hidden h-[400px] w-[400px] lg:inline-block"
-          src="/background.png"
-          unoptimized
-          alt="Background"
-          width={500}
-          height={500}
-        /> */}
         <div className="z-0 my-8 w-full text-center text-4xl font-bold text-black sm:my-16 sm:text-5xl">
           Discover, create, and share awesome lists.
         </div>
@@ -41,7 +31,6 @@ export default function Page() {
             title={list.title}
             description={list.description}
             coverPicture={list.coverPicture}
-            picture={list.picture}
             ownerHandle={list.ownerHandle}
             ownerId={list.ownerId}
             followersCount={list.followersCount}

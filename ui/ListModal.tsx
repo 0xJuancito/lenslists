@@ -45,15 +45,6 @@ export default function ListModal({ close, listId }: IListModal) {
           />
         </div>
         <div className="mb-3 flex flex-col gap-2 pt-0">
-          <label className="text-sm font-bold">Picture URL</label>
-          <input
-            type="text"
-            maxLength={255}
-            placeholder="https://lens.infura-ipfs.io/ipfs/QmZsWaqhhinnhaMUi2vNyuZ6qJJgB"
-            className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
-          />
-        </div>
-        <div className="mb-3 flex flex-col gap-2 pt-0">
           <label className="text-sm font-bold">Cover Picture URL</label>
           <input
             type="text"

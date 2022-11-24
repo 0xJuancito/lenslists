@@ -2,7 +2,6 @@ export type UpdateList = {
   name?: string;
   description?: string;
   coverPictureUrl?: string;
-  pictureUrl?: string;
 };
 
 export type NewList = {
@@ -10,7 +9,6 @@ export type NewList = {
   description: string;
   ownedBy: string;
   coverPictureUrl?: string | null;
-  pictureUrl?: string | null;
 };
 
 export type List = NewList & {

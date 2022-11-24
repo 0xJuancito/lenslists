@@ -8,7 +8,6 @@ export type IListCard = {
   title: string;
   description: string;
   coverPicture: string;
-  picture: string;
   followersCount: number;
   membersCount: number;
   listId: string;
@@ -20,7 +19,6 @@ export default function ListCard({
   title,
   description,
   coverPicture,
-  picture,
   ownerHandle,
   followersCount,
   membersCount,
@@ -44,17 +42,6 @@ export default function ListCard({
           className="aspect-video rounded-t-xl object-cover object-center"
           alt="Cover Picture"
         />
-        {/* Profile Picture */}
-        <div className="absolute">
-          <Image
-            unoptimized
-            src={picture}
-            height={150}
-            width={150}
-            alt="Profile Picture"
-            className="relative left-2 top-[-32px] h-[85px] w-[85px] rounded-lg border-4 border-zinc-50 sm:top-[-55px] sm:h-28 sm:w-28 xl:top-[-32px] xl:h-[85px] xl:w-[85px]"
-          />
-        </div>
       </div>
 
       {/* Body */}
@@ -63,22 +50,20 @@ export default function ListCard({
         style={{ wordBreak: 'break-word' }}
       >
         {/* Title + Handle */}
-        <div className="w-full pl-[85px] sm:pl-28 xl:pl-[85px]">
-          <div className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-bold text-black sm:text-xl xl:text-lg">
-            {title}
+        <div className="mt-2 w-full">
+          <div className="flex justify-center overflow-hidden text-ellipsis whitespace-nowrap text-lg font-bold text-black sm:text-xl xl:text-lg">
+            {'Lens Protocol Developers'}
           </div>
-          <div className="text-xs">
-            <span className="flex gap-1">
-              by
-              <Link
-                onClick={(e) => e.stopPropagation()}
-                href={`/users/${ownerId}/lists`}
-              >
-                <span className="cursor-pointer font-bold hover:underline">
-                  @{ownerHandle}
-                </span>
-              </Link>
-            </span>
+          <div className="flex w-full justify-center gap-1 text-xs">
+            by
+            <Link
+              onClick={(e) => e.stopPropagation()}
+              href={`/users/${ownerId}/lists`}
+            >
+              <span className="cursor-pointer font-bold hover:underline">
+                @{ownerHandle}
+              </span>
+            </Link>
           </div>
         </div>
 
