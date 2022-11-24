@@ -27,7 +27,7 @@ export const ownedLists = Joi.object({
 });
 
 export const listMembers = Joi.object({
-  userId: profileId,
+  listId: list.id,
   limit,
   offset,
 });

@@ -9,7 +9,7 @@ export type IProfileCard = {
   handle: string;
   profileId: string;
   followersCount: number;
-  membershipsCount: number;
+  followingCount: number;
 };
 
 export default function ProfileCard({
@@ -20,7 +20,7 @@ export default function ProfileCard({
   handle,
   profileId,
   followersCount,
-  membershipsCount,
+  followingCount,
 }: IProfileCard) {
   const BIO_MAX_LENGTH = 100;
   if (bio.length >= BIO_MAX_LENGTH) {
@@ -71,18 +71,18 @@ export default function ProfileCard({
             </span>
           </div>
         </div>
-        {/* Followers / Members / Memberships */}
+        {/* Following / Followers */}
         <div className="flex gap-4 text-xs">
+          <Link href={`/users/${profileId}/following`}>
+            <span className="flex cursor-pointer gap-1 hover:underline">
+              <span className="font-bold">{followingCount}</span>
+              <span>following</span>
+            </span>
+          </Link>
           <Link href={`/users/${profileId}/followers`}>
             <span className="flex cursor-pointer gap-1 hover:underline">
               <span className="font-bold">{followersCount}</span>
               <span>followers</span>
-            </span>
-          </Link>
-          <Link href={`/users/${profileId}/memberships`}>
-            <span className="flex cursor-pointer gap-1 hover:underline">
-              <span className="font-bold">{membershipsCount}</span>
-              <span>memberships</span>
             </span>
           </Link>
         </div>
