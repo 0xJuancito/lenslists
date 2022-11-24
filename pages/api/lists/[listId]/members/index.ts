@@ -111,7 +111,7 @@ async function addListMemberHandler(
     token = req.headers['x-access-token'] as string;
     const ownerId = await getProfileId(token);
     const list = await getListById(listId);
-    if (list?.ownedBy !== ownerId) {
+    if (list?.ownedByProfileId !== ownerId) {
       return res.status(403).json({ message: 'Unauthorized.' });
     }
   } catch (err) {

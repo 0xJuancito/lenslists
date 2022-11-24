@@ -7,7 +7,8 @@ export type UpdateList = {
 export type NewList = {
   name: string;
   description: string;
-  ownedBy: string;
+  ownedByProfileId: string;
+  ownedByHandle: string;
   coverPictureUrl?: string | null;
 };
 

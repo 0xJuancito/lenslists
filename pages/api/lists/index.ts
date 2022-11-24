@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createList } from '@/lib/lenslists';
-import { ErrorResponse, ListResponse } from '@/lib/responses.types';
+import { ErrorResponse, ListResponse, parseList } from '@/lib/responses.types';
 import { upsertListSchema } from '@/lib/validations';
 import { getProfileId } from '@/lib/server/lens';
 import { NewList } from '@/lib/types';
@@ -25,7 +25,7 @@ export default async function handler(
   try {
     body = JSON.parse(req.body);
     await upsertListSchema.validateAsync(body);
-    body.ownedBy = profileId;
+    body.ownedByProfileId = profileId;
   } catch (err: any) {
     const details = err.details || { message: 'Invalid JSON body.' };
 
@@ -33,7 +33,7 @@ export default async function handler(
   }
 
   try {
-    const list = await createList(body);
+    const list = parseList(await createList(body));
 
     const response = {
       data: {

@@ -1,4 +1,28 @@
-import { List, NewListMember } from '@/lib/types';
+import { NewListMember, List as DbList } from '@/lib/types';
+
+export const parseList = (list: DbList): ApiList => ({
+  name: list.name,
+  description: list.description,
+  coverPictureUrl: list.coverPictureUrl,
+  id: list.id,
+  createdAt: list.createdAt,
+  ownedBy: {
+    handle: list.ownedByHandle,
+    profileId: list.ownedByProfileId,
+  },
+});
+
+export type ApiList = {
+  name: string;
+  description: string;
+  coverPictureUrl?: string | null;
+  id: string;
+  createdAt: Date;
+  ownedBy: {
+    handle: string;
+    profileId: string;
+  };
+};
 
 export type Member = {
   profileId: string;
@@ -11,14 +35,14 @@ export type ErrorResponse = {
 
 export type ListResponse = {
   data: {
-    list: List;
+    list: ApiList;
   };
 };
 
 export type GetOwnedListsResponse = {
   data: {
     lists: {
-      items: List[];
+      items: ApiList[];
       pageInfo: {
         totalCount: number;
       };
@@ -29,7 +53,7 @@ export type GetOwnedListsResponse = {
 export type GetExploreListsResponse = {
   data: {
     lists: {
-      items: List[];
+      items: ApiList[];
       pageInfo: {
         totalCount: number;
       };

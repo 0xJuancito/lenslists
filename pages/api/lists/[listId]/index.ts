@@ -4,6 +4,7 @@ import {
   DeleteResponse,
   ErrorResponse,
   ListResponse,
+  parseList,
 } from '@/lib/responses.types';
 import { listIdSchema, upsertListSchema } from '@/lib/validations';
 import { getProfileId } from '@/lib/server/lens';
@@ -48,9 +49,11 @@ async function getListHandler(
     return res.status(404).json({ message: 'List not found.' });
   }
 
+  const apiList = parseList(list);
+
   const response = {
     data: {
-      list,
+      list: apiList,
     },
   };
 
@@ -71,7 +74,7 @@ async function updateListHandler(
   try {
     const token = req.headers['x-access-token'] as string;
     const ownerId = await getProfileId(token);
-    if (list.ownedBy !== ownerId) {
+    if (list.ownedByProfileId !== ownerId) {
       return res.status(403).json({ message: 'Unauthorized.' });
     }
   } catch (err) {
@@ -86,11 +89,11 @@ async function updateListHandler(
     const details = err.details || { message: 'Invalid JSON body.' };
     return res.status(422).json({ message: 'Validation error.', details });
   }
-  list = await updateList(listId, body);
+  const apiList = parseList(await updateList(listId, body));
 
   const response = {
     data: {
-      list,
+      list: apiList,
     },
   };
 
@@ -112,7 +115,7 @@ async function deleteListHandler(
   try {
     const token = req.headers['x-access-token'] as string;
     const ownerId = await getProfileId(token);
-    if (list.ownedBy !== ownerId) {
+    if (list.ownedByProfileId !== ownerId) {
       return res.status(403).json({ message: 'Unauthorized.' });
     }
   } catch (err) {

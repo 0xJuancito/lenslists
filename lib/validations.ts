@@ -8,7 +8,6 @@ const profileId = Joi.string().max(30).alphanum().required();
 const list = {
   id: Joi.string().max(30).regex(onlyNumbers).required(),
   name: Joi.string().max(25).required(),
-  ownedBy: profileId.required(),
   description: Joi.string().max(100),
   coverPictureUrl: Joi.string().uri().max(1000),
 };

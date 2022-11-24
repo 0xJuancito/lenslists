@@ -37,7 +37,7 @@ export default async function handler(
     try {
       const token = req.headers['x-access-token'] as string;
       const ownerId = await getProfileId(token);
-      if (list.ownedBy !== ownerId) {
+      if (list.ownedByProfileId !== ownerId) {
         return res.status(403).json({ message: 'Unauthorized.' });
       }
     } catch (err) {

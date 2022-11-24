@@ -1,6 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getExploreLists, countExploreLists } from '@/lib/lenslists';
-import { ErrorResponse, GetExploreListsResponse } from '@/lib/responses.types';
+import {
+  ErrorResponse,
+  GetExploreListsResponse,
+  parseList,
+} from '@/lib/responses.types';
 import { Pagination } from '@/lib/types';
 
 export default async function handler(
@@ -25,10 +29,12 @@ export default async function handler(
       countExploreLists(),
     ]);
 
+    const apiLists = lists.map(parseList);
+
     const response = {
       data: {
         lists: {
-          items: lists,
+          items: apiLists,
           pageInfo: {
             totalCount: listsCount,
           },
