@@ -75,7 +75,7 @@ export default function ProfileCard({
         <div className="flex gap-4 text-xs">
           <Link href={`/users/${profileId}/following`}>
             <span className="flex cursor-pointer gap-1 hover:underline">
-              <span className="font-bold">{followingCount}</span>
+              <span className="font-bold">{followingCount + 1}</span>
               <span>following</span>
             </span>
           </Link>

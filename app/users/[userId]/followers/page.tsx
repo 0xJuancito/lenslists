@@ -10,7 +10,7 @@ const profile: IProfileCard = {
   handle: 'lensprotocol.lens',
   profileId: '0x0e4b',
   followersCount: 41086,
-  membershipsCount: 22,
+  followingCount: 22,
 };
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -28,7 +28,7 @@ export default function Page() {
           handle={profile.handle}
           profileId={profile.profileId}
           followersCount={profile.followersCount}
-          membershipsCount={profile.membershipsCount}
+          followingCount={profile.followingCount}
         ></ProfileCard>
       ))}
     </div>
