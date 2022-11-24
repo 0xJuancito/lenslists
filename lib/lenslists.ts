@@ -21,6 +21,28 @@ const config: Knex.Config = {
 export const knexInstance = knex(config);
 
 // Lists
+export const getExploreLists = (pagination?: Pagination): Promise<List[]> => {
+  const limit = pagination?.limit || 50;
+  const offset = pagination?.offset || 0;
+
+  let query = knexInstance<List>('lists')
+    .select('*')
+    .orderBy('id', 'desc')
+    .limit(limit)
+    .offset(offset);
+
+  return query;
+};
+
+export const countExploreLists = async (): Promise<number> => {
+  let query = knexInstance<List>('lists')
+    .count<Record<string, number>>('*')
+    .first();
+
+  const result = await query;
+  return result?.count || 0;
+};
+
 export const getListById = async (listId: string): Promise<List | null> => {
   const list = await knexInstance<List>('lists')
     .select('*')

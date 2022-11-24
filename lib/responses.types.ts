@@ -26,6 +26,17 @@ export type GetOwnedListsResponse = {
   };
 };
 
+export type GetExploreListsResponse = {
+  data: {
+    lists: {
+      items: List[];
+      pageInfo: {
+        totalCount: number;
+      };
+    };
+  };
+};
+
 export type GetListMembersResponse = {
   data: {
     members: {
