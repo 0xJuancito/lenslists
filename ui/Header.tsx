@@ -15,7 +15,6 @@ export default function Header() {
         <Link href="/">
           <div className="flex items-center gap-2">
             <Image
-              // className="rounded-full bg-sky-600 p-1"
               src="/list.svg"
               unoptimized
               alt="Lens Lists Logo"
