@@ -36,12 +36,14 @@ export default function LensProvider({
   children: React.ReactNode;
 }) {
   return (
-    <WagmiConfig client={wagmiClient}>
-      <LensAuthenticationProvider>
-        <RainbowKitProvider chains={chains} avatar={LensAvatar}>
-          {children}
-        </RainbowKitProvider>
-      </LensAuthenticationProvider>
-    </WagmiConfig>
+    <div className="w-full">
+      <WagmiConfig client={wagmiClient}>
+        <LensAuthenticationProvider>
+          <RainbowKitProvider chains={chains} avatar={LensAvatar}>
+            {children}
+          </RainbowKitProvider>
+        </LensAuthenticationProvider>
+      </WagmiConfig>
+    </div>
   );
 }
