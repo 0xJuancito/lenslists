@@ -3,6 +3,7 @@
 import { GetExploreListsResponse } from '@/lib/responses.types';
 import ListCard, { IListCard } from '@/ui/ListCard';
 import { useEffect, useState } from 'react';
+import Loading from './loading';
 
 const list = {
   title: 'Lens Protocol',
@@ -19,6 +20,7 @@ const list = {
 
 export default function Page() {
   const [cards, setCards] = useState<IListCard[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/lists/explore').then(async (res) => {
@@ -35,6 +37,7 @@ export default function Page() {
         ownerHandle: list.ownedBy.handle,
       }));
       setCards(newCards);
+      setLoading(false);
     });
   }, []);
 
@@ -45,21 +48,25 @@ export default function Page() {
           Discover, create, and share awesome lists.
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
-        {cards.map((card, index) => (
-          <ListCard
-            key={index}
-            title={card.title}
-            description={card.description}
-            coverPicture={card.coverPicture}
-            ownerHandle={card.ownerHandle}
-            ownerId={card.ownerId}
-            followersCount={card.followersCount}
-            membersCount={card.membersCount}
-            listId={card.listId}
-          ></ListCard>
-        ))}
-      </div>
+      {loading ? (
+        <Loading></Loading>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
+          {cards.map((card, index) => (
+            <ListCard
+              key={index}
+              title={card.title}
+              description={card.description}
+              coverPicture={card.coverPicture}
+              ownerHandle={card.ownerHandle}
+              ownerId={card.ownerId}
+              followersCount={card.followersCount}
+              membersCount={card.membersCount}
+              listId={card.listId}
+            ></ListCard>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
