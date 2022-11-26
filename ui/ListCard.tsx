@@ -7,9 +7,9 @@ import ListModal from '@/ui/ListModal';
 import { useState } from 'react';
 
 export type IListCard = {
-  title: string;
+  name: string;
   description: string;
-  coverPicture: string;
+  coverPictureUrl: string;
   totalFollowers: number;
   totalMembers: number;
   listId: string;
@@ -19,9 +19,9 @@ export type IListCard = {
 };
 
 export default function ListCard({
-  title,
-  description,
-  coverPicture,
+  name: initialName,
+  description: initialDescription,
+  coverPictureUrl: initialCoverPictureUrl,
   ownerHandle,
   totalFollowers,
   totalMembers,
@@ -33,6 +33,24 @@ export default function ListCard({
 
   const [showListModal, setShowListModal] = useState(false);
 
+  const [name, setName] = useState(initialName);
+  const [description, setDescription] = useState(initialDescription);
+  const [coverPictureUrl, setCoverPictureUrl] = useState(
+    initialCoverPictureUrl,
+  );
+
+  const onUpdate = (card: Partial<IListCard>) => {
+    if (card.name !== undefined) {
+      setName(card.name);
+    }
+    if (card.description !== undefined) {
+      setDescription(card.description);
+    }
+    if (card.coverPictureUrl !== undefined) {
+      setCoverPictureUrl(card.coverPictureUrl);
+    }
+  };
+
   return (
     <>
       <div
@@ -43,7 +61,7 @@ export default function ListCard({
         <div>
           <Image
             unoptimized
-            src={coverPicture}
+            src={coverPictureUrl}
             height={450}
             width={800}
             className="aspect-video rounded-t-xl object-cover object-center"
@@ -56,10 +74,10 @@ export default function ListCard({
           className="flex w-full grow flex-col gap-3 px-4 pb-4"
           style={{ wordBreak: 'break-word' }}
         >
-          {/* Title + Handle */}
+          {/* Name + Handle */}
           <div className="mt-2 w-full">
             <div className="flex justify-center overflow-hidden text-ellipsis whitespace-nowrap text-lg font-bold text-black sm:text-xl xl:text-lg">
-              {title}
+              {name}
             </div>
             <div className="flex w-full justify-center gap-1 text-xs">
               by
@@ -132,10 +150,14 @@ export default function ListCard({
       </div>
       {showListModal && (
         <ListModal
+          name={name}
+          description={description}
+          coverPictureUrl={coverPictureUrl}
           listId={listId}
           close={() => {
             setShowListModal(false);
           }}
+          onUpdate={onUpdate}
         ></ListModal>
       )}
     </>

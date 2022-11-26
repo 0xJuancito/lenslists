@@ -26,7 +26,7 @@ export default function Page() {
         name: user.name || '',
         bio: user.bio || '',
         // @ts-ignore
-        coverPicture: user.coverPicture?.original?.url,
+        coverPictureUrl: user.coverPicture?.original?.url,
         // @ts-ignore
         picture: user.picture?.original?.url,
         handle: user.handle,
@@ -50,7 +50,7 @@ export default function Page() {
               key={index}
               name={user.name}
               bio={user.bio}
-              coverPicture={user.coverPicture}
+              coverPictureUrl={user.coverPictureUrl}
               picture={user.picture}
               handle={user.handle}
               profileId={user.profileId}

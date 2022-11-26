@@ -1,10 +1,10 @@
 import ListCard, { IListCard } from '@/ui/ListCard';
 
 const list: IListCard = {
-  title: 'Lens Protocol',
+  name: 'Lens Protocol',
   description:
     'A permissionless, composable, & decentralized social graph that makes building a Web3 social platform easy.',
-  coverPicture:
+  coverPictureUrl:
     'https://lens.infura-ipfs.io/ipfs/bafkreifcrzlxswmv2isffdfnsl2pjd2hph5wem5c4vxlypugtrzf3gagrq',
   ownerHandle: 'juancito.lens',
   ownerId: '0x0e4b',
@@ -21,9 +21,9 @@ export default function Page() {
       {cards.map((item, index) => (
         <ListCard
           key={index}
-          title={list.title}
+          name={list.name}
           description={list.description}
-          coverPicture={list.coverPicture}
+          coverPictureUrl={list.coverPictureUrl}
           ownerHandle={list.ownerHandle}
           ownerId={list.ownerId}
           totalFollowers={list.totalFollowers}

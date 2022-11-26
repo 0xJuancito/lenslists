@@ -86,6 +86,7 @@ async function updateListHandler(
     body = JSON.parse(req.body);
     await upsertListSchema.validateAsync(body);
   } catch (err: any) {
+    console.log(err);
     const details = err.details || { message: 'Invalid JSON body.' };
     return res.status(422).json({ message: 'Validation error.', details });
   }

@@ -1,21 +1,40 @@
 'use client';
 
+import { getAuthenticationToken } from '@/lib/apollo-client';
 import { useScrollBlock } from '@/lib/useScrollBlock';
 import DeleteListModal from '@/ui/DeleteListModal';
 import UserListItem from '@/ui/UserListItem';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { IListCard } from './ListCard';
 
 const suggestedUsers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export type IListModal = {
+  name?: string;
+  description?: string;
+  coverPictureUrl?: string;
   close: () => void;
+  onUpdate?: (card: Partial<IListCard>) => void;
   listId?: string;
 };
 
-export default function ListModal({ close, listId }: IListModal) {
+export default function ListModal({
+  close,
+  listId,
+  name: initialName,
+  description: initialDescription,
+  coverPictureUrl: initialCoverPictureUrl,
+  onUpdate,
+}: IListModal) {
   const [isManagingMembers, setIsManagingMembers] = useState(false);
   const [isSuggested, setIsSuggested] = useState(false);
   const [showDeleteListModal, setShowDeleteListModal] = useState(false);
+
+  const [name, setName] = useState(initialName);
+  const [description, setDescription] = useState(initialDescription);
+  const [coverPictureUrl, setCoverPictureUrl] = useState(
+    initialCoverPictureUrl,
+  );
 
   const [blockScroll, allowScroll] = useScrollBlock();
 
@@ -23,12 +42,28 @@ export default function ListModal({ close, listId }: IListModal) {
     blockScroll();
   });
 
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
+  const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(event.target.value);
+  };
+
+  const handleCoverPictureUrlChange = (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    setCoverPictureUrl(event.target.value);
+  };
+
   const EditList = (
     <div className="relative flex flex-auto flex-col justify-between gap-2 py-6">
       <div className="px-6">
         <div className="mb-3 flex flex-col gap-2 pt-0">
           <label className="text-sm font-bold">Name</label>
           <input
+            value={name}
+            onChange={handleNameChange}
             type="text"
             maxLength={25}
             placeholder="My Awesome List"
@@ -38,6 +73,8 @@ export default function ListModal({ close, listId }: IListModal) {
         <div className="mb-3 flex flex-col gap-2 pt-0">
           <label className="text-sm font-bold">Description</label>
           <textarea
+            value={description}
+            onChange={handleDescriptionChange}
             rows={3}
             maxLength={100}
             placeholder="Top 100 influencers on Lens Protocol"
@@ -47,6 +84,8 @@ export default function ListModal({ close, listId }: IListModal) {
         <div className="mb-3 flex flex-col gap-2 pt-0">
           <label className="text-sm font-bold">Cover Picture URL</label>
           <input
+            value={coverPictureUrl}
+            onChange={handleCoverPictureUrlChange}
             type="text"
             maxLength={255}
             placeholder="https://lens.infura-ipfs.io/ipfs/QmXsWsqhripefaMUi2vNhrhrApoSfeL"
@@ -59,7 +98,7 @@ export default function ListModal({ close, listId }: IListModal) {
         <div className="flex justify-around border-t border-t-slate-200 pt-6">
           <button
             className="w-28 cursor-pointer rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700 sm:w-44"
-            onClick={() => updateList()}
+            onClick={() => openUpdateList()}
           >
             <span className="hidden sm:inline">{'Manage '}</span>Members
           </button>
@@ -169,12 +208,12 @@ export default function ListModal({ close, listId }: IListModal) {
     </div>
   );
 
-  const createNewList = () => {
+  const openCreateNewList = () => {
     setIsSuggested(true);
     setIsManagingMembers(true);
   };
 
-  const updateList = () => {
+  const openUpdateList = () => {
     setIsSuggested(false);
     setIsManagingMembers(true);
   };
@@ -187,6 +226,21 @@ export default function ListModal({ close, listId }: IListModal) {
     setIsSuggested(true);
 
     close();
+  };
+
+  const updateList = () => {
+    fetch(`/api/lists/${listId}`, {
+      method: 'PUT',
+      headers: {
+        'x-access-token': getAuthenticationToken() || '',
+      },
+      body: JSON.stringify({ name, description, coverPictureUrl }),
+    });
+
+    if (onUpdate) {
+      onUpdate({ name, description, coverPictureUrl });
+    }
+    hideModal();
   };
 
   return (
@@ -243,7 +297,7 @@ export default function ListModal({ close, listId }: IListModal) {
                 <button
                   className="cursor-pointer rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700"
                   onClick={() => {
-                    hideModal();
+                    isManagingMembers ? hideModal() : updateList();
                   }}
                 >
                   DONE
@@ -251,7 +305,7 @@ export default function ListModal({ close, listId }: IListModal) {
               ) : (
                 <button
                   className="cursor-pointer rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700"
-                  onClick={() => createNewList()}
+                  onClick={() => openCreateNewList()}
                 >
                   NEXT
                 </button>

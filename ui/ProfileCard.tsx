@@ -4,7 +4,7 @@ import Link from 'next/link';
 export type IProfileCard = {
   name: string;
   bio: string;
-  coverPicture: string;
+  coverPictureUrl: string;
   picture: string;
   handle: string;
   profileId: string;
@@ -15,7 +15,7 @@ export type IProfileCard = {
 export default function ProfileCard({
   name,
   bio,
-  coverPicture,
+  coverPictureUrl,
   picture,
   handle,
   profileId,
@@ -33,7 +33,7 @@ export default function ProfileCard({
       <div>
         <Image
           unoptimized
-          src={coverPicture}
+          src={coverPictureUrl}
           height={300}
           width={900}
           className="h-32 rounded-t-xl object-cover object-center"

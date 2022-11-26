@@ -19,9 +19,9 @@ export default function Page() {
       const body = (await res.json()) as GetOwnedListsResponse;
       const lists = body.data.lists.items;
       const newCards: IListCard[] = lists.map((list) => ({
-        title: list.name,
+        name: list.name,
         description: list.description,
-        coverPicture: list.coverPictureUrl || '',
+        coverPictureUrl: list.coverPictureUrl || '',
         totalFollowers: list.stats.totalFollowers,
         totalMembers: list.stats.totalMembers,
         listId: list.id,
