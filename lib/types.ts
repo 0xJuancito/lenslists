@@ -15,6 +15,8 @@ export type NewList = {
 export type List = NewList & {
   id: string;
   createdAt: Date;
+  totalMembers: number;
+  totalFollowers: number;
 };
 
 export type NewListMember = {

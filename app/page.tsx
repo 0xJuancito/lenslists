@@ -5,19 +5,6 @@ import ListCard, { IListCard } from '@/ui/ListCard';
 import { useEffect, useState } from 'react';
 import Loading from './loading';
 
-const list = {
-  title: 'Lens Protocol',
-  description:
-    'A permissionless, composable, & decentralized social graph that makes building a Web3 social platform easy.',
-  coverPicture:
-    'https://lens.infura-ipfs.io/ipfs/bafkreifcrzlxswmv2isffdfnsl2pjd2hph5wem5c4vxlypugtrzf3gagrq',
-  ownerHandle: 'juancito.lens',
-  ownerId: '0x0e4b',
-  followersCount: 41086,
-  membersCount: 22,
-  listId: '1',
-};
-
 export default function Page() {
   const [cards, setCards] = useState<IListCard[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,8 +17,8 @@ export default function Page() {
         title: list.name,
         description: list.description,
         coverPicture: list.coverPictureUrl || '',
-        followersCount: 0,
-        membersCount: 0,
+        totalFollowers: list.stats.totalFollowers,
+        totalMembers: list.stats.totalMembers,
         listId: list.id,
         ownerId: list.ownedBy.profileId,
         ownerHandle: list.ownedBy.handle,
@@ -53,17 +40,7 @@ export default function Page() {
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
           {cards.map((card, index) => (
-            <ListCard
-              key={index}
-              title={card.title}
-              description={card.description}
-              coverPicture={card.coverPicture}
-              ownerHandle={card.ownerHandle}
-              ownerId={card.ownerId}
-              followersCount={card.followersCount}
-              membersCount={card.membersCount}
-              listId={card.listId}
-            ></ListCard>
+            <ListCard key={index} {...card}></ListCard>
           ))}
         </div>
       )}

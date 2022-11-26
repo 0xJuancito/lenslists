@@ -8,8 +8,8 @@ export type IProfileCard = {
   picture: string;
   handle: string;
   profileId: string;
-  followersCount: number;
-  followingCount: number;
+  totalFollowers: number;
+  totalFollowing: number;
 };
 
 export default function ProfileCard({
@@ -19,8 +19,8 @@ export default function ProfileCard({
   picture,
   handle,
   profileId,
-  followersCount,
-  followingCount,
+  totalFollowers,
+  totalFollowing,
 }: IProfileCard) {
   const BIO_MAX_LENGTH = 100;
   if (bio.length >= BIO_MAX_LENGTH) {
@@ -75,14 +75,14 @@ export default function ProfileCard({
         <div className="flex gap-4 text-xs">
           <Link href={`/users/${profileId}/following`}>
             <span className="flex cursor-pointer gap-1 hover:underline">
-              <span className="font-bold">{followingCount + 1}</span>
+              <span className="font-bold">{totalFollowing}</span>
               <span>following</span>
             </span>
           </Link>
           <Link href={`/users/${profileId}/followers`}>
             <span className="flex cursor-pointer gap-1 hover:underline">
-              <span className="font-bold">{followersCount}</span>
-              <span>followers</span>
+              <span className="font-bold">{totalFollowers}</span>
+              <span>{totalFollowers === 1 ? 'follower' : 'followers'}</span>
             </span>
           </Link>
         </div>

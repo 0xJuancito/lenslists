@@ -8,8 +8,8 @@ const list = {
     'https://lens.infura-ipfs.io/ipfs/bafkreifcrzlxswmv2isffdfnsl2pjd2hph5wem5c4vxlypugtrzf3gagrq',
   ownerHandle: 'juancito.lens',
   ownerId: '0x0e4b',
-  followersCount: 41086,
-  membersCount: 22,
+  totalFollowers: 41086,
+  totalMembers: 22,
   listId: '1',
 };
 
@@ -26,8 +26,8 @@ export default function Page() {
           coverPicture={list.coverPicture}
           ownerHandle={list.ownerHandle}
           ownerId={list.ownerId}
-          followersCount={list.followersCount}
-          membersCount={list.membersCount}
+          totalFollowers={list.totalFollowers}
+          totalMembers={list.totalMembers}
           listId={list.listId}
         ></ListCard>
       ))}

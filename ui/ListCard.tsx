@@ -8,8 +8,8 @@ export type IListCard = {
   title: string;
   description: string;
   coverPicture: string;
-  followersCount: number;
-  membersCount: number;
+  totalFollowers: number;
+  totalMembers: number;
   listId: string;
   ownerId: string;
   ownerHandle: string;
@@ -20,8 +20,8 @@ export default function ListCard({
   description,
   coverPicture,
   ownerHandle,
-  followersCount,
-  membersCount,
+  totalFollowers,
+  totalMembers,
   listId,
   ownerId,
 }: IListCard) {
@@ -75,8 +75,8 @@ export default function ListCard({
             href={`/lists/${listId}/members`}
           >
             <span className="flex cursor-pointer gap-1">
-              <span>{membersCount}</span>
-              <span>members</span>
+              <span>{totalMembers}</span>
+              <span>{totalMembers === 1 ? 'member' : 'members'}</span>
             </span>
           </Link>
           <Link
@@ -89,8 +89,8 @@ export default function ListCard({
             }
           >
             <span className="flex cursor-pointer gap-1">
-              <span>{followersCount}</span>
-              <span>followers</span>
+              <span>{totalFollowers}</span>
+              <span>{totalFollowers === 1 ? 'follower' : 'followers'}</span>
             </span>
           </Link>
         </div>

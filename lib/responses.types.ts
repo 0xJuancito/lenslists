@@ -10,6 +10,10 @@ export const parseList = (list: DbList): ApiList => ({
     handle: list.ownedByHandle,
     profileId: list.ownedByProfileId,
   },
+  stats: {
+    totalMembers: Number(list.totalMembers),
+    totalFollowers: Number(list.totalFollowers),
+  },
 });
 
 export type ApiList = {
@@ -21,6 +25,10 @@ export type ApiList = {
   ownedBy: {
     handle: string;
     profileId: string;
+  };
+  stats: {
+    totalMembers: number;
+    totalFollowers: number;
   };
 };
 

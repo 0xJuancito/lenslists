@@ -31,8 +31,8 @@ export default function Page() {
         picture: user.picture?.original?.url,
         handle: user.handle,
         profileId: user.id,
-        followingCount: user.stats.totalFollowing,
-        followersCount: user.stats.totalFollowers,
+        totalFollowing: user.stats.totalFollowing,
+        totalFollowers: user.stats.totalFollowers,
       }));
       setCards(newCards);
       setLoading(false);
@@ -54,8 +54,8 @@ export default function Page() {
               picture={user.picture}
               handle={user.handle}
               profileId={user.profileId}
-              followingCount={user.followingCount}
-              followersCount={user.followersCount}
+              totalFollowing={user.totalFollowing}
+              totalFollowers={user.totalFollowers}
             ></ProfileCard>
           ))}
         </div>

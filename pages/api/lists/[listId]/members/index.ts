@@ -60,7 +60,7 @@ async function getListMembersHandler(
     pagination.offset = Number(req.query.offset);
   }
 
-  const [members, membersCount] = await Promise.all([
+  const [members, totalMembers] = await Promise.all([
     getListMembers(listId, pagination),
     countListMembers(listId),
   ]);
@@ -74,7 +74,7 @@ async function getListMembersHandler(
       members: {
         items: parsedMembers,
         pageInfo: {
-          totalCount: membersCount,
+          totalCount: totalMembers,
         },
       },
     },
