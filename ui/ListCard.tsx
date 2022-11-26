@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import ListModal from '@/ui/ListModal';
 import { useState } from 'react';
+import ImageWithFallback from '@/ui/ImageWithFallback';
 
 export type IListCard = {
   name: string;
@@ -63,8 +64,8 @@ export default function ListCard({
       >
         {/* Cover Picture */}
         <div>
-          <Image
-            unoptimized
+          <ImageWithFallback
+            fallbackImage="/fallback.png"
             src={coverPictureUrl}
             height={450}
             width={800}

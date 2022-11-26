@@ -11,10 +11,16 @@ export const getProfileId = async (token: string): Promise<string> => {
   return response.defaultProfile.id;
 };
 
-export const getProfile = async (
-  token: string,
-  profileId: string,
-): Promise<any> => {
+export const getProfile = async (token: string, profileId?: string) => {
+  if (!profileId) {
+    const { id: address } = jwt_decode(token) as any;
+    const response = await getDefaultProfile(
+      token.replace('Bearer ', ''),
+      address,
+    );
+    return response.defaultProfile;
+  }
+
   const response = await getProfileFromLens(
     token.replace('Bearer ', ''),
     profileId,

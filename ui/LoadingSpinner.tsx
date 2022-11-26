@@ -1,9 +1,9 @@
-export default function LoadingSpinner() {
+export default function LoadingSpinner({ height = 'h-16' }) {
   return (
     <>
       <svg
         aria-hidden="true"
-        className="mr-2 h-16 w-16 animate-spin fill-blue-600 text-gray-200"
+        className={`${height} animate-spin fill-blue-600 text-gray-200`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

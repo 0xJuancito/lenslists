@@ -5,6 +5,7 @@ const GET_DEFAULT_PROFILES = `
   query($request: DefaultProfileRequest!) {
     defaultProfile(request: $request) {
       id
+      handle
     }
   }
 `;

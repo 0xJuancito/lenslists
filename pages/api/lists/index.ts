@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { createList } from '@/lib/lenslists';
 import { ErrorResponse, ListResponse, parseList } from '@/lib/responses.types';
 import { upsertListSchema } from '@/lib/validations';
-import { getProfileId } from '@/lib/server/lens';
+import { getProfile, getProfileId } from '@/lib/server/lens';
 import { NewList } from '@/lib/types';
 
 export default async function handler(
@@ -15,9 +15,13 @@ export default async function handler(
 
   const token = req.headers['x-access-token'] as string;
   let profileId;
+  let handle;
   try {
-    profileId = await getProfileId(token);
+    const profile = await getProfile(token);
+    profileId = profile.id;
+    handle = profile.handle;
   } catch (err) {
+    console.log(err);
     return res.status(403).json({ message: 'Unauthorized.' });
   }
 
@@ -26,6 +30,7 @@ export default async function handler(
     body = JSON.parse(req.body);
     await upsertListSchema.validateAsync(body);
     body.ownedByProfileId = profileId;
+    body.ownedByHandle = handle;
   } catch (err: any) {
     const details = err.details || { message: 'Invalid JSON body.' };
 

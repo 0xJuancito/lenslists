@@ -9,8 +9,13 @@ import { GetListMembersResponse } from '@/lib/responses.types';
 import { useScrollBlock } from '@/lib/useScrollBlock';
 import DeleteListModal from '@/ui/DeleteListModal';
 import UserListItem from '@/ui/UserListItem';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { IListCard } from './ListCard';
+import LoadingSpinner from './LoadingSpinner';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { ProfileContext } from './LensAuthenticationProvider';
+import { usePathname } from 'next/navigation';
 
 type IListUser = {
   id: string;
@@ -32,11 +37,16 @@ export type IListModal = {
 export default function ListModal({
   close,
   listId: initialListId,
-  name: initialName,
-  description: initialDescription,
-  coverPictureUrl: initialCoverPictureUrl,
+  name: initialName = '',
+  description: initialDescription = '',
+  coverPictureUrl: initialCoverPictureUrl = '',
   onUpdate,
 }: IListModal) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const profile = useContext(ProfileContext);
+
   const [isManagingMembers, setIsManagingMembers] = useState(false);
   const [isSuggested, setIsSuggested] = useState(false);
   const [showDeleteListModal, setShowDeleteListModal] = useState(false);
@@ -56,6 +66,8 @@ export default function ListModal({
   const debouceSearch = useDebouncedCallback((value) => {
     handleSearchChange(value);
   }, 400);
+
+  const [creatingList, setCreatingList] = useState(false);
 
   useEffect(() => {
     blockScroll();
@@ -334,9 +346,42 @@ export default function ListModal({
     </div>
   );
 
-  const openCreateNewList = () => {
-    setIsSuggested(true);
-    setIsManagingMembers(true);
+  const onCreateNext = () => {
+    if (creatingList) {
+      return;
+    }
+
+    if (!name || !description || !coverPictureUrl) {
+      toast('All fields are required.', {});
+      return;
+    }
+
+    setCreatingList(true);
+
+    fetch(`/api/lists`, {
+      method: 'POST',
+      headers: {
+        'x-access-token': getAuthenticationToken() || '',
+      },
+      body: JSON.stringify({ name, description, coverPictureUrl }),
+    })
+      .then(async (response) => {
+        if (response.status === 200) {
+          const body = await response.json();
+          setIsSuggested(true);
+          setIsManagingMembers(true);
+          setListId(body.data.list.id);
+        } else {
+          const body = await response.json();
+          const message =
+            body?.details[0]?.message ||
+            'There was an error. Please try again later.';
+          toast(message, {});
+        }
+      })
+      .finally(() => {
+        setCreatingList(false);
+      });
   };
 
   const openUpdateList = () => {
@@ -367,6 +412,18 @@ export default function ListModal({
       onUpdate({ name, description, coverPictureUrl });
     }
     hideModal();
+  };
+
+  const redirectToMyLists = () => {
+    hideModal();
+    if (profile) {
+      const newPathname = `/users/${profile.id}/lists`;
+      if (pathname === newPathname) {
+        location.reload();
+      } else {
+        router.push(newPathname);
+      }
+    }
   };
 
   return (
@@ -423,17 +480,23 @@ export default function ListModal({
                 <button
                   className="cursor-pointer rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700"
                   onClick={() => {
-                    isManagingMembers ? hideModal() : updateList();
+                    isManagingMembers ? redirectToMyLists() : updateList();
                   }}
                 >
                   DONE
                 </button>
               ) : (
                 <button
-                  className="cursor-pointer rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700"
-                  onClick={() => openCreateNewList()}
+                  className={`${
+                    creatingList ? 'bg-zinc-400' : 'bg-sky-600 hover:bg-sky-700'
+                  } flex max-h-10 w-20 cursor-pointer justify-center rounded-2xl px-4 py-2 text-white shadow-md`}
+                  onClick={onCreateNext}
                 >
-                  NEXT
+                  {creatingList ? (
+                    <LoadingSpinner height={'h-6'}></LoadingSpinner>
+                  ) : (
+                    <span>NEXT</span>
+                  )}
                 </button>
               )}
             </div>
