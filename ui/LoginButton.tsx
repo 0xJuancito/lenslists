@@ -60,20 +60,31 @@ export default function LoginButton() {
               }
 
               const loggedButton = (onClick: () => void) => (
-                <button
-                  className="flex cursor-pointer items-center gap-2 rounded-2xl bg-lens-lime px-4 py-2 font-bold text-black shadow-md hover:bg-lens-lime-hover"
-                  onClick={onClick}
-                >
+                <>
+                  <button
+                    className="hidden cursor-pointer items-center gap-2 rounded-2xl bg-lens-lime px-4 py-2 font-bold text-black shadow-md hover:bg-lens-lime-hover sm:flex"
+                    onClick={onClick}
+                  >
+                    <Image
+                      src={profile?.pictureUrl || '/default-profile.png'}
+                      className="rounded-full"
+                      unoptimized
+                      alt="Profile"
+                      width={26}
+                      height={26}
+                    />
+                    <span>{profile?.handle}</span>
+                  </button>
                   <Image
+                    onClick={onClick}
                     src={profile?.pictureUrl || '/default-profile.png'}
-                    className="rounded-full"
+                    className="flex cursor-pointer rounded-full sm:hidden"
                     unoptimized
                     alt="Profile"
-                    width={26}
-                    height={26}
+                    width={42}
+                    height={42}
                   />
-                  <span>{profile?.handle}</span>
-                </button>
+                </>
               );
 
               if (chain.unsupported) {
