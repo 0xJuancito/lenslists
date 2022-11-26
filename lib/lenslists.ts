@@ -206,6 +206,7 @@ export const getListFollowers = (
   const query = knexInstance<ListFollower>('listFollowers')
     .select('*')
     .where({ listId })
+    .orderBy('id', 'desc')
     .limit(limit)
     .offset(offset);
 
@@ -233,6 +234,7 @@ export const getFollowedLists = (
     .select('lists.*')
     .leftJoin('listFollowers', 'lists.id', 'listFollowers.listId')
     .where({ 'listFollowers.profileId': profileId })
+    .orderBy('id', 'desc')
     .limit(limit)
     .offset(offset);
 

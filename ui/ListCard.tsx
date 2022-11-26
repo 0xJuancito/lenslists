@@ -24,7 +24,7 @@ export default function ListCard({
   coverPictureUrl: initialCoverPictureUrl,
   ownerHandle,
   totalFollowers,
-  totalMembers,
+  totalMembers: initialTotalMembers,
   listId,
   ownerId,
   editable = false,
@@ -38,6 +38,7 @@ export default function ListCard({
   const [coverPictureUrl, setCoverPictureUrl] = useState(
     initialCoverPictureUrl,
   );
+  const [totalMembers, setTotalMembers] = useState(initialTotalMembers);
 
   const onUpdate = (card: Partial<IListCard>) => {
     if (card.name !== undefined) {
@@ -48,6 +49,9 @@ export default function ListCard({
     }
     if (card.coverPictureUrl !== undefined) {
       setCoverPictureUrl(card.coverPictureUrl);
+    }
+    if (card.totalMembers !== undefined) {
+      setTotalMembers(card.totalMembers);
     }
   };
 

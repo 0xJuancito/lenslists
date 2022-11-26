@@ -1,7 +1,5 @@
 'use client';
 
-import UserListItem from '@/ui/UserListItem';
-
 export type IDeleteListModal = {
   close: () => void;
   listId: string;

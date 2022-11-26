@@ -1,13 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
 
 type IListUser = {
   pictureUrl: string;
   name: string;
+  id: string;
   handle: string;
   isMember: boolean;
+  onMemberChange: (user: IListUser, isMember: boolean) => void;
 };
 
 export default function UserListItem({
@@ -15,13 +16,9 @@ export default function UserListItem({
   name,
   handle,
   isMember,
+  id,
+  onMemberChange,
 }: IListUser) {
-  const [isMemberButton, setIsMemberButton] = useState(isMember);
-
-  const toggleIsMember = () => {
-    setIsMemberButton(!isMemberButton);
-  };
-
   return (
     <div className="flex cursor-pointer items-center justify-between px-6 py-2 hover:bg-zinc-50">
       <span className="flex items-center gap-4">
@@ -39,17 +36,27 @@ export default function UserListItem({
         </span>
       </span>
 
-      {isMemberButton ? (
+      {isMember ? (
         <button
           className="cursor-pointer rounded-2xl bg-red-600 py-1 px-4 text-white shadow-md hover:bg-red-700"
-          onClick={() => toggleIsMember()}
+          onClick={() =>
+            onMemberChange(
+              { id, name, pictureUrl, handle, isMember, onMemberChange },
+              false,
+            )
+          }
         >
           Remove
         </button>
       ) : (
         <button
           className="cursor-pointer rounded-2xl bg-sky-600 py-1 px-4 text-white shadow-md hover:bg-sky-700"
-          onClick={() => toggleIsMember()}
+          onClick={() =>
+            onMemberChange(
+              { id, name, pictureUrl, handle, isMember, onMemberChange },
+              true,
+            )
+          }
         >
           Add
         </button>

@@ -13,9 +13,11 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { IListCard } from './ListCard';
 
 type IListUser = {
+  id: string;
   name: string;
   handle: string;
   pictureUrl: string;
+  isMember: boolean;
 };
 
 export type IListModal = {
@@ -58,13 +60,18 @@ export default function ListModal({
   useEffect(() => {
     blockScroll();
 
+    let newSuggestions: IListUser[] = [];
+    let newMembers: IListUser[] = [];
+
     explore().then((response) => {
       const users = response.items;
-      const newSuggestions = users.map((user) => ({
+      newSuggestions = users.map((user) => ({
+        id: user.id,
         name: user.name as string,
         handle: user.handle,
         // @ts-ignore
         pictureUrl: user.picture?.original?.url,
+        isMember: newMembers.some((member) => member.id === user.id),
       }));
       setSuggestions(newSuggestions);
     });
@@ -76,16 +83,69 @@ export default function ListModal({
           (member) => member.profileId,
         );
         const users = (await profiles(membersIds)).items;
-        const newMembers = users.map((user) => ({
+        newMembers = users.map((user) => ({
+          id: user.id,
           name: user.name as string,
           handle: user.handle,
           // @ts-ignore
           pictureUrl: user.picture?.original?.url,
+          isMember: true,
         }));
         setMembers(newMembers);
+
+        newSuggestions.forEach((suggestion, index) => {
+          if (newMembers.some((member) => member.id === suggestion.id)) {
+            newSuggestions[index].isMember = true;
+          }
+        });
+        setSuggestions(newSuggestions);
       });
     }
   }, []);
+
+  const onMemberChange = (user: IListUser, isMember: boolean) => {
+    if (isMember) {
+      fetch(`/api/lists/${listId}/members`, {
+        method: 'POST',
+        headers: {
+          'x-access-token': getAuthenticationToken() || '',
+        },
+        body: JSON.stringify({ profileId: user.id }),
+      });
+    } else {
+      fetch(`/api/lists/${listId}/members/${user.id}`, {
+        method: 'DELETE',
+        headers: {
+          'x-access-token': getAuthenticationToken() || '',
+        },
+      });
+    }
+
+    const newMembers = [...members];
+    newMembers.forEach((member, index) => {
+      if (member.id === user.id) {
+        members[index].isMember = isMember;
+      }
+    });
+    if (isMember && !newMembers.some((member) => member.id === user.id)) {
+      newMembers.unshift({ ...user, isMember: true });
+    }
+    setMembers(newMembers);
+
+    const newSuggestions = [...suggestions];
+    newSuggestions.forEach((member, index) => {
+      if (member.id === user.id) {
+        suggestions[index].isMember = isMember;
+      }
+    });
+    setSuggestions(newSuggestions);
+
+    if (onUpdate) {
+      onUpdate({
+        totalMembers: newMembers.filter((member) => member.isMember).length,
+      });
+    }
+  };
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -106,10 +166,12 @@ export default function ListModal({
       // @ts-ignore
       const users = response.items;
       const newSuggestions = users.map((user: any) => ({
+        id: user.id,
         name: user.name as string,
         handle: user.handle,
         // @ts-ignore
         pictureUrl: user.picture?.original?.url,
+        isMember: members.some((member) => member.id === user.id),
       }));
       setSuggestions(newSuggestions);
     });
@@ -189,10 +251,12 @@ export default function ListModal({
       {members.map((member, key) => (
         <UserListItem
           key={key}
+          id={member.id}
           pictureUrl={member.pictureUrl}
           name={member.name}
           handle={member.handle}
-          isMember={true}
+          isMember={member.isMember}
+          onMemberChange={onMemberChange}
         ></UserListItem>
       ))}
     </div>
@@ -222,10 +286,12 @@ export default function ListModal({
         {suggestions.map((user, key) => (
           <UserListItem
             key={key}
+            id={user.id}
             pictureUrl={user.pictureUrl}
             name={user.name}
             handle={user.handle}
-            isMember={false}
+            isMember={user.isMember}
+            onMemberChange={onMemberChange}
           ></UserListItem>
         ))}
       </div>
