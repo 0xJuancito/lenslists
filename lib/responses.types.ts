@@ -6,9 +6,9 @@ export const parseList = (list: DbList): ApiList => ({
   coverPictureUrl: list.coverPictureUrl,
   id: list.id,
   createdAt: list.createdAt,
-  ownedBy: {
+  ownerProfile: {
+    id: list.ownedByProfileId,
     handle: list.ownedByHandle,
-    profileId: list.ownedByProfileId,
   },
   stats: {
     totalMembers: Number(list.totalMembers),
@@ -22,9 +22,9 @@ export type ApiList = {
   coverPictureUrl?: string | null;
   id: string;
   createdAt: Date;
-  ownedBy: {
+  ownerProfile: {
     handle: string;
-    profileId: string;
+    id: string;
   };
   stats: {
     totalMembers: number;

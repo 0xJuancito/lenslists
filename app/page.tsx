@@ -20,8 +20,8 @@ export default function Page() {
         totalFollowers: list.stats.totalFollowers,
         totalMembers: list.stats.totalMembers,
         listId: list.id,
-        ownerId: list.ownedBy.profileId,
-        ownerHandle: list.ownedBy.handle,
+        ownerId: list.ownerProfile.id,
+        ownerHandle: list.ownerProfile.handle,
       }));
       setCards(newCards);
       setLoading(false);
