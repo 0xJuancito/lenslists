@@ -2,6 +2,7 @@
 
 import ListModal from '@/ui/ListModal';
 import LoginButton from '@/ui/LoginButton';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
@@ -11,6 +12,16 @@ export default function Header() {
   const [showListModal, setShowListModal] = useState(false);
 
   const profile = useContext(ProfileContext);
+
+  const { openConnectModal } = useConnectModal();
+
+  const openCreateListModal = () => {
+    if (openConnectModal) {
+      openConnectModal();
+    } else {
+      setShowListModal(true);
+    }
+  };
 
   return (
     <div className="item flex h-16 w-full border-b bg-white">
@@ -42,9 +53,7 @@ export default function Header() {
           )}
           <button
             className="flex cursor-pointer items-center gap-2 rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700"
-            onClick={() => {
-              setShowListModal(true);
-            }}
+            onClick={() => openCreateListModal()}
           >
             <svg
               viewBox="0 0 24 24"
