@@ -4,10 +4,13 @@ import ListModal from '@/ui/ListModal';
 import LoginButton from '@/ui/LoginButton';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ProfileContext } from './LensAuthenticationProvider';
 
 export default function Header() {
   const [showListModal, setShowListModal] = useState(false);
+
+  const profile = useContext(ProfileContext);
 
   return (
     <div className="item flex h-16 w-full border-b bg-white">
@@ -27,9 +30,16 @@ export default function Header() {
           </div>
         </Link>
         <div className="flex gap-2 sm:gap-8">
-          <div className="hidden cursor-pointer items-center text-lg font-bold text-black sm:flex">
-            MY LISTS
-          </div>
+          {profile?.id && (
+            <Link
+              href={`/users/${profile.id}/lists`}
+              className="flex items-center"
+            >
+              <div className="hidden cursor-pointer text-lg font-bold text-black sm:flex">
+                MY LISTS
+              </div>
+            </Link>
+          )}
           <button
             className="hidden cursor-pointer items-center gap-2 rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700 sm:flex"
             onClick={() => {
@@ -49,7 +59,6 @@ export default function Header() {
           </button>
           {showListModal && (
             <ListModal
-              listId="123"
               close={() => {
                 setShowListModal(false);
               }}

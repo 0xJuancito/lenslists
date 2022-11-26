@@ -1,6 +1,7 @@
 const LS_LENS_STORE = 'lens.store';
 
 export type LensStore = {
+  id: string;
   accessToken: string;
   refreshToken: string;
   handle: string;

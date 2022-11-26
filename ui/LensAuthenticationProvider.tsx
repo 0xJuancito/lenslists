@@ -19,6 +19,7 @@ import {
 import { refresh } from '@/lib/lens/refresh';
 
 type Profile = {
+  id: string;
   handle: string;
   pictureUrl: string | null;
 };
@@ -44,6 +45,7 @@ export default function LensProvider({
     setAuthenticationToken(lensStore.accessToken);
     setAuthenticationStatus('authenticated');
     setProfile({
+      id: lensStore.id,
       handle: lensStore.handle,
       pictureUrl: lensStore.pictureUrl,
     });
@@ -127,6 +129,7 @@ export default function LensProvider({
       const pictureUrl = profile?.picture?.original?.url;
 
       const lensStore: LensStore = {
+        id: profile.id,
         accessToken: authenticatedResult.accessToken,
         refreshToken: authenticatedResult.refreshToken,
         handle: profile.handle,

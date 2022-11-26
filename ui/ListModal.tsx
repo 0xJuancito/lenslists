@@ -59,7 +59,7 @@ export default function ListModal({ close, listId }: IListModal) {
         <div className="flex justify-around border-t border-t-slate-200 pt-6">
           <button
             className="w-28 cursor-pointer rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700 sm:w-44"
-            onClick={() => createNewList()}
+            onClick={() => updateList()}
           >
             <span className="hidden sm:inline">{'Manage '}</span>Members
           </button>
@@ -171,6 +171,11 @@ export default function ListModal({ close, listId }: IListModal) {
 
   const createNewList = () => {
     setIsSuggested(true);
+    setIsManagingMembers(true);
+  };
+
+  const updateList = () => {
+    setIsSuggested(false);
     setIsManagingMembers(true);
   };
 

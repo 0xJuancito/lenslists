@@ -64,9 +64,15 @@ export const getOwnedLists = (
   const offset = pagination?.offset || 0;
 
   let query = knexInstance<List>('lists')
-    .select('*')
+    .select('lists.*')
+    .select(knexInstance.raw('COUNT("listMembers".id) AS "totalMembers"'))
+    .select(knexInstance.raw('COUNT("listFollowers".id) AS "totalFollowers"'))
+    .leftJoin('listMembers', 'listMembers.listId', 'lists.id')
+    .leftJoin('listFollowers', 'listFollowers.listId', 'lists.id')
+    .groupBy('lists.id')
+    .orderBy('lists.id', 'desc')
     .where({ ownedByProfileId })
-    .orderBy('id', 'desc')
+    .orderBy('lists.id', 'desc')
     .limit(limit)
     .offset(offset);
 
