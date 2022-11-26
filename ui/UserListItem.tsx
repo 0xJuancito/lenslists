@@ -26,8 +26,8 @@ export default function UserListItem({
     <div className="flex cursor-pointer items-center justify-between px-6 py-2 hover:bg-zinc-50">
       <span className="flex items-center gap-4">
         <Image
-          className="rounded-full"
-          src={pictureUrl}
+          className="aspect-square rounded-full object-cover"
+          src={pictureUrl || '/default-profile.png'}
           unoptimized
           alt="Profile picture"
           width={45}

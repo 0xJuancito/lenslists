@@ -1,8 +1,10 @@
 'use client';
 
+import { useDebouncedCallback } from 'use-debounce';
 import { getAuthenticationToken } from '@/lib/apollo-client';
 import { explore } from '@/lib/lens/explore-profiles';
 import { profiles } from '@/lib/lens/get-profiles';
+import { search } from '@/lib/lens/search-profiles';
 import { GetListMembersResponse } from '@/lib/responses.types';
 import { useScrollBlock } from '@/lib/useScrollBlock';
 import DeleteListModal from '@/ui/DeleteListModal';
@@ -49,6 +51,10 @@ export default function ListModal({
 
   const [blockScroll, allowScroll] = useScrollBlock();
 
+  const debouceSearch = useDebouncedCallback((value) => {
+    handleSearchChange(value);
+  }, 400);
+
   useEffect(() => {
     blockScroll();
 
@@ -93,6 +99,20 @@ export default function ListModal({
     event: ChangeEvent<HTMLInputElement>,
   ) => {
     setCoverPictureUrl(event.target.value);
+  };
+
+  const handleSearchChange = (query: string) => {
+    search(query).then((response) => {
+      // @ts-ignore
+      const users = response.items;
+      const newSuggestions = users.map((user: any) => ({
+        name: user.name as string,
+        handle: user.handle,
+        // @ts-ignore
+        pictureUrl: user.picture?.original?.url,
+      }));
+      setSuggestions(newSuggestions);
+    });
   };
 
   const EditList = (
@@ -195,6 +215,7 @@ export default function ListModal({
           maxLength={255}
           placeholder="Search People"
           className="w-full rounded-2xl border border-zinc-300 px-3 py-3 pl-9 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
+          onChange={(e) => debouceSearch(e.target.value)}
         />
       </div>
       <div>
