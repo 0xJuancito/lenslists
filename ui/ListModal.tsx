@@ -1,6 +1,8 @@
 'use client';
 
 import { getAuthenticationToken } from '@/lib/apollo-client';
+import { profiles } from '@/lib/lens/get-profiles';
+import { GetListMembersResponse } from '@/lib/responses.types';
 import { useScrollBlock } from '@/lib/useScrollBlock';
 import DeleteListModal from '@/ui/DeleteListModal';
 import UserListItem from '@/ui/UserListItem';
@@ -8,6 +10,12 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { IListCard } from './ListCard';
 
 const suggestedUsers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+type IMember = {
+  name: string;
+  handle: string;
+  pictureUrl: string;
+};
 
 export type IListModal = {
   name?: string;
@@ -20,7 +28,7 @@ export type IListModal = {
 
 export default function ListModal({
   close,
-  listId,
+  listId: initialListId,
   name: initialName,
   description: initialDescription,
   coverPictureUrl: initialCoverPictureUrl,
@@ -36,11 +44,30 @@ export default function ListModal({
     initialCoverPictureUrl,
   );
 
+  const [listId, setListId] = useState(initialListId);
+  const [members, setMembers] = useState<IMember[]>([]);
+
   const [blockScroll, allowScroll] = useScrollBlock();
 
   useEffect(() => {
     blockScroll();
-  });
+    if (listId) {
+      fetch(`/api/lists/${listId}/members`).then(async (rawResponse) => {
+        const response = (await rawResponse.json()) as GetListMembersResponse;
+        const membersIds = response.data.members.items.map(
+          (member) => member.profileId,
+        );
+        const users = (await profiles(membersIds)).items;
+        const newMembers = users.map((user) => ({
+          name: user.name as string,
+          handle: user.handle,
+          // @ts-ignore
+          pictureUrl: user.picture?.original?.url,
+        }));
+        setMembers(newMembers);
+      });
+    }
+  }, []);
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -127,12 +154,12 @@ export default function ListModal({
 
   const Members = (
     <div>
-      {suggestedUsers.map((user, key) => (
+      {members.map((member, key) => (
         <UserListItem
           key={key}
-          pictureUrl="/profile.jpeg"
-          name="juancito"
-          handle="juancito.lens"
+          pictureUrl={member.pictureUrl}
+          name={member.name}
+          handle={member.handle}
           isMember={true}
         ></UserListItem>
       ))}
