@@ -374,7 +374,8 @@ export default function ListModal({
         } else {
           const body = await response.json();
           const message =
-            body?.details[0]?.message ||
+            body?.details?.[0]?.message ||
+            body?.message ||
             'There was an error. Please try again later.';
           toast(message, {});
         }
