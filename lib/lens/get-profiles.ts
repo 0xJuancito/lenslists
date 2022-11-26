@@ -1,5 +1,6 @@
 import { apolloClient } from '../apollo-client';
 import { ProfileQueryRequest, ProfilesDocument } from './graphql/generated';
+import { formatProfile } from './utils';
 
 const getProfilesRequest = async (request: ProfileQueryRequest) => {
   const result = await apolloClient.query({
@@ -13,7 +14,11 @@ const getProfilesRequest = async (request: ProfileQueryRequest) => {
 };
 
 export const profiles = async (profileIds: string[]) => {
-  const profilesFromProfileIds = await getProfilesRequest({ profileIds });
+  const result = await getProfilesRequest({ profileIds });
 
-  return profilesFromProfileIds;
+  result.items.forEach((item) => {
+    formatProfile(item);
+  });
+
+  return result;
 };

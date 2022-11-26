@@ -3,6 +3,7 @@ import {
   DefaultProfileDocument,
   DefaultProfileRequest,
 } from './graphql/generated';
+import { formatProfile } from './utils';
 
 const getDefaultProfileRequest = async (request: DefaultProfileRequest) => {
   const result = await apolloClient.query({
@@ -17,6 +18,8 @@ const getDefaultProfileRequest = async (request: DefaultProfileRequest) => {
 
 export const getDefaultProfile = async (address: string) => {
   const result = await getDefaultProfileRequest({ ethereumAddress: address });
+
+  formatProfile(result);
 
   return result;
 };

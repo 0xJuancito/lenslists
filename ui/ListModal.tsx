@@ -1,6 +1,7 @@
 'use client';
 
 import { getAuthenticationToken } from '@/lib/apollo-client';
+import { explore } from '@/lib/lens/explore-profiles';
 import { profiles } from '@/lib/lens/get-profiles';
 import { GetListMembersResponse } from '@/lib/responses.types';
 import { useScrollBlock } from '@/lib/useScrollBlock';
@@ -9,9 +10,7 @@ import UserListItem from '@/ui/UserListItem';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { IListCard } from './ListCard';
 
-const suggestedUsers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-type IMember = {
+type IListUser = {
   name: string;
   handle: string;
   pictureUrl: string;
@@ -45,12 +44,25 @@ export default function ListModal({
   );
 
   const [listId, setListId] = useState(initialListId);
-  const [members, setMembers] = useState<IMember[]>([]);
+  const [members, setMembers] = useState<IListUser[]>([]);
+  const [suggestions, setSuggestions] = useState<IListUser[]>([]);
 
   const [blockScroll, allowScroll] = useScrollBlock();
 
   useEffect(() => {
     blockScroll();
+
+    explore().then((response) => {
+      const users = response.items;
+      const newSuggestions = users.map((user) => ({
+        name: user.name as string,
+        handle: user.handle,
+        // @ts-ignore
+        pictureUrl: user.picture?.original?.url,
+      }));
+      setSuggestions(newSuggestions);
+    });
+
     if (listId) {
       fetch(`/api/lists/${listId}/members`).then(async (rawResponse) => {
         const response = (await rawResponse.json()) as GetListMembersResponse;
@@ -186,12 +198,12 @@ export default function ListModal({
         />
       </div>
       <div>
-        {suggestedUsers.map((user, key) => (
+        {suggestions.map((user, key) => (
           <UserListItem
             key={key}
-            pictureUrl="/profile.jpeg"
-            name="juancito"
-            handle="juancito.lens"
+            pictureUrl={user.pictureUrl}
+            name={user.name}
+            handle={user.handle}
             isMember={false}
           ></UserListItem>
         ))}
