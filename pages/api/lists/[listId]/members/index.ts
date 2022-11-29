@@ -13,6 +13,8 @@ import {
 import {
   listIdSchema,
   listMembers,
+  maxMembersCount,
+  MAX_MEMBERS_COUNT,
   newListMemberSchema,
 } from '@/lib/validations';
 import { getProfile, getProfileId } from '@/lib/server/lens';
@@ -116,6 +118,15 @@ async function addListMemberHandler(
     }
   } catch (err) {
     return res.status(403).json({ message: 'Unauthorized.' });
+  }
+
+  try {
+    const count = await countListMembers(listId);
+    await maxMembersCount.validateAsync(count);
+  } catch (err) {
+    return res.status(409).json({
+      message: `You can't add more than ${MAX_MEMBERS_COUNT} memmbers to a list at the moment.`,
+    });
   }
 
   try {

@@ -1,6 +1,7 @@
 import Joi from 'joi';
 
 export const MAX_LISTS_COUNT = 20;
+export const MAX_MEMBERS_COUNT = 50;
 
 const onlyNumbers = /^[0-9]*$/;
 const limit = Joi.number().min(1).max(50);
@@ -49,4 +50,6 @@ export const newListMemberSchema = Joi.object({
   profileId,
 });
 
-export const maxListsCount = Joi.number().max(MAX_LISTS_COUNT);
+export const maxListsCount = Joi.number().max(MAX_LISTS_COUNT - 1);
+
+export const maxMembersCount = Joi.number().max(MAX_MEMBERS_COUNT - 1);

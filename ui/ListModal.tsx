@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { ProfileContext } from './LensAuthenticationProvider';
 import { usePathname } from 'next/navigation';
+import { MAX_MEMBERS_COUNT } from '@/lib/validations';
 
 type IListUser = {
   id: string;
@@ -118,6 +119,14 @@ export default function ListModal({
   }, []);
 
   const onMemberChange = (user: IListUser, isMember: boolean) => {
+    const totalMembers = members.filter((member) => member.isMember).length;
+    if (totalMembers >= MAX_MEMBERS_COUNT && isMember) {
+      toast(
+        `You cannot add more than ${MAX_MEMBERS_COUNT} members to a list at the moment.`,
+      );
+      return;
+    }
+
     if (isMember) {
       fetch(`/api/lists/${listId}/members`, {
         method: 'POST',
