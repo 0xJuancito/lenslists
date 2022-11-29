@@ -1,7 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createList } from '@/lib/lenslists';
+import { countOwnedLists, createList } from '@/lib/lenslists';
 import { ErrorResponse, ListResponse, parseList } from '@/lib/responses.types';
-import { upsertListSchema } from '@/lib/validations';
+import {
+  maxListsCount,
+  MAX_LISTS_COUNT,
+  upsertListSchema,
+} from '@/lib/validations';
 import { getProfile, getProfileId } from '@/lib/server/lens';
 import { NewList } from '@/lib/types';
 
@@ -35,6 +39,15 @@ export default async function handler(
     const details = err.details || { message: 'Invalid JSON body.' };
 
     return res.status(422).json({ message: 'Validation error.', details });
+  }
+
+  try {
+    const count = await countOwnedLists(profileId);
+    await maxListsCount.validateAsync(count);
+  } catch (err) {
+    return res.status(409).json({
+      message: `You can't create more than ${MAX_LISTS_COUNT} lists at the moment.`,
+    });
   }
 
   try {

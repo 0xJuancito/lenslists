@@ -57,7 +57,7 @@ export const getListById = async (listId: string): Promise<List | null> => {
 };
 
 export const getOwnedLists = (
-  ownedByProfileId: string,
+  profileId: string,
   pagination?: Pagination,
 ): Promise<List[]> => {
   const limit = pagination?.limit || 50;
@@ -71,7 +71,7 @@ export const getOwnedLists = (
     .leftJoin('listFollowers', 'listFollowers.listId', 'lists.id')
     .groupBy('lists.id')
     .orderBy('lists.id', 'desc')
-    .where({ ownedByProfileId })
+    .where({ ownedByProfileId: profileId })
     .orderBy('lists.id', 'desc')
     .limit(limit)
     .offset(offset);
@@ -79,12 +79,10 @@ export const getOwnedLists = (
   return query;
 };
 
-export const countOwnedLists = async (
-  ownedByProfileId: string,
-): Promise<number> => {
+export const countOwnedLists = async (profileId: string): Promise<number> => {
   let query = knexInstance<List>('lists')
     .count<Record<string, number>>('*')
-    .where({ ownedByProfileId })
+    .where({ ownedByProfileId: profileId })
     .first();
 
   const result = await query;

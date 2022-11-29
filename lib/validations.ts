@@ -1,5 +1,7 @@
 import Joi from 'joi';
 
+export const MAX_LISTS_COUNT = 20;
+
 const onlyNumbers = /^[0-9]*$/;
 const limit = Joi.number().min(1).max(50);
 const offset = Joi.number().min(0);
@@ -46,3 +48,5 @@ export const upsertListSchema = Joi.object({
 export const newListMemberSchema = Joi.object({
   profileId,
 });
+
+export const maxListsCount = Joi.number().max(MAX_LISTS_COUNT);
