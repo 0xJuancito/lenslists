@@ -17,4 +17,19 @@ export const formatProfile = (profile: any) => {
       profile.picture?.original?.url,
     );
   }
+
+  // @ts-ignore
+  if (profile.coverPicture?.original?.url) {
+    // @ts-ignore
+    profile.coverPicture.original.url = formatImageUrl(
+      profile.coverPicture?.original?.url,
+    );
+  }
+  // @ts-ignore
+  if (profile.coverPicture?.original?.url) {
+    // @ts-ignore
+    profile.coverPicture.original.url = formatImageUrl(
+      profile.coverPicture?.original?.url,
+    );
+  }
 };
