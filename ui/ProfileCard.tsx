@@ -80,18 +80,18 @@ export default function ProfileCard({
         </div>
         {/* Following / Followers */}
         <div className="flex gap-4 text-xs">
-          <Link href={`/users/${profileId}/following`}>
-            <span className="flex cursor-pointer gap-1 hover:underline">
+          <span>
+            <span className="flex gap-1">
               <span className="font-bold">{totalFollowing}</span>
               <span>following</span>
             </span>
-          </Link>
-          <Link href={`/users/${profileId}/followers`}>
-            <span className="flex cursor-pointer gap-1 hover:underline">
+          </span>
+          <span>
+            <span className="flex gap-1">
               <span className="font-bold">{totalFollowers}</span>
               <span>{totalFollowers === 1 ? 'follower' : 'followers'}</span>
             </span>
-          </Link>
+          </span>
         </div>
         {/* Bio */}
         <div className="flex grow items-center text-center text-sm">
