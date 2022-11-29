@@ -134,12 +134,13 @@ export default function ListCard({
               EDIT LIST
             </button>
           ) : (
-            <button
-              onClick={(e) => e.stopPropagation()}
-              className="mt-2 mb-1 cursor-pointer rounded-2xl bg-lens-lime px-4 py-2 text-black shadow-md hover:bg-lens-lime-hover"
-            >
-              FOLLOW
-            </button>
+            ''
+            // <button
+            //   onClick={(e) => e.stopPropagation()}
+            //   className="mt-2 mb-1 cursor-pointer rounded-2xl bg-lens-lime px-4 py-2 text-black shadow-md hover:bg-lens-lime-hover"
+            // >
+            //   FOLLOW
+            // </button>
           )}
         </div>
       </div>
