@@ -94,7 +94,9 @@ export default function ListModal({
         const membersIds = response.data.members.items.map(
           (member) => member.profileId,
         );
-        const users = (await profiles(membersIds)).items;
+        const users = membersIds.length
+          ? (await profiles(membersIds)).items
+          : [];
         newMembers = users.map((user) => ({
           id: user.id,
           name: user.name as string,
