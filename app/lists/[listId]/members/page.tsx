@@ -41,6 +41,11 @@ export default function Page() {
 
   return (
     <div>
+      <div className="flex justify-between">
+        <div className="z-0 my-8 w-full text-center text-4xl font-bold text-black sm:my-16 sm:text-5xl">
+          List Members
+        </div>
+      </div>
       {loading ? (
         <Loading></Loading>
       ) : (
