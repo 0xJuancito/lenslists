@@ -88,7 +88,9 @@ export default function ListCard({
               by
               <Link
                 onClick={(e) => e.stopPropagation()}
-                href={`/users/${ownerId}/lists`}
+                href={`https://lenster.xyz/u/${ownerHandle}`}
+                target={'_blank'}
+                rel={'noreferrer'}
               >
                 <span className="cursor-pointer font-bold hover:underline">
                   @{ownerHandle}

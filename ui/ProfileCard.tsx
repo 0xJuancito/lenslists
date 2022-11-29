@@ -66,7 +66,11 @@ export default function ProfileCard({
           </div>
           <div className="text-xs">
             <span className="flex justify-center gap-1">
-              <Link href={`/users/${profileId}/lists`}>
+              <Link
+                href={`https://lenster.xyz/u/${handle}`}
+                target={'_blank'}
+                rel={'noreferrer'}
+              >
                 <span className="cursor-pointer font-bold hover:underline">
                   @{handle}
                 </span>
