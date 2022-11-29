@@ -1,5 +1,7 @@
-import Image from 'next/image';
+'use client';
+
 import Link from 'next/link';
+import ImageWithFallback from './ImageWithFallback';
 
 export type IProfileCard = {
   name: string;
@@ -31,8 +33,8 @@ export default function ProfileCard({
     <div className="flex flex-col items-center rounded-xl bg-white shadow-lg">
       {/* Cover Picture */}
       <div>
-        <Image
-          unoptimized
+        <ImageWithFallback
+          fallbackImage="/default-cover.jpeg"
           src={coverPictureUrl}
           height={300}
           width={900}
@@ -42,13 +44,14 @@ export default function ProfileCard({
       </div>
       {/* Profile Picture */}
       <div className="absolute">
-        <Image
-          unoptimized
+        <ImageWithFallback
+          fallbackImage="/default-profile.png"
           src={picture}
           height={150}
           width={150}
           alt="Profile Picture"
-          className="relative top-12 rounded-full border-4 border-zinc-50"
+          className="relative top-12 rounded-full border-4 border-zinc-50 object-cover"
+          style={{ width: '150px', height: '150px' }}
         />
       </div>
       {/* Body */}
