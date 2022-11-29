@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-export const MAX_LISTS_COUNT = 20;
+export const MAX_LISTS_COUNT = 10;
 export const MAX_MEMBERS_COUNT = 50;
 
 const onlyNumbers = /^[0-9]*$/;
