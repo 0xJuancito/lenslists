@@ -100,31 +100,19 @@ export default function ListCard({
           </div>
 
           {/* Followers + Members */}
-          <div className="mt-1 flex justify-center gap-4 text-xs">
-            <Link
-              onClick={(e) => e.stopPropagation()}
-              className="rounded-xl bg-sky-400 py-1 px-2 text-white hover:bg-sky-500"
-              href={`/lists/${listId}/members`}
-            >
-              <span className="flex cursor-pointer gap-1">
-                <span>{totalMembers}</span>
+          <div className="flex justify-center gap-4 text-xs">
+            <span>
+              <span className="flex gap-1">
+                <span className="font-bold">{totalMembers}</span>
                 <span>{totalMembers === 1 ? 'member' : 'members'}</span>
               </span>
-            </Link>
-            <Link
-              onClick={(e) => e.stopPropagation()}
-              className="rounded-xl bg-sky-400 py-1 px-2 text-white hover:bg-sky-500"
-              href={
-                listId
-                  ? `/lists/${listId}/followers`
-                  : `/users/${ownerId}/followers`
-              }
-            >
-              <span className="flex cursor-pointer gap-1">
-                <span>{totalFollowers}</span>
+            </span>
+            <span>
+              <span className="flex gap-1">
+                <span className="font-bold">{totalFollowers}</span>
                 <span>{totalFollowers === 1 ? 'follower' : 'followers'}</span>
               </span>
-            </Link>
+            </span>
           </div>
 
           {/* Description */}
