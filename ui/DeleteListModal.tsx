@@ -10,7 +10,7 @@ export default function DeleteListModal({ close, listId }: IDeleteListModal) {
     <>
       <div
         className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden overflow-x-hidden outline-none focus:outline-none sm:overflow-y-auto"
-        onClick={() => close()}
+        onClick={close}
       >
         <div
           className="relative my-6 mx-auto w-auto max-w-2xl"
@@ -31,7 +31,7 @@ export default function DeleteListModal({ close, listId }: IDeleteListModal) {
               </button>
               <button
                 className="block w-full cursor-pointer rounded-2xl border bg-white px-4 py-2 text-black shadow-md hover:bg-zinc-100"
-                onClick={() => close()}
+                onClick={close}
               >
                 Cancel
               </button>
