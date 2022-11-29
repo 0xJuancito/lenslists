@@ -491,8 +491,10 @@ export default function ListModal({
               ) : (
                 <button
                   className={`${
-                    creatingList ? 'bg-zinc-400' : 'bg-sky-600 hover:bg-sky-700'
-                  } flex max-h-10 w-20 cursor-pointer justify-center rounded-2xl px-4 py-2 text-white shadow-md`}
+                    creatingList
+                      ? 'bg-zinc-400'
+                      : 'cursor-pointer bg-sky-600 hover:bg-sky-700'
+                  } flex max-h-10 w-20 justify-center rounded-2xl px-4 py-2 text-white shadow-md`}
                   onClick={onCreateNext}
                 >
                   {creatingList ? (
