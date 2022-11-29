@@ -27,9 +27,9 @@ export default function Header() {
     <div className="item flex h-16 w-full border-b bg-white">
       <div className="container mx-auto flex max-w-screen-xl items-center justify-between px-4">
         <Link href="/">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Image
-              src="/list.svg"
+              src="/lists.png"
               unoptimized
               alt="Lens Lists Logo"
               width={40}

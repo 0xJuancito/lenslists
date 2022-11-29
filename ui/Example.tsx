@@ -7,7 +7,7 @@ export default function Header() {
     <div>
       <span className="flex items-center">
         <Image
-          src="/logo.svg"
+          src="/lists.png"
           unoptimized
           alt="Lens Lists Logo"
           width={40}
