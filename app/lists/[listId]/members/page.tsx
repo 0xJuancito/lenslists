@@ -27,7 +27,9 @@ export default function Page() {
         const membersIds = body.data.members.items.map(
           (member) => member.profileId,
         );
-        const users = (await profiles(membersIds)).items;
+        const users = membersIds.length
+          ? (await profiles(membersIds)).items
+          : [];
         const newCards: IProfileCard[] = users.map((user) => ({
           name: user.name || '',
           bio: user.bio || '',
@@ -83,6 +85,11 @@ export default function Page() {
               ></ProfileCard>
             ))}
           </div>
+          {!cards.length ? (
+            <div className="flex justify-center">This list has no members</div>
+          ) : (
+            ''
+          )}
         </div>
       )}
     </div>
