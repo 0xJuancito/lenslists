@@ -1,7 +1,11 @@
 'use client';
 
+import { proxyActionFreeFollow } from '@/lib/lens/proxy-action-free-follow';
 import Link from 'next/link';
+import { useState } from 'react';
 import ImageWithFallback from './ImageWithFallback';
+import { toast } from 'react-toastify';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 export type IProfileCard = {
   name: string;
@@ -12,6 +16,7 @@ export type IProfileCard = {
   profileId: string;
   totalFollowers: number;
   totalFollowing: number;
+  isFollowedByMe?: boolean;
 };
 
 export default function ProfileCard({
@@ -23,11 +28,24 @@ export default function ProfileCard({
   profileId,
   totalFollowers,
   totalFollowing,
+  isFollowedByMe: initialIsFollowedByMe = false,
 }: IProfileCard) {
   const BIO_MAX_LENGTH = 100;
   if (bio.length >= BIO_MAX_LENGTH) {
     bio = `${bio.slice(0, BIO_MAX_LENGTH)}...`;
   }
+
+  const [isFollowedByMe, setIsFollowedByMe] = useState(initialIsFollowedByMe);
+  const { openConnectModal } = useConnectModal();
+
+  const follow = () => {
+    if (openConnectModal) {
+      openConnectModal();
+    } else {
+      proxyActionFreeFollow(profileId);
+      setIsFollowedByMe(true);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center rounded-xl bg-white shadow-lg">
@@ -101,9 +119,18 @@ export default function ProfileCard({
         </div>
         {/* Button */}
         <div className="w-full">
-          <button className="mt-2 mb-1 w-full cursor-pointer rounded-2xl bg-lens-lime px-4 py-2 text-black shadow-md hover:bg-lens-lime-hover">
-            FOLLOW
-          </button>
+          {isFollowedByMe ? (
+            <button className="mt-2 mb-1 w-full cursor-default rounded-2xl bg-zinc-50 px-4 py-2 text-black shadow-md">
+              FOLLOWING
+            </button>
+          ) : (
+            <button
+              className="mt-2 mb-1 w-full cursor-pointer rounded-2xl bg-lens-lime px-4 py-2 text-black shadow-md hover:bg-lens-lime-hover"
+              onClick={follow}
+            >
+              FOLLOW
+            </button>
+          )}
         </div>
       </div>
     </div>

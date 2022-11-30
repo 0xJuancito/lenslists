@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 import { ProfileContext } from './LensAuthenticationProvider';
 import LoadingSpinner from './LoadingSpinner';
+import { toast } from 'react-toastify';
 
 export type IDeleteListModal = {
   close: () => void;
@@ -104,7 +105,4 @@ export default function DeleteListModal({ close, listId }: IDeleteListModal) {
       <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
     </>
   );
-}
-function toast(arg0: string, arg1: {}) {
-  throw new Error('Function not implemented.');
 }

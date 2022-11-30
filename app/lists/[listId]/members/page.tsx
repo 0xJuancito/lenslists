@@ -41,6 +41,7 @@ export default function Page() {
           profileId: user.id,
           totalFollowing: user.stats.totalFollowing,
           totalFollowers: user.stats.totalFollowers,
+          isFollowedByMe: user.isFollowedByMe,
         }));
         setCards(newCards);
       },
@@ -82,6 +83,7 @@ export default function Page() {
                 profileId={user.profileId}
                 totalFollowing={user.totalFollowing}
                 totalFollowers={user.totalFollowers}
+                isFollowedByMe={user.isFollowedByMe}
               ></ProfileCard>
             ))}
           </div>
