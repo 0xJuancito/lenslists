@@ -107,12 +107,12 @@ export default function ListCard({
                 <span>{totalMembers === 1 ? 'member' : 'members'}</span>
               </span>
             </span>
-            <span>
+            {/* <span>
               <span className="flex gap-1">
                 <span className="font-bold">{totalFollowers}</span>
                 <span>{totalFollowers === 1 ? 'follower' : 'followers'}</span>
               </span>
-            </span>
+            </span> */}
           </div>
 
           {/* Description */}
