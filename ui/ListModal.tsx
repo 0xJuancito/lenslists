@@ -9,7 +9,7 @@ import { GetListMembersResponse } from '@/lib/responses.types';
 import { useScrollBlock } from '@/lib/useScrollBlock';
 import DeleteListModal from '@/ui/DeleteListModal';
 import UserListItem from '@/ui/UserListItem';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { IListCard } from './ListCard';
 import LoadingSpinner from './LoadingSpinner';
 import { toast } from 'react-toastify';
@@ -17,6 +17,8 @@ import { useRouter } from 'next/navigation';
 import { ProfileContext } from './LensAuthenticationProvider';
 import { usePathname } from 'next/navigation';
 import { MAX_MEMBERS_COUNT } from '@/lib/validations';
+
+import { IKImage, IKContext, IKUpload } from 'imagekitio-react';
 
 type IListUser = {
   id: string;
@@ -46,6 +48,8 @@ export default function ListModal({
   const router = useRouter();
   const pathname = usePathname();
 
+  const ikUploadRef = useRef<any>(null);
+
   const profile = useContext(ProfileContext);
 
   const [isManagingMembers, setIsManagingMembers] = useState(false);
@@ -57,6 +61,8 @@ export default function ListModal({
   const [coverPictureUrl, setCoverPictureUrl] = useState(
     initialCoverPictureUrl,
   );
+
+  const [uploading, setUploading] = useState(false);
 
   const [listId, setListId] = useState(initialListId);
   const [members, setMembers] = useState<IListUser[]>([]);
@@ -178,12 +184,6 @@ export default function ListModal({
     setDescription(event.target.value);
   };
 
-  const handleCoverPictureUrlChange = (
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
-    setCoverPictureUrl(event.target.value);
-  };
-
   const handleSearchChange = (query: string) => {
     search(query).then((response) => {
       // @ts-ignore
@@ -204,37 +204,65 @@ export default function ListModal({
     <div className="relative flex flex-auto flex-col justify-between gap-2 py-6">
       <div className="px-6">
         <div className="mb-3 flex flex-col gap-2 pt-0">
-          <label className="text-sm font-bold">Name</label>
-          <input
-            value={name}
-            onChange={handleNameChange}
-            type="text"
-            maxLength={25}
-            placeholder="My Awesome List"
-            className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
-          />
-        </div>
-        <div className="mb-3 flex flex-col gap-2 pt-0">
-          <label className="text-sm font-bold">Description</label>
-          <textarea
-            value={description}
-            onChange={handleDescriptionChange}
-            rows={3}
-            maxLength={100}
-            placeholder="Top 100 influencers on Lens Protocol"
-            className="relative w-full resize-none rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
-          />
-        </div>
-        <div className="mb-3 flex flex-col gap-2 pt-0">
           <label className="text-sm font-bold">Cover Picture URL</label>
-          <input
-            value={coverPictureUrl}
-            onChange={handleCoverPictureUrlChange}
-            type="text"
-            maxLength={255}
-            placeholder="https://lens.infura-ipfs.io/ipfs/QmXsWsqhripefaMUi2vNhrhrApoSfeL"
-            className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
-          />
+          <IKContext
+            urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL}
+            publicKey={process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY}
+            authenticationEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_AUTH_URL}
+          >
+            <>
+              <div
+                className="flex aspect-video w-1/2 cursor-pointer items-center justify-center rounded-lg border shadow"
+                onClick={() => ikUploadRef?.current?.click()}
+              >
+                {coverPictureUrl && !uploading ? (
+                  <IKImage
+                    src={coverPictureUrl}
+                    className="aspect-video h-full w-full object-cover"
+                  />
+                ) : uploading ? (
+                  <LoadingSpinner />
+                ) : (
+                  <img src="/upload.png" height={40} width={40}></img>
+                )}
+              </div>
+              <IKUpload
+                className="hidden"
+                inputRef={ikUploadRef}
+                onUploadStart={() => setUploading(true)}
+                onError={() => {
+                  toast('Could not upload the image. Try again.');
+                  setUploading(false);
+                }}
+                onSuccess={(res) => {
+                  setCoverPictureUrl(res.url);
+                  setUploading(false);
+                }}
+              />
+            </>
+          </IKContext>
+          <div className="mb-3 flex flex-col gap-2 pt-0">
+            <label className="text-sm font-bold">Name</label>
+            <input
+              value={name}
+              onChange={handleNameChange}
+              type="text"
+              maxLength={25}
+              placeholder="My Awesome List"
+              className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
+            />
+          </div>
+          <div className="mb-3 flex flex-col gap-2 pt-0">
+            <label className="text-sm font-bold">Description</label>
+            <textarea
+              value={description}
+              onChange={handleDescriptionChange}
+              rows={3}
+              maxLength={100}
+              placeholder="Top 100 influencers on Lens Protocol"
+              className="relative w-full resize-none rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
+            />
+          </div>
         </div>
       </div>
       {/* Button Actions */}
