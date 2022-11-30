@@ -19,7 +19,7 @@ export default function Page() {
   const [list, setList] = useState<ApiList | null>(null);
 
   useEffect(() => {
-    const listId = pathname?.replace('/lists/', '').replace('/members', '');
+    const listId = pathname?.replace('/lists/', '');
 
     const loadingMembers = fetch(`/api/lists/${listId}/members`).then(
       async (res) => {

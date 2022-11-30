@@ -57,11 +57,8 @@ export default function ListCard({
   };
 
   return (
-    <>
-      <div
-        onClick={() => router.push(`/lists/${listId}/members`)}
-        className="flex cursor-pointer flex-col rounded-xl bg-white shadow-lg hover:shadow-xl"
-      >
+    <Link href={`/lists/${listId}`}>
+      <div className="flex cursor-pointer flex-col rounded-xl bg-white shadow-lg hover:shadow-xl">
         {/* Cover Picture */}
         <div>
           <ImageWithFallback
@@ -86,16 +83,17 @@ export default function ListCard({
             </div>
             <div className="flex w-full justify-center gap-1 text-xs">
               by
-              <Link
-                onClick={(e) => e.stopPropagation()}
-                href={`https://lenster.xyz/u/${ownerHandle}`}
-                target={'_blank'}
-                rel={'noreferrer'}
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  window.open(`https://lenster.xyz/u/${ownerHandle}`, '_blank');
+                }}
               >
                 <span className="cursor-pointer font-bold hover:underline">
                   @{ownerHandle}
                 </span>
-              </Link>
+              </div>
             </div>
           </div>
 
@@ -156,6 +154,6 @@ export default function ListCard({
           onUpdate={onUpdate}
         ></ListModal>
       )}
-    </>
+    </Link>
   );
 }
