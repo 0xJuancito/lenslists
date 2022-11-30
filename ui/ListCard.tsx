@@ -57,8 +57,11 @@ export default function ListCard({
   };
 
   return (
-    <Link href={`/lists/${listId}`}>
-      <div className="flex cursor-pointer flex-col rounded-xl bg-white shadow-lg hover:shadow-xl">
+    <div className="flex">
+      <Link
+        href={`/lists/${listId}`}
+        className="flex cursor-pointer flex-col rounded-xl bg-white shadow-lg hover:shadow-xl"
+      >
         {/* Cover Picture */}
         <div>
           <ImageWithFallback
@@ -142,7 +145,7 @@ export default function ListCard({
             // </button>
           )}
         </div>
-      </div>
+      </Link>
       {showListModal && (
         <ListModal
           name={name}
@@ -155,6 +158,6 @@ export default function ListCard({
           onUpdate={onUpdate}
         ></ListModal>
       )}
-    </Link>
+    </div>
   );
 }
