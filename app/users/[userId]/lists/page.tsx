@@ -49,6 +49,18 @@ export default function Page() {
 
   return (
     <div>
+      {/* Title */}
+      {loading ? (
+        ''
+      ) : (
+        <div className="flex justify-between">
+          <div className="z-0 my-8 w-full text-center text-4xl font-bold text-black sm:my-16 sm:text-5xl">
+            {myProfile?.id === user?.id ? 'My Lists' : `${user?.handle} lists`}
+          </div>
+        </div>
+      )}
+
+      {/* Body */}
       {loading ? (
         <Loading></Loading>
       ) : cards.length ? (
@@ -58,20 +70,11 @@ export default function Page() {
           ))}
         </div>
       ) : (
-        <>
-          <div className="flex justify-between">
-            <div className="z-0 my-8 w-full text-center text-4xl font-bold text-black sm:my-16 sm:text-5xl">
-              {myProfile?.id === user?.id
-                ? 'My Lists'
-                : `${user?.handle} lists`}
-            </div>
-          </div>
-          <div className="flex justify-center">
-            {myProfile?.id === user?.id
-              ? "You haven't created any list yet. Try creating one!"
-              : `${user?.handle} hasn't created any list yet.`}
-          </div>
-        </>
+        <div className="flex justify-center">
+          {myProfile?.id === user?.id
+            ? "You haven't created any list yet. Try creating one!"
+            : `${user?.handle} hasn't created any list yet.`}
+        </div>
       )}
     </div>
   );
