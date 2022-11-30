@@ -18,7 +18,7 @@ export default function ImageWithFallback({
       unoptimized
       alt={alt}
       onError={setError}
-      src={error ? fallbackImage : src}
+      src={error ? fallbackImage : src || fallbackImage}
       {...props}
     />
   );
