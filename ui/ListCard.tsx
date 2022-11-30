@@ -125,6 +125,7 @@ export default function ListCard({
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                e.preventDefault();
                 setShowListModal(true);
               }}
               className="mt-2 mb-1 cursor-pointer rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700"
