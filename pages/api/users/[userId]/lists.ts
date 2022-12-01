@@ -10,7 +10,7 @@ import { UserListsResponse } from 'models/userListsResponse';
  * /api/users/{profileId}/lists:
  *   get:
  *     summary: Return a collection of lists owned by the user
- *     tags: [List]
+ *     tags: [Lists]
  *     parameters:
  *       - in: path
  *         name: profileId

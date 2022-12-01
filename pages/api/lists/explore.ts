@@ -9,7 +9,7 @@ import { ExploreListsResponse } from 'models/exploreListsResponse';
  * /api/lists/explore:
  *   get:
  *     summary: Return a collection of recommended lists
- *     tags: [List]
+ *     tags: [Lists]
  *     parameters:
  *       - in: query
  *         name: limit
