@@ -26,6 +26,26 @@ import { DeleteResponse } from 'models/deleteResponse';
  *             schema:
  *               type: object
  *               $ref: '#/components/schemas/ListResponse'
+ *   delete:
+ *     security:
+ *       - apiKey:
+ *         -
+ *     summary: Delete a list
+ *     tags: [Lists]
+ *     parameters:
+ *       - in: path
+ *         name: listId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The id of the list
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               $ref: '#/components/schemas/DeleteResponse'
  */
 export default async function handler(
   req: NextApiRequest,
