@@ -17,24 +17,9 @@ export const parseList = (list: DbList): ApiList => ({
   },
 });
 
-export type Member = {
-  profileId: string;
-};
-
 export type ErrorResponse = {
   message: string;
   details?: object;
-};
-
-export type GetListMembersResponse = {
-  data: {
-    members: {
-      items: Member[];
-      pageInfo: {
-        totalCount: number;
-      };
-    };
-  };
 };
 
 export type DeleteResponse = {

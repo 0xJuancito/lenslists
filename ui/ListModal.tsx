@@ -5,7 +5,6 @@ import { getAuthenticationToken } from '@/lib/apollo-client';
 import { explore } from '@/lib/lens/explore-profiles';
 import { profiles } from '@/lib/lens/get-profiles';
 import { search } from '@/lib/lens/search-profiles';
-import { GetListMembersResponse } from '@/lib/responses.types';
 import { useScrollBlock } from '@/lib/useScrollBlock';
 import DeleteListModal from '@/ui/DeleteListModal';
 import UserListItem from '@/ui/UserListItem';
@@ -19,6 +18,7 @@ import { usePathname } from 'next/navigation';
 import { MAX_MEMBERS_COUNT } from '@/lib/validations';
 
 import { IKImage, IKContext, IKUpload } from 'imagekitio-react';
+import { MembersResponse } from 'models/membersResponse';
 
 type IListUser = {
   id: string;
@@ -97,7 +97,7 @@ export default function ListModal({
 
     if (listId) {
       fetch(`/api/lists/${listId}/members`).then(async (rawResponse) => {
-        const response = (await rawResponse.json()) as GetListMembersResponse;
+        const response = (await rawResponse.json()) as MembersResponse;
         const membersIds = response.data.members.items.map(
           (member) => member.profileId,
         );

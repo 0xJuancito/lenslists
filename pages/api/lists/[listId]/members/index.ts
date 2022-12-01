@@ -5,11 +5,7 @@ import {
   getListById,
   getListMembers,
 } from '@/lib/lenslists';
-import {
-  ErrorResponse,
-  GetListMembersResponse,
-  MemberResponse,
-} from '@/lib/responses.types';
+import { ErrorResponse, MemberResponse } from '@/lib/responses.types';
 import {
   listIdSchema,
   listMembers,
@@ -19,7 +15,44 @@ import {
 } from '@/lib/validations';
 import { getProfile, getProfileId } from '@/lib/server/lens';
 import { Pagination } from '@/lib/types';
+import { MembersResponse } from 'models/membersResponse';
 
+/**
+ * @swagger
+ * /api/lists/{listId}/members:
+ *   get:
+ *     summary: Return the members of a specific list
+ *     tags: [Lists]
+ *     parameters:
+ *       - in: path
+ *         name: listId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The id of the list
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 50
+ *         description: The number of items to be returned
+ *       - in: query
+ *         name: offset
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *         description: The offset for the retrieved items to start from.
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               $ref: '#/components/schemas/MembersResponse'
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -42,7 +75,7 @@ export default async function handler(
 
 async function getListMembersHandler(
   req: NextApiRequest,
-  res: NextApiResponse<GetListMembersResponse | ErrorResponse>,
+  res: NextApiResponse<MembersResponse | ErrorResponse>,
 ) {
   try {
     await listMembers.validateAsync(req.query);

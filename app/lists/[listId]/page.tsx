@@ -1,11 +1,11 @@
 'use client';
 
 import { profiles } from '@/lib/lens/get-profiles';
-import { GetListMembersResponse } from '@/lib/responses.types';
 import ProfileCard, { IProfileCard } from '@/ui/ProfileCard';
 import Loading from 'app/loading';
 import { List } from 'models/list';
 import { ListResponse } from 'models/listResponse';
+import { MembersResponse } from 'models/membersResponse';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -21,7 +21,7 @@ export default function Page() {
 
     const loadingMembers = fetch(`/api/lists/${listId}/members`).then(
       async (res) => {
-        const body = (await res.json()) as GetListMembersResponse;
+        const body = (await res.json()) as MembersResponse;
         const membersIds = body.data.members.items.map(
           (member) => member.profileId,
         );
