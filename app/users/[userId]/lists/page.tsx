@@ -20,7 +20,7 @@ export default function Page() {
   useEffect(() => {
     const profileId = pathname?.replace('/users/', '').replace('/lists', '');
 
-    const loadingLists = fetch(`/api/users/${profileId}/owned-lists`).then(
+    const loadingLists = fetch(`/api/users/${profileId}/lists`).then(
       async (res) => {
         const body = (await res.json()) as GetOwnedListsResponse;
         const lists = body.data.lists.items;
