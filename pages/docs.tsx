@@ -22,6 +22,15 @@ export const getStaticProps: GetStaticProps = async () => {
         description:
           'Draft specification for managing lists on Lens Protocol. Beware of possible breaking changes.',
       },
+      components: {
+        securitySchemes: {
+          apiKey: {
+            type: 'apiKey',
+            in: 'header',
+            name: 'x-access-token',
+          },
+        },
+      },
     },
     schemaFolders: ['models'],
   });

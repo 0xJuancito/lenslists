@@ -22,12 +22,6 @@ export type ErrorResponse = {
   details?: object;
 };
 
-export type DeleteResponse = {
-  data: {
-    deleted: boolean;
-  };
-};
-
 export type MemberResponse = {
   data: {
     member: NewListMember;

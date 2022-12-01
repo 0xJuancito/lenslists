@@ -1,13 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { deleteList, getListById, updateList } from '@/lib/lenslists';
-import {
-  DeleteResponse,
-  ErrorResponse,
-  parseList,
-} from '@/lib/responses.types';
+import { ErrorResponse, parseList } from '@/lib/responses.types';
 import { listIdSchema, upsertListSchema } from '@/lib/validations';
 import { getProfileId } from '@/lib/server/lens';
 import { ListResponse } from 'models/listResponse';
+import { DeleteResponse } from 'models/deleteResponse';
 
 /**
  * @swagger
