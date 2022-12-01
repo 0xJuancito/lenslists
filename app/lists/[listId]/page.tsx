@@ -47,7 +47,7 @@ export default function Page() {
 
     const loadingList = fetch(`/api/lists/${listId}`).then(async (res) => {
       const body = (await res.json()) as ListResponse;
-      setList(body.data.list);
+      setList(body.data?.list);
     });
 
     Promise.all([loadingMembers, loadingList]).then(() => {
