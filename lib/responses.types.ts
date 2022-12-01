@@ -19,7 +19,7 @@ export const parseList = (list: DbList): ApiList => ({
 export type ApiList = {
   name: string;
   description: string;
-  coverPictureUrl?: string | null;
+  coverPictureUrl: string;
   id: string;
   createdAt: Date;
   ownerProfile: {
