@@ -1,4 +1,5 @@
 import { NewListMember, List as DbList } from '@/lib/types';
+import { List as ApiList } from 'models/list';
 
 export const parseList = (list: DbList): ApiList => ({
   name: list.name,
@@ -16,22 +17,6 @@ export const parseList = (list: DbList): ApiList => ({
   },
 });
 
-export type ApiList = {
-  name: string;
-  description: string;
-  coverPictureUrl: string;
-  id: string;
-  createdAt: Date;
-  ownerProfile: {
-    handle: string;
-    id: string;
-  };
-  stats: {
-    totalMembers: number;
-    totalFollowers: number;
-  };
-};
-
 export type Member = {
   profileId: string;
 };
@@ -48,17 +33,6 @@ export type ListResponse = {
 };
 
 export type GetOwnedListsResponse = {
-  data: {
-    lists: {
-      items: ApiList[];
-      pageInfo: {
-        totalCount: number;
-      };
-    };
-  };
-};
-
-export type GetExploreListsResponse = {
   data: {
     lists: {
       items: ApiList[];

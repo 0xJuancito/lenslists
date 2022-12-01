@@ -1,13 +1,10 @@
 'use client';
 
 import { profiles } from '@/lib/lens/get-profiles';
-import {
-  ApiList,
-  GetListMembersResponse,
-  ListResponse,
-} from '@/lib/responses.types';
+import { GetListMembersResponse, ListResponse } from '@/lib/responses.types';
 import ProfileCard, { IProfileCard } from '@/ui/ProfileCard';
 import Loading from 'app/loading';
+import { List } from 'models/list';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -16,7 +13,7 @@ export default function Page() {
 
   const [cards, setCards] = useState<IProfileCard[]>([]);
   const [loading, setLoading] = useState(true);
-  const [list, setList] = useState<ApiList | null>(null);
+  const [list, setList] = useState<List | null>(null);
 
   useEffect(() => {
     const listId = pathname?.replace('/lists/', '');

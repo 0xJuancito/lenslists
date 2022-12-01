@@ -1,7 +1,7 @@
 'use client';
 
-import { GetExploreListsResponse } from '@/lib/responses.types';
 import ListCard, { IListCard } from '@/ui/ListCard';
+import { ExploreListsResponse } from 'models/exploreListsResponse';
 import { useEffect, useState } from 'react';
 import Loading from './loading';
 
@@ -11,7 +11,7 @@ export default function Page() {
 
   useEffect(() => {
     fetch('/api/lists/explore').then(async (res) => {
-      const body = (await res.json()) as GetExploreListsResponse;
+      const body = (await res.json()) as ExploreListsResponse;
       const lists = body.data.lists.items;
       const newCards: IListCard[] = lists.map((list) => ({
         name: list.name,

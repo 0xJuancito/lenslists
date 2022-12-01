@@ -9,7 +9,7 @@ export type NewList = {
   description: string;
   ownedByProfileId: string;
   ownedByHandle: string;
-  coverPictureUrl?: string | null;
+  coverPictureUrl: string;
 };
 
 export type List = NewList & {

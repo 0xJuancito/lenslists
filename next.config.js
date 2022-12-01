@@ -3,8 +3,12 @@ const nextConfig = {
   reactStrictMode: false, // Recommended for the `pages` directory, default in `app`.
   swcMinify: true,
   experimental: {
-    // Required:
     appDir: true,
+    transpilePackages: [
+      'react-syntax-highlighter',
+      'swagger-client',
+      'swagger-ui-react',
+    ],
   },
 };
 
