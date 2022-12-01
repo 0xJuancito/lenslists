@@ -204,7 +204,7 @@ export default function ListModal({
     <div className="relative flex flex-auto flex-col justify-between gap-2 py-6">
       <div className="px-6">
         <div className="mb-3 flex flex-col gap-2 pt-0">
-          <label className="text-sm font-bold">Cover Picture URL</label>
+          <label className="text-sm font-bold">Cover Picture</label>
           <IKContext
             urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL}
             publicKey={process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY}
