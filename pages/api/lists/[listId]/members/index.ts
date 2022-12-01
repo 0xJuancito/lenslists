@@ -22,7 +22,7 @@ import { MembersResponse } from 'models/membersResponse';
  * /api/lists/{listId}/members:
  *   get:
  *     summary: Return the members of a specific list
- *     tags: [Lists]
+ *     tags: [List Members]
  *     parameters:
  *       - in: path
  *         name: listId

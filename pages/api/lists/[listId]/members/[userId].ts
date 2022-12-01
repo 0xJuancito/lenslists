@@ -13,7 +13,7 @@ import { DeleteResponse } from 'models/deleteResponse';
  *       - apiKey:
  *         -
  *     summary: Remove a user from a list
- *     tags: [Lists]
+ *     tags: [List Members]
  *     parameters:
  *       - in: path
  *         name: listId
