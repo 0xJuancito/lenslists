@@ -1,6 +1,5 @@
 'use client';
 
-import { GetOwnedListsResponse } from '@/lib/responses.types';
 import ListCard, { IListCard } from '@/ui/ListCard';
 import Loading from 'app/loading';
 import { useContext, useEffect, useState } from 'react';
@@ -8,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { profile } from '@/lib/lens/get-profile';
 import { Profile } from '@/lib/lens/graphql/generated';
 import { ProfileContext } from '@/ui/LensAuthenticationProvider';
+import { UserListsResponse } from 'models/userListsResponse';
 
 export default function Page() {
   const pathname = usePathname();
@@ -22,7 +22,7 @@ export default function Page() {
 
     const loadingLists = fetch(`/api/users/${profileId}/lists`).then(
       async (res) => {
-        const body = (await res.json()) as GetOwnedListsResponse;
+        const body = (await res.json()) as UserListsResponse;
         const lists = body.data.lists.items;
         const newCards: IListCard[] = lists.map((list) => ({
           name: list.name,
