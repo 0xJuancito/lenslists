@@ -4,6 +4,11 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     appDir: true,
+    transpilePackages: [
+      'react-syntax-highlighter',
+      'swagger-client',
+      'swagger-ui-react',
+    ],
   },
 };
 
