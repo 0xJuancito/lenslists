@@ -1,10 +1,11 @@
 'use client';
 
 import { profiles } from '@/lib/lens/get-profiles';
-import { GetListMembersResponse, ListResponse } from '@/lib/responses.types';
+import { GetListMembersResponse } from '@/lib/responses.types';
 import ProfileCard, { IProfileCard } from '@/ui/ProfileCard';
 import Loading from 'app/loading';
 import { List } from 'models/list';
+import { ListResponse } from 'models/listResponse';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 

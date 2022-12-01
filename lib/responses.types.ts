@@ -26,12 +26,6 @@ export type ErrorResponse = {
   details?: object;
 };
 
-export type ListResponse = {
-  data: {
-    list: ApiList;
-  };
-};
-
 export type GetListMembersResponse = {
   data: {
     members: {

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { countOwnedLists, createList } from '@/lib/lenslists';
-import { ErrorResponse, ListResponse, parseList } from '@/lib/responses.types';
+import { ErrorResponse, parseList } from '@/lib/responses.types';
 import {
   maxListsCount,
   MAX_LISTS_COUNT,
@@ -8,6 +8,7 @@ import {
 } from '@/lib/validations';
 import { getProfile, getProfileId } from '@/lib/server/lens';
 import { NewList } from '@/lib/types';
+import { ListResponse } from 'models/listResponse';
 
 export default async function handler(
   req: NextApiRequest,

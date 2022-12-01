@@ -3,12 +3,33 @@ import { deleteList, getListById, updateList } from '@/lib/lenslists';
 import {
   DeleteResponse,
   ErrorResponse,
-  ListResponse,
   parseList,
 } from '@/lib/responses.types';
 import { listIdSchema, upsertListSchema } from '@/lib/validations';
 import { getProfileId } from '@/lib/server/lens';
+import { ListResponse } from 'models/listResponse';
 
+/**
+ * @swagger
+ * /api/lists/{listId}:
+ *   get:
+ *     summary: Return the information of a specific list
+ *     tags: [Lists]
+ *     parameters:
+ *       - in: path
+ *         name: listId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The id of the list
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               $ref: '#/components/schemas/ListResponse'
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,

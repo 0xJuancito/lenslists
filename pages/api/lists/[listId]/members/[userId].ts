@@ -1,10 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { deleteListMember, getListById } from '@/lib/lenslists';
-import {
-  DeleteResponse,
-  ErrorResponse,
-  ListResponse,
-} from '@/lib/responses.types';
+import { DeleteResponse, ErrorResponse } from '@/lib/responses.types';
 import { listIdMemberIdSchema } from '@/lib/validations';
 import { getProfileId } from '@/lib/server/lens';
 
