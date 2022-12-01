@@ -45,13 +45,18 @@ export const countExploreLists = async (): Promise<number> => {
     .first();
 
   const result = await query;
-  return Number(result?.count);
+  return result?.count ? Number(result?.count) : 0;
 };
 
 export const getListById = async (listId: string): Promise<List | null> => {
   const list = await knexInstance<List>('lists')
-    .select('*')
-    .where({ id: listId })
+    .select('lists.*')
+    .select(knexInstance.raw('COUNT("listMembers".id) AS "totalMembers"'))
+    .select(knexInstance.raw('COUNT("listFollowers".id) AS "totalFollowers"'))
+    .leftJoin('listMembers', 'listMembers.listId', 'lists.id')
+    .leftJoin('listFollowers', 'listFollowers.listId', 'lists.id')
+    .groupBy('lists.id')
+    .where({ 'lists.id': listId })
     .first();
   return list || null;
 };
@@ -86,7 +91,7 @@ export const countOwnedLists = async (profileId: string): Promise<number> => {
     .first();
 
   const result = await query;
-  return Number(result?.count);
+  return result?.count ? Number(result?.count) : 0;
 };
 
 export const createList = async (newList: NewList): Promise<List> => {
@@ -142,7 +147,7 @@ export const countListMembers = async (listId: string): Promise<number> => {
     .first();
 
   const result = await query;
-  return Number(result?.count);
+  return result?.count ? Number(result?.count) : 0;
 };
 
 export const getListMemberships = (
@@ -172,7 +177,7 @@ export const countListMemberships = async (
     .where({ 'listMembers.profileId': profileId });
 
   const result = await query;
-  return Number(result?.count);
+  return result?.count ? Number(result?.count) : 0;
 };
 
 export const createListMember = async (
@@ -218,7 +223,7 @@ export const countListFollowers = async (listId: string): Promise<number> => {
     .first();
 
   const result = await query;
-  return Number(result?.count);
+  return result?.count ? Number(result?.count) : 0;
 };
 
 export const getFollowedLists = (
@@ -248,7 +253,7 @@ export const countFollowedLists = async (
     .where({ 'listFollowers.profileId': profileId });
 
   const result = await query;
-  return Number(result?.count);
+  return result?.count ? Number(result?.count) : 0;
 };
 
 export const createListFollower = async (
@@ -296,7 +301,7 @@ export const countListPinned = async (profileId: string): Promise<number> => {
     .first();
 
   const result = await query;
-  return Number(result?.count);
+  return result?.count ? Number(result?.count) : 0;
 };
 
 export const createListPinned = async (
