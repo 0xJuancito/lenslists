@@ -32,17 +32,6 @@ export type ListResponse = {
   };
 };
 
-export type GetOwnedListsResponse = {
-  data: {
-    lists: {
-      items: ApiList[];
-      pageInfo: {
-        totalCount: number;
-      };
-    };
-  };
-};
-
 export type GetListMembersResponse = {
   data: {
     members: {
