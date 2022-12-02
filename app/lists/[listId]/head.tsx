@@ -19,7 +19,8 @@ export default async function Head({ params }: { params: { listId: string } }) {
     const list = response.data.list;
     title = `${list.name} - Lens Lists`;
     description = list.description;
-    ogImageUrl = `${ogImageUrl}?title=${list.name}&handle=${list.ownerProfile.handle}&image=${list.coverPictureUrl}`;
+    const handle = list.ownerProfile.handle.replace('.lens', '');
+    ogImageUrl = `${ogImageUrl}?title=${list.name}&handle=${handle}&image=${list.coverPictureUrl}`;
   } catch (err) {}
 
   return (
