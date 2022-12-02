@@ -5,7 +5,7 @@ import {
   getListById,
   getListMembers,
 } from '@/lib/lenslists';
-import { ErrorResponse, MemberResponse } from '@/lib/responses.types';
+import { ErrorResponse } from '@/lib/responses.types';
 import {
   listIdSchema,
   listMembers,
@@ -16,20 +16,22 @@ import {
 import { getProfile, getProfileId } from '@/lib/server/lens';
 import { Pagination } from '@/lib/types';
 import { MembersResponse } from 'models/membersResponse';
+import { MemberResponse } from 'models/memberResponse';
 
 /**
  * @swagger
  * /api/lists/{listId}/members:
+ *   parameters:
+ *     - in: path
+ *       name: listId
+ *       required: true
+ *       schema:
+ *         type: string
+ *       description: The id of the list
  *   get:
  *     summary: Return the members of a specific list
  *     tags: [List Members]
  *     parameters:
- *       - in: path
- *         name: listId
- *         required: true
- *         schema:
- *           type: string
- *         description: The id of the list
  *       - in: query
  *         name: limit
  *         required: false
@@ -52,6 +54,29 @@ import { MembersResponse } from 'models/membersResponse';
  *             schema:
  *               type: object
  *               $ref: '#/components/schemas/MembersResponse'
+ *   post:
+ *     security:
+ *       - apiKey:
+ *         -
+ *     summary: Add a user to a list
+ *     tags: [List Members]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               profileId:
+ *                 type: string
+ *                 required: true
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               $ref: '#/components/schemas/MemberResponse'
  */
 export default async function handler(
   req: NextApiRequest,

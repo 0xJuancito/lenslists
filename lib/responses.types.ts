@@ -1,4 +1,4 @@
-import { NewListMember, List as DbList } from '@/lib/types';
+import { List as DbList } from '@/lib/types';
 import { List as ApiList } from 'models/list';
 
 export const parseList = (list: DbList): ApiList => ({
@@ -20,10 +20,4 @@ export const parseList = (list: DbList): ApiList => ({
 export type ErrorResponse = {
   message: string;
   details?: object;
-};
-
-export type MemberResponse = {
-  data: {
-    member: NewListMember;
-  };
 };
