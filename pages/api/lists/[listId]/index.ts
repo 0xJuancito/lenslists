@@ -9,16 +9,36 @@ import { DeleteResponse } from 'models/deleteResponse';
 /**
  * @swagger
  * /api/lists/{listId}:
+ *   parameters:
+ *     - in: path
+ *       name: listId
+ *       required: true
+ *       schema:
+ *         type: string
+ *       description: The id of the list
  *   get:
  *     summary: Return the information of a specific list
  *     tags: [Lists]
- *     parameters:
- *       - in: path
- *         name: listId
- *         required: true
- *         schema:
- *           type: string
- *         description: The id of the list
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               $ref: '#/components/schemas/ListResponse'
+ *   put:
+ *     security:
+ *       - apiKey:
+ *         -
+ *     summary: Update a list
+ *     tags: [Lists]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             $ref: '#/components/schemas/UpsertList'
  *     responses:
  *       200:
  *         content:
@@ -32,13 +52,6 @@ import { DeleteResponse } from 'models/deleteResponse';
  *         -
  *     summary: Delete a list
  *     tags: [Lists]
- *     parameters:
- *       - in: path
- *         name: listId
- *         required: true
- *         schema:
- *           type: string
- *         description: The id of the list
  *     responses:
  *       200:
  *         content:
@@ -124,7 +137,6 @@ async function updateListHandler(
     body = req.body;
     await upsertListSchema.validateAsync(body);
   } catch (err: any) {
-    console.log(err);
     const details = err.details || { message: 'Invalid JSON body.' };
     return res.status(422).json({ message: 'Validation error.', details });
   }
