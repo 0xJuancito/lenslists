@@ -45,11 +45,12 @@ export default function (req: NextRequest) {
               top: '90px',
               left: '200px',
               borderRadius: '24px',
+              objectFit: 'cover',
             }}
           />
           <div
             style={{
-              backgroundColor: 'rgba(0,0,0,.5)',
+              backgroundColor: 'rgba(0,0,0,0.7)',
               color: '#ffffff',
               display: 'flex',
               flexDirection: 'column',
