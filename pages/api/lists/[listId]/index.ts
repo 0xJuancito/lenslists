@@ -121,7 +121,7 @@ async function updateListHandler(
 
   let body;
   try {
-    body = JSON.parse(req.body);
+    body = req.body;
     await upsertListSchema.validateAsync(body);
   } catch (err: any) {
     console.log(err);

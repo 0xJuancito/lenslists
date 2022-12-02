@@ -134,8 +134,8 @@ async function addListMemberHandler(
 
   let body: { profileId: string };
   try {
-    body = JSON.parse(req.body);
-    await newListMemberSchema.validateAsync(body);
+    body = req.body;
+    await newListMemberSchema.validateAsync(req.body);
   } catch (err: any) {
     const details = err.details || { message: 'Invalid JSON body.' };
     return res.status(422).json({ message: 'Validation error.', details });

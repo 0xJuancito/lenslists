@@ -32,7 +32,7 @@ export default async function handler(
 
   let body: NewList;
   try {
-    body = JSON.parse(req.body);
+    body = req.body;
     await upsertListSchema.validateAsync(body);
     body.ownedByProfileId = profileId;
     body.ownedByHandle = handle;

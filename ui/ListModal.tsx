@@ -138,6 +138,8 @@ export default function ListModal({
         method: 'POST',
         headers: {
           'x-access-token': getAuthenticationToken() || '',
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ profileId: user.id }),
       });
@@ -401,6 +403,8 @@ export default function ListModal({
       method: 'POST',
       headers: {
         'x-access-token': getAuthenticationToken() || '',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ name, description, coverPictureUrl }),
     })
@@ -444,6 +448,8 @@ export default function ListModal({
       method: 'PUT',
       headers: {
         'x-access-token': getAuthenticationToken() || '',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ name, description, coverPictureUrl }),
     });
