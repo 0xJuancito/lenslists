@@ -10,6 +10,30 @@ import { getProfile, getProfileId } from '@/lib/server/lens';
 import { NewList } from '@/lib/types';
 import { ListResponse } from 'models/listResponse';
 
+/**
+ * @swagger
+ * /api/lists:
+ *   post:
+ *     security:
+ *       - apiKey:
+ *         -
+ *     summary: Create a new list
+ *     tags: [Lists]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             $ref: '#/components/schemas/UpsertList'
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               $ref: '#/components/schemas/ListResponse'
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ListResponse | ErrorResponse>,
