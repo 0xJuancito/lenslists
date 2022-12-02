@@ -1,34 +1,29 @@
-export default function Head({ params }: { params: { slug: string } }) {
+export default function Head() {
+  const title = 'Lens Lists';
+  const description =
+    'Discover, create, and share awesome lists on Lens Protocol.';
+
+  const ogUrl = 'https://lists.inlens.xyz/';
+  const ogImageUrl = 'https://lists.inlens.xyz/og.jpg';
+
   return (
     <>
-      <title>Lens Lists</title>
-      <meta
-        name="description"
-        content="Discover, create, and share awesome lists on Lens Protocol."
-      />
+      <title>{title}</title>
+      <meta name="description" content={description} />
 
       {/* <!-- Open Graph / Facebook --> */}
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://lists.inlens.xyz/" />
-      <meta property="og:title" content="Lens Lists" />
-      <meta
-        property="og:description"
-        content="Discover, create, and share awesome lists on Lens Protocol."
-      />
-      <meta property="og:image" content="https://lists.inlens.xyz/og.jpg" />
+      <meta property="og:url" content={ogUrl} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={ogImageUrl} />
 
       {/* <!-- Twitter --> */}
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content="https://lists.inlens.xyz/" />
-      <meta property="twitter:title" content="Lens Lists" />
-      <meta
-        property="twitter:description"
-        content="Discover, create, and share awesome lists on Lens Protocol."
-      />
-      <meta
-        property="twitter:image"
-        content="https://lists.inlens.xyz/og.jpg"
-      />
+      <meta property="twitter:url" content={ogUrl} />
+      <meta property="twitter:title" content={title} />
+      <meta property="twitter:description" content={description} />
+      <meta property="twitter:image" content={ogImageUrl} />
     </>
   );
 }
