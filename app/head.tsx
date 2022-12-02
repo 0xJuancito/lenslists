@@ -4,7 +4,7 @@ export default function Head() {
     'Discover, create, and share awesome lists on Lens Protocol.';
 
   const ogUrl = 'https://lists.inlens.xyz/';
-  const ogImageUrl = 'https://lists.inlens.xyz/og.jpg';
+  const ogImageUrl = 'https://lists.inlens.xyz/og.png';
 
   return (
     <>
