@@ -118,9 +118,7 @@ export default function ListCard({
 
           {/* Description */}
           <div className="grow text-center text-sm">
-            <div className="overflow-hidden" style={{ maxHeight: '60px' }}>
-              {description}
-            </div>
+            <div className="overflow-hidden line-clamp-3">{description}</div>
           </div>
 
           {/* Update List - Follow */}

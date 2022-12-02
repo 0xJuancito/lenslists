@@ -15,7 +15,11 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { ProfileContext } from './LensAuthenticationProvider';
 import { usePathname } from 'next/navigation';
-import { MAX_MEMBERS_COUNT } from '@/lib/validations';
+import {
+  MAX_LIST_DESCRIPTION_LENGTH,
+  MAX_LIST_NAME_LENGTH,
+  MAX_MEMBERS_COUNT,
+} from '@/lib/validations';
 
 import { IKImage, IKContext, IKUpload } from 'imagekitio-react';
 import { MembersResponse } from 'models/membersResponse';
@@ -249,7 +253,7 @@ export default function ListModal({
               value={name}
               onChange={handleNameChange}
               type="text"
-              maxLength={25}
+              maxLength={MAX_LIST_NAME_LENGTH}
               placeholder="My Awesome List"
               className="relative w-full rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
             />
@@ -260,7 +264,7 @@ export default function ListModal({
               value={description}
               onChange={handleDescriptionChange}
               rows={3}
-              maxLength={100}
+              maxLength={MAX_LIST_DESCRIPTION_LENGTH}
               placeholder="Top 100 influencers on Lens Protocol"
               className="relative w-full resize-none rounded border bg-white px-3 py-3 text-sm placeholder-zinc-400 shadow outline-none focus:outline-none focus:ring"
             />

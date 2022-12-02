@@ -3,6 +3,9 @@ import Joi from 'joi';
 export const MAX_LISTS_COUNT = 10;
 export const MAX_MEMBERS_COUNT = 50;
 
+export const MAX_LIST_NAME_LENGTH = 25;
+export const MAX_LIST_DESCRIPTION_LENGTH = 200;
+
 const onlyNumbers = /^[0-9]*$/;
 const limit = Joi.number().min(1).max(50);
 const offset = Joi.number().min(0);
@@ -10,8 +13,8 @@ const profileId = Joi.string().max(30).alphanum().required();
 
 const list = {
   id: Joi.string().max(30).regex(onlyNumbers).required(),
-  name: Joi.string().max(25).required(),
-  description: Joi.string().max(100).required(),
+  name: Joi.string().max(MAX_LIST_NAME_LENGTH).required(),
+  description: Joi.string().max(MAX_LIST_DESCRIPTION_LENGTH).required(),
   coverPictureUrl: Joi.string().uri().max(1000).required(),
 };
 

@@ -48,6 +48,7 @@
     "wagmi": "0.8.5"
   },
   "devDependencies": {
+    "@tailwindcss/line-clamp": "0.4.2",
     "@types/body-scroll-lock": "3.1.0",
     "@types/jsonwebtoken": "8.5.9",
     "@types/node": "18.0.3",
