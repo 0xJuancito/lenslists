@@ -30,11 +30,6 @@ export default function ProfileCard({
   totalFollowing,
   isFollowedByMe: initialIsFollowedByMe = false,
 }: IProfileCard) {
-  const BIO_MAX_LENGTH = 100;
-  if (bio.length >= BIO_MAX_LENGTH) {
-    bio = `${bio.slice(0, BIO_MAX_LENGTH)}...`;
-  }
-
   const [isFollowedByMe, setIsFollowedByMe] = useState(initialIsFollowedByMe);
   const { openConnectModal } = useConnectModal();
 
@@ -113,9 +108,7 @@ export default function ProfileCard({
         </div>
         {/* Bio */}
         <div className="flex grow items-center text-center text-sm">
-          <div className="overflow-hidden" style={{ maxHeight: '60px' }}>
-            {bio}
-          </div>
+          <div className="overflow-hidden line-clamp-3">{bio}</div>
         </div>
         {/* Button */}
         <div className="w-full">
