@@ -4,7 +4,7 @@ export const MAX_LISTS_COUNT = 10;
 export const MAX_MEMBERS_COUNT = 50;
 
 export const MAX_LIST_NAME_LENGTH = 25;
-export const MAX_LIST_DESCRIPTION_LENGTH = 200;
+export const MAX_LIST_DESCRIPTION_LENGTH = 150;
 
 const onlyNumbers = /^[0-9]*$/;
 const limit = Joi.number().min(1).max(50);
