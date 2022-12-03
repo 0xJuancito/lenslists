@@ -3,12 +3,15 @@
 import ListCard, { IListCard } from '@/ui/ListCard';
 import Loading from 'app/loading';
 import { useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { profile } from '@/lib/lens/get-profile';
 import { Profile } from '@/lib/lens/graphql/generated';
 import { ProfileContext } from '@/ui/LensAuthenticationProvider';
 import { UserListsResponse } from 'models/userListsResponse';
 
 export default function Page() {
+  const searchParams = useSearchParams();
+
   const myProfile = useContext(ProfileContext);
 
   const [cards, setCards] = useState<IListCard[]>([]);
