@@ -6,7 +6,9 @@ async function getData() {
   const baseUrl = isDevelopment
     ? 'http://localhost:3000'
     : 'https://lists.inlens.xyz';
-  const res = await fetch(`${baseUrl}/api/lists/explore`);
+  const res = await fetch(`${baseUrl}/api/lists/explore`, {
+    next: { revalidate: 60 },
+  });
   const body = (await res.json()) as ExploreListsResponse;
   const lists = body.data.lists.items;
   const cards: IListCard[] = lists.map((list) => ({
