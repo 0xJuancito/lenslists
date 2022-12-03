@@ -1,32 +1,26 @@
-'use client';
-
 import ListCard, { IListCard } from '@/ui/ListCard';
 import { ExploreListsResponse } from 'models/exploreListsResponse';
-import { useEffect, useState } from 'react';
-import Loading from './loading';
 
-export default function Page() {
-  const [cards, setCards] = useState<IListCard[]>([]);
-  const [loading, setLoading] = useState(true);
+async function getData() {
+  const res = await fetch('http://localhost:3000/api/lists/explore');
+  const body = (await res.json()) as ExploreListsResponse;
+  const lists = body.data.lists.items;
+  const cards: IListCard[] = lists.map((list) => ({
+    name: list.name,
+    description: list.description,
+    coverPictureUrl: list.coverPictureUrl || '',
+    totalFollowers: list.stats.totalFollowers,
+    totalMembers: list.stats.totalMembers,
+    listId: list.id,
+    ownerId: list.ownerProfile.id,
+    ownerHandle: list.ownerProfile.handle,
+  }));
 
-  useEffect(() => {
-    fetch('/api/lists/explore').then(async (res) => {
-      const body = (await res.json()) as ExploreListsResponse;
-      const lists = body.data.lists.items;
-      const newCards: IListCard[] = lists.map((list) => ({
-        name: list.name,
-        description: list.description,
-        coverPictureUrl: list.coverPictureUrl || '',
-        totalFollowers: list.stats.totalFollowers,
-        totalMembers: list.stats.totalMembers,
-        listId: list.id,
-        ownerId: list.ownerProfile.id,
-        ownerHandle: list.ownerProfile.handle,
-      }));
-      setCards(newCards);
-      setLoading(false);
-    });
-  }, []);
+  return cards;
+}
+
+export default async function Page() {
+  const cards = await getData();
 
   return (
     <div>
@@ -35,15 +29,11 @@ export default function Page() {
           Discover, create, and share awesome lists.
         </div>
       </div>
-      {loading ? (
-        <Loading></Loading>
-      ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {cards.map((card, index) => (
-            <ListCard key={index} {...card}></ListCard>
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {cards.map((card, index) => (
+          <ListCard key={index} {...card}></ListCard>
+        ))}
+      </div>
     </div>
   );
 }
