@@ -2,7 +2,11 @@ import ListCard, { IListCard } from '@/ui/ListCard';
 import { ExploreListsResponse } from 'models/exploreListsResponse';
 
 async function getData() {
-  const res = await fetch('http://localhost:3000/api/lists/explore');
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  const baseUrl = isDevelopment
+    ? 'http://localhost:3000'
+    : 'https://lists.inlens.xyz';
+  const res = await fetch(`${baseUrl}/api/lists/explore`);
   const body = (await res.json()) as ExploreListsResponse;
   const lists = body.data.lists.items;
   const cards: IListCard[] = lists.map((list) => ({
