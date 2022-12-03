@@ -10,7 +10,7 @@ import { ProfileContext } from '@/ui/LensAuthenticationProvider';
 import { UserListsResponse } from 'models/userListsResponse';
 
 export default function Page() {
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const myProfile = useContext(ProfileContext);
 
@@ -20,6 +20,7 @@ export default function Page() {
 
   useEffect(() => {
     const profileId = '0x0e4b';
+    console.log(searchParams);
 
     const loadingLists = fetch(`/api/users/${profileId}/lists`).then(
       async (res) => {
