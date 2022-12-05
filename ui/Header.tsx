@@ -46,6 +46,9 @@ export default function Header() {
             <span className="hidden text-3xl font-bold text-black lg:flex">
               LENS LISTS
             </span>
+            <span className="hidden rounded-lg bg-lens-lime px-2 py-1 text-xs font-bold text-black lg:flex">
+              alpha
+            </span>
           </div>
         </Link>
         <div className="flex gap-4 sm:gap-8">
