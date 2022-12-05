@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     appDir: true,
+    serverComponentsExternalPackages: ['knex'],
     transpilePackages: [
       'react-syntax-highlighter',
       'swagger-client',

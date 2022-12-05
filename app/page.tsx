@@ -1,25 +1,18 @@
+import { getExploreLists } from '@/lib/lenslists';
 import ListCard, { IListCard } from '@/ui/ListCard';
-import { ExploreListsResponse } from 'models/exploreListsResponse';
 
 async function getData() {
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  const baseUrl = isDevelopment
-    ? 'http://localhost:3000'
-    : 'https://lists.inlens.xyz';
-  const res = await fetch(`${baseUrl}/api/lists/explore`, {
-    next: { revalidate: 60 },
-  });
-  const body = (await res.json()) as ExploreListsResponse;
-  const lists = body.data.lists.items;
+  const lists = await getExploreLists();
+
   const cards: IListCard[] = lists.map((list) => ({
     name: list.name,
     description: list.description,
     coverPictureUrl: list.coverPictureUrl || '',
-    totalFollowers: list.stats.totalFollowers,
-    totalMembers: list.stats.totalMembers,
+    totalFollowers: list.totalFollowers,
+    totalMembers: list.totalMembers,
     listId: list.id,
-    ownerId: list.ownerProfile.id,
-    ownerHandle: list.ownerProfile.handle,
+    ownerId: list.id,
+    ownerHandle: list.ownedByHandle,
   }));
 
   return cards;
