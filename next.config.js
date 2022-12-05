@@ -17,10 +17,6 @@ const nextConfig = {
         source: '/users/:profileId/lists',
         destination: '/lists-by-profile-id?profileId=:profileId',
       },
-      {
-        source: '/lists/:listId',
-        destination: '/list-detail?listId=:listId',
-      },
     ];
   },
 };
