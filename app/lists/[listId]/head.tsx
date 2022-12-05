@@ -20,9 +20,11 @@ export default async function Head({ params }: { params: { listId: string } }) {
     title = `${list.name} - Lens Lists`;
     description = list.description;
     const handle = list.ownerProfile.handle.replace('.lens', '');
-    ogImageUrl = encodeURI(
-      `${ogImageUrl}?title=${list.name}&handle=${handle}&image=${list.coverPictureUrl}`,
-    );
+
+    const imageSlices = list.coverPictureUrl.split('/');
+    const image = imageSlices ? imageSlices[imageSlices.length - 1] : '';
+
+    ogImageUrl = `${ogImageUrl}?title=${list.name}&handle=${handle}&image=${image}`;
   } catch (err) {}
 
   return (

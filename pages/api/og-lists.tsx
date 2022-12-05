@@ -6,11 +6,15 @@ export const config = {
 };
 
 export default function (req: NextRequest) {
+  const imagekitBaseUrl = 'https://ik.imagekit.io/3dn0rxeyb/';
+
   try {
     const { searchParams } = req.nextUrl;
     const handle = searchParams.get('handle');
     const title = searchParams.get('title');
     const image = searchParams.get('image');
+
+    const imageUrl = `${imagekitBaseUrl}${image}`;
 
     if (!handle || !title || !image) {
       throw new Error();
@@ -39,7 +43,7 @@ export default function (req: NextRequest) {
           <img
             width="800"
             height="450"
-            src={image}
+            src={imageUrl}
             style={{
               position: 'absolute',
               top: '90px',

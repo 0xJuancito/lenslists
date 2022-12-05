@@ -5,7 +5,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>,
 ) {
-  console.log(123);
   const imagekit = new ImageKit({
     publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY as string,
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY as string,
