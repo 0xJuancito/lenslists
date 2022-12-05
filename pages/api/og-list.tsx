@@ -95,13 +95,8 @@ export default function (req: NextRequest) {
       },
     );
   } catch (e: any) {
-    console.log(e);
-    return new Response(e.message, {
+    return new Response(`Failed to generate the image`, {
       status: 500,
     });
-
-    // return new Response(`Failed to generate the image`, {
-    //   status: 500,
-    // });
   }
 }
