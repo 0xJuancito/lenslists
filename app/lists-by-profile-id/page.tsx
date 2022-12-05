@@ -9,6 +9,7 @@ import { ProfileContext } from '@/ui/LensAuthenticationProvider';
 import { UserListsResponse } from 'models/userListsResponse';
 
 export default function Page(context: any) {
+  console.log(context);
   const profileId = context?.searchParams?.profileId;
   const myProfile = useContext(ProfileContext);
 
