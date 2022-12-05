@@ -22,9 +22,9 @@ export default async function Head({ params }: { params: { listId: string } }) {
     const handle = list.ownerProfile.handle.replace('.lens', '');
 
     const imageSlices = list.coverPictureUrl.split('/');
-    const image = imageSlices ? imageSlices[imageSlices.length - 1] : '';
+    const image = imageSlices.length ? imageSlices[imageSlices.length - 1] : '';
 
-    ogImageUrl = encodeURI(
+    ogImageUrl = encodeURIComponent(
       `${ogImageUrl}?title=${list.name}&handle=${handle}&image=${image}`,
     );
   } catch (err) {}
