@@ -17,7 +17,7 @@ export const getStaticProps: GetStaticProps = async () => {
     definition: {
       openapi: '3.0.0',
       info: {
-        title: 'Lens Lists API',
+        title: 'Lens Lists API (alpha)',
         version: '0.1.0',
         description:
           'Draft specification for managing lists on Lens Protocol. Beware of possible breaking changes.',
