@@ -7,7 +7,7 @@ export default async function Head({ params }: { params: { listId: string } }) {
     : 'https://lists.inlens.xyz';
 
   const ogUrl = `${baseUrl}/lists/${params.listId}`;
-  let ogImageUrl = `${baseUrl}/api/og-lists`;
+  let ogImageUrl = `${baseUrl}/api/og-list`;
 
   let title = 'Lens Lists';
   let description =
