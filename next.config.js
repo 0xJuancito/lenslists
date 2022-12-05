@@ -10,6 +10,14 @@ const nextConfig = {
       'swagger-ui-react',
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/users/:profileId/lists',
+        destination: '/lists-by-profile-id?profileId=:profileId',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

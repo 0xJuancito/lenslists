@@ -3,14 +3,16 @@
 import ListCard, { IListCard } from '@/ui/ListCard';
 import Loading from 'app/loading';
 import { useContext, useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
 import { profile } from '@/lib/lens/get-profile';
 import { Profile } from '@/lib/lens/graphql/generated';
 import { ProfileContext } from '@/ui/LensAuthenticationProvider';
 import { UserListsResponse } from 'models/userListsResponse';
 
-export default function Page() {
-  const pathname = usePathname();
+export default function Page({
+  searchParams,
+}: {
+  searchParams: { profileId: string };
+}) {
   const myProfile = useContext(ProfileContext);
 
   const [cards, setCards] = useState<IListCard[]>([]);
@@ -18,7 +20,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const profileId = pathname?.replace('/users/', '').replace('/lists', '');
+    const profileId = searchParams.profileId;
 
     const loadingLists = fetch(`/api/users/${profileId}/lists`).then(
       async (res) => {

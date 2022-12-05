@@ -58,7 +58,7 @@ export default function ListCard({
 
   return (
     <div className="flex">
-      <a
+      <Link
         href={`/lists/${listId}`}
         className="flex cursor-pointer flex-col rounded-xl bg-white shadow-lg hover:shadow-xl"
       >
@@ -143,7 +143,7 @@ export default function ListCard({
             // </button>
           )}
         </div>
-      </a>
+      </Link>
       {showListModal && (
         <ListModal
           name={name}
