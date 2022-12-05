@@ -8,11 +8,8 @@ import { Profile } from '@/lib/lens/graphql/generated';
 import { ProfileContext } from '@/ui/LensAuthenticationProvider';
 import { UserListsResponse } from 'models/userListsResponse';
 
-export default function Page({
-  searchParams,
-}: {
-  searchParams: { profileId: string };
-}) {
+export default function Page(context: any) {
+  const profileId = context?.searchParams?.profileId;
   const myProfile = useContext(ProfileContext);
 
   const [cards, setCards] = useState<IListCard[]>([]);
@@ -20,8 +17,6 @@ export default function Page({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const profileId = searchParams.profileId;
-
     const loadingLists = fetch(`/api/users/${profileId}/lists`).then(
       async (res) => {
         const body = (await res.json()) as UserListsResponse;
