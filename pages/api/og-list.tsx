@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer';
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 
