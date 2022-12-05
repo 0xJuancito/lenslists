@@ -9,8 +9,7 @@ import { ProfileContext } from '@/ui/LensAuthenticationProvider';
 import { UserListsResponse } from 'models/userListsResponse';
 import { usePathname } from 'next/navigation';
 
-export default function Page(context: any) {
-  const profileId = context?.searchParams?.profileId;
+export default function Page() {
   const myProfile = useContext(ProfileContext);
 
   const [cards, setCards] = useState<IListCard[]>([]);
@@ -20,8 +19,8 @@ export default function Page(context: any) {
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log(pathname);
-    console.log(context);
+    const profileId = pathname?.replace('/users/', '').replace('/lists', '');
+
     const loadingLists = fetch(`/api/users/${profileId}/lists`).then(
       async (res) => {
         const body = (await res.json()) as UserListsResponse;
