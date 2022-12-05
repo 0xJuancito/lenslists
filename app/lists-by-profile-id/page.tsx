@@ -7,9 +7,9 @@ import { profile } from '@/lib/lens/get-profile';
 import { Profile } from '@/lib/lens/graphql/generated';
 import { ProfileContext } from '@/ui/LensAuthenticationProvider';
 import { UserListsResponse } from 'models/userListsResponse';
+import { usePathname } from 'next/navigation';
 
 export default function Page(context: any) {
-  console.log(context);
   const profileId = context?.searchParams?.profileId;
   const myProfile = useContext(ProfileContext);
 
@@ -17,7 +17,11 @@ export default function Page(context: any) {
   const [user, setUser] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const pathname = usePathname();
+
   useEffect(() => {
+    console.log(pathname);
+    console.log(context);
     const loadingLists = fetch(`/api/users/${profileId}/lists`).then(
       async (res) => {
         const body = (await res.json()) as UserListsResponse;
