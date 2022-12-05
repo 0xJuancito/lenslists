@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
 import { ProfileContext } from './LensAuthenticationProvider';
+import { ToastContainer } from 'react-toastify';
 
 export default function Header() {
   const [showListModal, setShowListModal] = useState(false);
@@ -25,6 +26,13 @@ export default function Header() {
 
   return (
     <div className="item flex h-16 w-full border-b bg-white">
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+      />
       <div className="container mx-auto flex max-w-screen-xl items-center justify-between px-4">
         <Link href="/">
           <div className="flex items-center gap-3">
