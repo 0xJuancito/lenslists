@@ -21,12 +21,15 @@ export default async function Head({ params }: { params: { listId: string } }) {
     description = list.description;
     const handle = list.ownerProfile.handle.replace('.lens', '');
 
-    const imageSlices = list.coverPictureUrl.split('/');
-    const image = imageSlices.length ? imageSlices[imageSlices.length - 1] : '';
+    const buffer = Buffer.from(
+      JSON.stringify({
+        title: list.name,
+        handle: handle,
+        image: list.coverPictureUrl,
+      }),
+    ).toString('base64');
 
-    ogImageUrl = encodeURIComponent(
-      `${ogImageUrl}?title=${list.name}&handle=${handle}&image=${image}`,
-    );
+    ogImageUrl = `${ogImageUrl}?data=${buffer}`;
   } catch (err) {}
 
   return (

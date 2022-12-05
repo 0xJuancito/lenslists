@@ -59,7 +59,7 @@ export default function ListCard({
   return (
     <div className="flex">
       <a
-        href={`/lists/${listId}`}
+        href={`/lists/${listId}?share`}
         className="flex cursor-pointer flex-col rounded-xl bg-white shadow-lg hover:shadow-xl"
       >
         {/* Cover Picture */}
