@@ -24,7 +24,9 @@ export default async function Head({ params }: { params: { listId: string } }) {
     const imageSlices = list.coverPictureUrl.split('/');
     const image = imageSlices ? imageSlices[imageSlices.length - 1] : '';
 
-    ogImageUrl = `${ogImageUrl}?title=${list.name}&handle=${handle}&image=${image}`;
+    ogImageUrl = encodeURI(
+      `${ogImageUrl}?title=${list.name}&handle=${handle}&image=${image}`,
+    );
   } catch (err) {}
 
   return (
