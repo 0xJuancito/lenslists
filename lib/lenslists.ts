@@ -32,6 +32,7 @@ export const getExploreLists = (pagination?: Pagination): Promise<List[]> => {
     .leftJoin('listMembers', 'listMembers.listId', 'lists.id')
     .leftJoin('listFollowers', 'listFollowers.listId', 'lists.id')
     .groupBy('lists.id')
+    .where(knexInstance.raw(`"lists".name NOT ILIKE '%test%'`))
     .having(knexInstance.raw('COUNT("listMembers".id) > 0'))
     .orderBy('lists.score', 'desc')
     .orderBy('lists.id', 'desc')
