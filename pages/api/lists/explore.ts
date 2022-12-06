@@ -4,36 +4,36 @@ import { ErrorResponse, parseList } from '@/lib/responses.types';
 import { Pagination } from '@/lib/types';
 import { ExploreListsResponse } from 'models/exploreListsResponse';
 
-/**
- * @swagger
- * /api/lists/explore:
- *   get:
- *     summary: Return a collection of recommended lists
- *     tags: [Lists]
- *     parameters:
- *       - in: query
- *         name: limit
- *         required: false
- *         schema:
- *           type: integer
- *           minimum: 1
- *           maximum: 50
- *         description: The number of items to be returned
- *       - in: query
- *         name: offset
- *         required: false
- *         schema:
- *           type: integer
- *           minimum: 0
- *         description: The offset for the retrieved items to start from.
- *     responses:
- *       200:
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               $ref: '#/components/schemas/ExploreListsResponse'
- */
+// /**
+//  * @swagger
+//  * /api/lists/explore:
+//  *   get:
+//  *     summary: Return a collection of recommended lists
+//  *     tags: [Lists]
+//  *     parameters:
+//  *       - in: query
+//  *         name: limit
+//  *         required: false
+//  *         schema:
+//  *           type: integer
+//  *           minimum: 1
+//  *           maximum: 50
+//  *         description: The number of items to be returned
+//  *       - in: query
+//  *         name: offset
+//  *         required: false
+//  *         schema:
+//  *           type: integer
+//  *           minimum: 0
+//  *         description: The offset for the retrieved items to start from.
+//  *     responses:
+//  *       200:
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               $ref: '#/components/schemas/ExploreListsResponse'
+//  */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ExploreListsResponse | ErrorResponse>,
