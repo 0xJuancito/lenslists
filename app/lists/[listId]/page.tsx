@@ -38,7 +38,7 @@ export default function Page() {
           handle: user.handle,
           profileId: user.id,
           totalFollowing: user.stats.totalFollowing,
-          totalFavorites: user.stats.totalFavorites,
+          totalFollowers: user.stats.totalFollowers,
           isFollowedByMe: user.isFollowedByMe,
         }));
         setCards(newCards);
@@ -80,7 +80,7 @@ export default function Page() {
                 handle={user.handle}
                 profileId={user.profileId}
                 totalFollowing={user.totalFollowing}
-                totalFavorites={user.totalFavorites}
+                totalFollowers={user.totalFollowers}
                 isFollowedByMe={user.isFollowedByMe}
               ></ProfileCard>
             ))}
