@@ -32,6 +32,7 @@ export const getExploreLists = (pagination?: Pagination): Promise<List[]> => {
     .leftJoin('listMembers', 'listMembers.listId', 'lists.id')
     .leftJoin('listFollowers', 'listFollowers.listId', 'lists.id')
     .groupBy('lists.id')
+    .orderBy('lists.score', 'desc')
     .orderBy('lists.id', 'desc')
     .limit(limit)
     .offset(offset);
