@@ -13,7 +13,7 @@ export const parseList = (list: DbList): ApiList => ({
   },
   stats: {
     totalMembers: Number(list.totalMembers),
-    totalFollowers: Number(list.totalFollowers),
+    totalFavorites: Number(list.totalFavorites),
   },
 });
 

@@ -11,7 +11,7 @@ export type IListCard = {
   name: string;
   description: string;
   coverPictureUrl: string;
-  totalFollowers: number;
+  totalFavorites: number;
   totalMembers: number;
   listId: string;
   ownerId: string;
@@ -24,7 +24,7 @@ export default function ListCard({
   description: initialDescription,
   coverPictureUrl: initialCoverPictureUrl,
   ownerHandle,
-  totalFollowers,
+  totalFavorites,
   totalMembers: initialTotalMembers,
   listId,
   ownerId,
@@ -100,7 +100,7 @@ export default function ListCard({
             </div>
           </div>
 
-          {/* Followers + Members */}
+          {/* Favorites + Members */}
           <div className="flex justify-center gap-4 text-xs">
             <span>
               <span className="flex gap-1">
@@ -110,8 +110,8 @@ export default function ListCard({
             </span>
             {/* <span>
               <span className="flex gap-1">
-                <span className="font-bold">{totalFollowers}</span>
-                <span>{totalFollowers === 1 ? 'follower' : 'followers'}</span>
+                <span className="font-bold">{totalFavorites}</span>
+                <span>{totalFavorites === 1 ? 'favorite' : 'favorites'}</span>
               </span>
             </span> */}
           </div>

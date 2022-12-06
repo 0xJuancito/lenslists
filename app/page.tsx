@@ -10,7 +10,7 @@ async function getData() {
     name: list.name,
     description: list.description,
     coverPictureUrl: list.coverPictureUrl || '',
-    totalFollowers: list.totalFollowers,
+    totalFavorites: list.totalFavorites,
     totalMembers: list.totalMembers,
     listId: list.id,
     ownerId: list.id,

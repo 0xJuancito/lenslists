@@ -28,7 +28,7 @@
  *           properties:
  *             totalMembers:
  *               type: number
- *             totalFollowers:
+ *             totalFavorites:
  *               type: number
  */
 export interface List {
@@ -43,6 +43,6 @@ export interface List {
   };
   stats: {
     totalMembers: number;
-    totalFollowers: number;
+    totalFavorites: number;
   };
 }

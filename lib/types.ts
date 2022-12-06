@@ -16,7 +16,7 @@ export type List = NewList & {
   id: string;
   createdAt: Date;
   totalMembers: number;
-  totalFollowers: number;
+  totalFavorites: number;
 };
 
 export type NewListMember = {
@@ -28,12 +28,12 @@ export type ListMember = NewListMember & {
   id: string;
 };
 
-export type NewListFollower = {
+export type NewListFavorite = {
   profileId: string;
   listId: string;
 };
 
-export type ListFollower = NewListFollower & {
+export type ListFavorite = NewListFavorite & {
   id: string;
 };
 

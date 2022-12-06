@@ -29,7 +29,7 @@ export default function Page() {
           name: list.name,
           description: list.description,
           coverPictureUrl: list.coverPictureUrl || '',
-          totalFollowers: list.stats.totalFollowers,
+          totalFavorites: list.stats.totalFavorites,
           totalMembers: list.stats.totalMembers,
           listId: list.id,
           ownerId: list.ownerProfile.id,
