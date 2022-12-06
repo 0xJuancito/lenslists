@@ -1,6 +1,8 @@
 import { getExploreLists } from '@/lib/lenslists';
 import ListCard, { IListCard } from '@/ui/ListCard';
 
+export const revalidate = 300; // revalidate this page every 5 minutes
+
 async function getData() {
   const lists = await getExploreLists();
 
