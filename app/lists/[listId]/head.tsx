@@ -29,7 +29,7 @@ export default async function Head({ params }: { params: { listId: string } }) {
       }),
     ).toString('base64');
 
-    ogImageUrl = `${ogImageUrl}?data=${buffer}`;
+    ogImageUrl = `${ogImageUrl}/${buffer}`;
   } catch (err) {}
 
   return (

@@ -7,9 +7,9 @@ export const config = {
 };
 
 export default function (req: NextRequest) {
+  const data = req.nextUrl.pathname.replace('/api/og-list/', '');
   try {
-    const { searchParams } = req.nextUrl;
-    const buffer = Buffer.from(searchParams.get('data') || '', 'base64');
+    const buffer = Buffer.from(data || '', 'base64');
     const { handle, title, image } = JSON.parse(buffer.toString());
 
     if (!handle || !title || !image) {
