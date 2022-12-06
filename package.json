@@ -21,6 +21,7 @@
     "@apollo/client": "3.7.1",
     "@heroicons/react": "2.0.12",
     "@rainbow-me/rainbowkit": "0.8.0",
+    "@vercel/analytics": "0.1.5",
     "@vercel/og": "0.0.21",
     "buffer": "6.0.3",
     "clsx": "1.2.1",

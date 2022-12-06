@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import Header from '@/ui/Header';
 import LensProvider from '@/ui/LensProvider';
+import { AnalyticsWrapper } from './components/analytics';
 
 export default function RootLayout({
   children,
@@ -30,7 +31,10 @@ export default function RootLayout({
           <LensProvider>
             <Header></Header>
             <div className="container mx-auto flex max-w-screen-2xl px-4 pb-7 lg:px-4 xl:px-24">
-              <div className="w-full">{children}</div>
+              <div className="w-full">
+                {children}
+                <AnalyticsWrapper />
+              </div>
             </div>
           </LensProvider>
         </div>
