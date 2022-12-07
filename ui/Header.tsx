@@ -62,6 +62,19 @@ export default function Header() {
               </div>
             </Link>
           )}
+          {profile?.id && (
+            <Link
+              href={`/users/${profile.id}/favorite-lists`}
+              className="flex items-center"
+            >
+              <div className="flex cursor-pointer text-lg font-bold text-black">
+                <span className="hidden lg:flex">FAVORITES</span>
+                <span className="flex w-12 rounded-2xl bg-red-500 p-2 px-4 text-white lg:hidden">
+                  ♥
+                </span>
+              </div>
+            </Link>
+          )}
           <button
             className="flex cursor-pointer items-center gap-2 rounded-2xl bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700"
             onClick={() => openCreateListModal()}
