@@ -34,6 +34,7 @@ export const getExploreLists = (pagination?: Pagination): Promise<List[]> => {
     .groupBy('lists.id')
     .where(knexInstance.raw(`"lists".name NOT ILIKE '%test%'`))
     .having(knexInstance.raw('COUNT("listMembers".id) > 0'))
+    .orderByRaw(knexInstance.raw('COUNT("listFavorites".id) DESC'))
     .orderBy('lists.score', 'desc')
     .orderBy('lists.id', 'desc')
     .limit(limit)
@@ -80,7 +81,6 @@ export const getOwnedLists = (
     .groupBy('lists.id')
     .orderBy('lists.id', 'desc')
     .where({ ownedByProfileId: profileId })
-    .orderBy('lists.id', 'desc')
     .limit(limit)
     .offset(offset);
 
@@ -202,32 +202,57 @@ export const deleteListMember = async (
 };
 
 // List Favorites
-export const getListFavorites = (
-  listId: string,
+export const getFavoriteLists = (
+  profileId: string,
   pagination?: Pagination,
-): Promise<ListFavorite[]> => {
+): Promise<List[]> => {
   const limit = pagination?.limit || 50;
   const offset = pagination?.offset || 0;
 
-  const query = knexInstance<ListFavorite>('listFavorites')
-    .select('*')
-    .where({ listId })
-    .orderBy('id', 'desc')
+  let query = knexInstance<List>('lists')
+    .select('lists.*')
+    .select(knexInstance.raw('COUNT("listMembers".id) AS "totalMembers"'))
+    .select(knexInstance.raw('COUNT("listFavorites".id) AS "totalFavorites"'))
+    .leftJoin('listMembers', 'listMembers.listId', 'lists.id')
+    .leftJoin('listFavorites', 'listFavorites.listId', 'lists.id')
+    .groupBy('lists.id')
+    .where({ 'listFavorites.profileId': profileId })
+    .orderBy('lists.id', 'desc')
     .limit(limit)
     .offset(offset);
 
   return query;
 };
 
-export const countListFavorites = async (listId: string): Promise<number> => {
-  let query = knexInstance<ListFavorite>('listFavorites')
+export const countFavoriteLists = async (
+  profileId: string,
+): Promise<number> => {
+  let query = knexInstance<List>('lists')
     .count<Record<string, number>>('*')
-    .where({ listId })
+    .leftJoin('listFavorites', 'listFavorites.listId', 'lists.id')
+    .groupBy('lists.id')
+    .where({ 'listFavorites.profileId': profileId })
     .first();
 
   const result = await query;
   return result?.count ? Number(result?.count) : 0;
 };
+
+export const isFavoriteList = async (
+  listId: string,
+  profileId: string,
+): Promise<boolean> => {
+  let query = knexInstance<ListFavorite>('listFavorites')
+    .count<Record<string, number>>('*')
+    .where({ profileId, listId })
+    .first();
+
+  const result = await query;
+  const count = result?.count ? Number(result?.count) : 0;
+  return count > 0;
+};
+
+// Followed Lists
 
 export const getFollowedLists = (
   profileId: string,

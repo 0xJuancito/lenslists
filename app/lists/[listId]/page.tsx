@@ -1,20 +1,29 @@
 'use client';
 
+import { getAuthenticationToken } from '@/lib/apollo-client';
 import { profiles } from '@/lib/lens/get-profiles';
+import { getFromLocalStorage } from '@/lib/lensStorage';
+import { ProfileContext } from '@/ui/LensAuthenticationProvider';
 import ProfileCard, { IProfileCard } from '@/ui/ProfileCard';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 import Loading from 'app/loading';
 import { List } from 'models/list';
 import { ListResponse } from 'models/listResponse';
 import { MembersResponse } from 'models/membersResponse';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 export default function Page() {
   const pathname = usePathname();
+  const { openConnectModal } = useConnectModal();
 
   const [cards, setCards] = useState<IProfileCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState<List | null>(null);
+
+  const [favorite, setFavorite] = useState(false);
+
+  const profile = useContext(ProfileContext);
 
   useEffect(() => {
     const listId = pathname?.replace('/lists/', '');
@@ -45,9 +54,15 @@ export default function Page() {
       },
     );
 
-    const loadingList = fetch(`/api/lists/${listId}`).then(async (res) => {
+    const ls = getFromLocalStorage();
+    const fetchRequest = ls?.id
+      ? fetch(`/api/lists/${listId}?profileId=${ls.id}`)
+      : fetch(`/api/lists/${listId}`);
+
+    const loadingList = fetchRequest.then(async (res) => {
       const body = (await res.json()) as ListResponse;
       setList(body.data?.list);
+      setFavorite(Boolean(body.data?.list.favorite));
     });
 
     Promise.all([loadingMembers, loadingList]).then(() => {
@@ -55,19 +70,52 @@ export default function Page() {
     });
   }, []);
 
+  const toggleFavorite = () => {
+    if (openConnectModal) {
+      openConnectModal();
+      return;
+    }
+
+    if (favorite) {
+      fetch(`/api/lists/${list?.id}/favorites/${profile?.id}`, {
+        method: 'DELETE',
+        headers: {
+          'x-access-token': getAuthenticationToken() || '',
+        },
+      });
+    } else {
+      fetch(`/api/lists/${list?.id}/favorites`, {
+        method: 'POST',
+        headers: {
+          'x-access-token': getAuthenticationToken() || '',
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ profileId: profile?.id }),
+      });
+    }
+    setFavorite(!favorite);
+  };
+
   return (
     <div>
       {loading ? (
         <Loading></Loading>
       ) : (
         <div>
-          <div className="mb-8 flex flex-col justify-between">
-            <div className="z-0 mt-8 mb-4 w-full text-center text-4xl font-bold text-black sm:mt-16 sm:text-5xl">
+          <div className="mb-8 flex flex-col items-center justify-center">
+            <div className="z-0 mt-8 mb-4 flex w-full justify-center text-4xl font-bold text-black sm:mt-16 sm:text-5xl">
               {list?.name}
             </div>
-            <div className="z-0 w-full text-center text-black">
+            <div className="z-0 flex w-full justify-center text-black">
               {list?.description}
             </div>
+            <button
+              className="mt-6 mb-4 flex w-48 cursor-default justify-center rounded-2xl bg-red-400 px-4 py-2 text-white shadow-md hover:cursor-pointer hover:bg-red-500"
+              onClick={toggleFavorite}
+            >
+              {favorite ? '♥ In Favorites' : '♡ Add to Favorites'}
+            </button>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {cards.map((user, index) => (

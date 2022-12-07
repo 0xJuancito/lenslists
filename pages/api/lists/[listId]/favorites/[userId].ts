@@ -1,40 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { deleteListMember, getListById } from '@/lib/lenslists';
+import { deleteListFavorite, getListById } from '@/lib/lenslists';
 import { ErrorResponse } from '@/lib/responses.types';
-import { listIdMemberIdSchema } from '@/lib/validations';
+import { listIdUserIdSchema } from '@/lib/validations';
 import { getProfileId } from '@/lib/server/lens';
 import { DeleteResponse } from 'models/deleteResponse';
 
-/**
- * @swagger
- * /api/lists/{listId}/members/{profileId}:
- *   delete:
- *     security:
- *       - apiKey:
- *         -
- *     summary: Remove a user from a list
- *     tags: [List Members]
- *     parameters:
- *       - in: path
- *         name: listId
- *         required: true
- *         schema:
- *           type: string
- *         description: The id of the list
- *       - in: path
- *         name: profileId
- *         required: true
- *         schema:
- *           type: string
- *         description: The Lens Protocol profile id of the user
- *     responses:
- *       200:
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               $ref: '#/components/schemas/DeleteResponse'
- */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<DeleteResponse | ErrorResponse>,
@@ -44,7 +14,7 @@ export default async function handler(
   }
 
   try {
-    await listIdMemberIdSchema.validateAsync(req.query);
+    await listIdUserIdSchema.validateAsync(req.query);
   } catch (err: any) {
     return res
       .status(422)
@@ -63,15 +33,15 @@ export default async function handler(
 
     try {
       const token = req.headers['x-access-token'] as string;
-      const ownerId = await getProfileId(token);
-      if (list.ownedByProfileId !== ownerId) {
+      const tokenProfileId = await getProfileId(token);
+      if (profileId !== tokenProfileId) {
         return res.status(403).json({ message: 'Unauthorized.' });
       }
     } catch (err) {
       return res.status(403).json({ message: 'Unauthorized.' });
     }
 
-    await deleteListMember(listId, profileId);
+    await deleteListFavorite(listId, profileId);
 
     const response = {
       data: {

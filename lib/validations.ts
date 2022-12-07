@@ -9,7 +9,7 @@ export const MAX_LIST_DESCRIPTION_LENGTH = 150;
 const onlyNumbers = /^[0-9]*$/;
 const limit = Joi.number().min(1).max(50);
 const offset = Joi.number().min(0);
-const profileId = Joi.string().max(30).alphanum().required();
+export const profileIdSchema = Joi.string().max(30).alphanum().required();
 
 const list = {
   id: Joi.string().max(30).regex(onlyNumbers).required(),
@@ -20,14 +20,15 @@ const list = {
 
 export const listIdSchema = Joi.object({
   listId: list.id,
+  profileId: profileIdSchema.optional(),
 });
 
 export const userIdSchema = Joi.object({
-  userId: profileId,
+  userId: profileIdSchema,
 });
 
 export const ownedLists = Joi.object({
-  userId: profileId,
+  userId: profileIdSchema,
   limit,
   offset,
 });
@@ -40,7 +41,12 @@ export const listMembers = Joi.object({
 
 export const listIdMemberIdSchema = Joi.object({
   listId: list.id,
-  userId: profileId,
+  userId: profileIdSchema,
+});
+
+export const listIdUserIdSchema = Joi.object({
+  listId: list.id,
+  userId: profileIdSchema,
 });
 
 export const upsertListSchema = Joi.object({
@@ -50,7 +56,11 @@ export const upsertListSchema = Joi.object({
 });
 
 export const newListMemberSchema = Joi.object({
-  profileId,
+  profileId: profileIdSchema,
+});
+
+export const listFavoriteSchema = Joi.object({
+  profileId: profileIdSchema,
 });
 
 export const maxListsCount = Joi.number().max(MAX_LISTS_COUNT - 1);

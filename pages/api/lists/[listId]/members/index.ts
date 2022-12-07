@@ -91,7 +91,6 @@ export default async function handler(
       return res.status(405).json({ message: 'Method not found.' });
     }
   } catch (err) {
-    console.log(err);
     res.status(500).json({
       message: 'There was an unexpected error. Please try again later.',
     });

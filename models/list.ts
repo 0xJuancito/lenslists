@@ -37,6 +37,7 @@ export interface List {
   description: string;
   coverPictureUrl: string;
   createdAt: Date;
+  favorite?: boolean;
   ownerProfile: {
     handle: string;
     id: string;

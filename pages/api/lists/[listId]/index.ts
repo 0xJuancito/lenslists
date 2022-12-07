@@ -1,10 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { deleteList, getListById, updateList } from '@/lib/lenslists';
+import {
+  deleteList,
+  getListById,
+  isFavoriteList,
+  updateList,
+} from '@/lib/lenslists';
 import { ErrorResponse, parseList } from '@/lib/responses.types';
-import { listIdSchema, upsertListSchema } from '@/lib/validations';
+import {
+  listIdSchema,
+  profileIdSchema,
+  upsertListSchema,
+} from '@/lib/validations';
 import { getProfileId } from '@/lib/server/lens';
 import { ListResponse } from 'models/listResponse';
 import { DeleteResponse } from 'models/deleteResponse';
+import { List } from '@/lib/types';
 
 /**
  * @swagger
@@ -94,10 +104,18 @@ async function getListHandler(
   res: NextApiResponse<ListResponse | ErrorResponse>,
 ) {
   const listId = req.query.listId as string;
+
   const list = await getListById(listId);
 
   if (!list) {
     return res.status(404).json({ message: 'List not found.' });
+  }
+
+  const profileId = req.query.profileId as string;
+  if (profileId) {
+    await profileIdSchema.validateAsync(profileId);
+    const favorite = await isFavoriteList(listId, profileId);
+    list.favorite = favorite;
   }
 
   const apiList = parseList(list);

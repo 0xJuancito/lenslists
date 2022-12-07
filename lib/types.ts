@@ -17,6 +17,7 @@ export type List = NewList & {
   createdAt: Date;
   totalMembers: number;
   totalFavorites: number;
+  favorite?: boolean;
 };
 
 export type NewListMember = {
