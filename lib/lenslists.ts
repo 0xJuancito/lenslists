@@ -27,14 +27,20 @@ export const getExploreLists = (pagination?: Pagination): Promise<List[]> => {
 
   let query = knexInstance<List>('lists')
     .select('lists.*')
-    .select(knexInstance.raw('COUNT("listMembers".id) AS "totalMembers"'))
-    .select(knexInstance.raw('COUNT("listFavorites".id) AS "totalFavorites"'))
+    .select(
+      knexInstance.raw('COUNT(DISTINCT "listMembers".id) AS "totalMembers"'),
+    )
+    .select(
+      knexInstance.raw(
+        'COUNT(DISTINCT "listFavorites".id) AS "totalFavorites"',
+      ),
+    )
     .leftJoin('listMembers', 'listMembers.listId', 'lists.id')
     .leftJoin('listFavorites', 'listFavorites.listId', 'lists.id')
     .groupBy('lists.id')
     .where(knexInstance.raw(`"lists".name NOT ILIKE '%test%'`))
     .having(knexInstance.raw('COUNT("listMembers".id) > 0'))
-    .orderByRaw(knexInstance.raw('COUNT("listFavorites".id) DESC'))
+    .orderByRaw(knexInstance.raw('COUNT(DISTINCT "listFavorites".id) DESC'))
     .orderBy('lists.score', 'desc')
     .orderBy('lists.id', 'desc')
     .limit(limit)
@@ -59,8 +65,14 @@ export const countExploreLists = async (): Promise<number> => {
 export const getListById = async (listId: string): Promise<List | null> => {
   const list = await knexInstance<List>('lists')
     .select('lists.*')
-    .select(knexInstance.raw('COUNT("listMembers".id) AS "totalMembers"'))
-    .select(knexInstance.raw('COUNT("listFavorites".id) AS "totalFavorites"'))
+    .select(
+      knexInstance.raw('COUNT(DISTINCT "listMembers".id) AS "totalMembers"'),
+    )
+    .select(
+      knexInstance.raw(
+        'COUNT(DISTINCT "listFavorites".id) AS "totalFavorites"',
+      ),
+    )
     .leftJoin('listMembers', 'listMembers.listId', 'lists.id')
     .leftJoin('listFavorites', 'listFavorites.listId', 'lists.id')
     .groupBy('lists.id')
@@ -78,8 +90,14 @@ export const getOwnedLists = (
 
   let query = knexInstance<List>('lists')
     .select('lists.*')
-    .select(knexInstance.raw('COUNT("listMembers".id) AS "totalMembers"'))
-    .select(knexInstance.raw('COUNT("listFavorites".id) AS "totalFavorites"'))
+    .select(
+      knexInstance.raw('COUNT(DISTINCT "listMembers".id) AS "totalMembers"'),
+    )
+    .select(
+      knexInstance.raw(
+        'COUNT(DISTINCT "listFavorites".id) AS "totalFavorites"',
+      ),
+    )
     .leftJoin('listMembers', 'listMembers.listId', 'lists.id')
     .leftJoin('listFavorites', 'listFavorites.listId', 'lists.id')
     .groupBy('lists.id')
@@ -215,8 +233,14 @@ export const getFavoriteLists = (
 
   let query = knexInstance<List>('lists')
     .select('lists.*')
-    .select(knexInstance.raw('COUNT("listMembers".id) AS "totalMembers"'))
-    .select(knexInstance.raw('COUNT("listFavorites".id) AS "totalFavorites"'))
+    .select(
+      knexInstance.raw('COUNT(DISTINCT "listMembers".id) AS "totalMembers"'),
+    )
+    .select(
+      knexInstance.raw(
+        'COUNT(DISTINCT "listFavorites".id) AS "totalFavorites"',
+      ),
+    )
     .leftJoin('listMembers', 'listMembers.listId', 'lists.id')
     .leftJoin('listFavorites', 'listFavorites.listId', 'lists.id')
     .groupBy('lists.id')
