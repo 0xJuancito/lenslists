@@ -46,6 +46,10 @@ export const getExploreLists = (pagination?: Pagination): Promise<List[]> => {
 export const countExploreLists = async (): Promise<number> => {
   let query = knexInstance<List>('lists')
     .count<Record<string, number>>('*')
+    .where(knexInstance.raw(`"lists".name NOT ILIKE '%test%'`))
+    .leftJoin('listMembers', 'listMembers.listId', 'lists.id')
+    .groupBy('lists.id')
+    .having(knexInstance.raw('COUNT("listMembers".id) > 0'))
     .first();
 
   const result = await query;
