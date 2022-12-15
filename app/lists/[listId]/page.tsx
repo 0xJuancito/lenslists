@@ -12,9 +12,14 @@ import { ListResponse } from 'models/listResponse';
 import { MembersResponse } from 'models/membersResponse';
 import { usePathname } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function Page() {
+  const LIMIT = 20;
+
   const pathname = usePathname();
+  const listId = pathname?.replace('/lists/', '');
+
   const { openConnectModal } = useConnectModal();
 
   const [cards, setCards] = useState<IProfileCard[]>([]);
@@ -22,37 +27,14 @@ export default function Page() {
   const [list, setList] = useState<List | null>(null);
 
   const [favorite, setFavorite] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
+
+  const [fetchOffset, setFetchOffset] = useState(0);
 
   const profile = useContext(ProfileContext);
 
   useEffect(() => {
-    const listId = pathname?.replace('/lists/', '');
-
-    const loadingMembers = fetch(`/api/lists/${listId}/members`).then(
-      async (res) => {
-        const body = (await res.json()) as MembersResponse;
-        const membersIds = body.data.members.items.map(
-          (member) => member.profileId,
-        );
-        const users = membersIds.length
-          ? (await profiles(membersIds)).items
-          : [];
-        const newCards: IProfileCard[] = users.map((user) => ({
-          name: user.name || '',
-          bio: user.bio || '',
-          // @ts-ignore
-          coverPictureUrl: user.coverPicture?.original?.url,
-          // @ts-ignore
-          picture: user.picture?.original?.url,
-          handle: user.handle,
-          profileId: user.id,
-          totalFollowing: user.stats.totalFollowing,
-          totalFollowers: user.stats.totalFollowers,
-          isFollowedByMe: user.isFollowedByMe,
-        }));
-        setCards(newCards);
-      },
-    );
+    const loadingMembers = fetchData();
 
     const ls = getFromLocalStorage();
     const fetchRequest = ls?.id
@@ -69,6 +51,35 @@ export default function Page() {
       setLoading(false);
     });
   }, []);
+
+  const fetchData = async () => {
+    const res = await fetch(
+      `/api/lists/${listId}/members?limit=${LIMIT}&offset=${fetchOffset}`,
+    );
+    const body = (await res.json()) as MembersResponse;
+    const membersIds = body.data.members.items.map(
+      (member) => member.profileId,
+    );
+    const users = membersIds.length ? (await profiles(membersIds)).items : [];
+    const newCards: IProfileCard[] = users.map((user) => ({
+      name: user.name || '',
+      bio: user.bio || '',
+      // @ts-ignore
+      coverPictureUrl: user.coverPicture?.original?.url,
+      // @ts-ignore
+      picture: user.picture?.original?.url,
+      handle: user.handle,
+      profileId: user.id,
+      totalFollowing: user.stats.totalFollowing,
+      totalFollowers: user.stats.totalFollowers,
+      isFollowedByMe: user.isFollowedByMe,
+    }));
+    setCards(cards.concat(newCards));
+
+    const totalCount = body.data.members.pageInfo.totalCount;
+    setFetchOffset(fetchOffset + LIMIT);
+    setHasMore(fetchOffset + LIMIT < totalCount);
+  };
 
   const toggleFavorite = () => {
     if (openConnectModal) {
@@ -117,7 +128,13 @@ export default function Page() {
               {favorite ? '♥ In Favorites' : '♡ Add to Favorites'}
             </button>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <InfiniteScroll
+            className="grid grid-cols-1 gap-6 pb-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            dataLength={cards.length}
+            next={fetchData}
+            hasMore={hasMore}
+            loader={''}
+          >
             {cards.map((user, index) => (
               <ProfileCard
                 key={index}
@@ -132,7 +149,8 @@ export default function Page() {
                 isFollowedByMe={user.isFollowedByMe}
               ></ProfileCard>
             ))}
-          </div>
+          </InfiniteScroll>
+          {hasMore ? <Loading></Loading> : ''}
           {!cards.length ? (
             <div className="flex justify-center">This list has no members</div>
           ) : (
