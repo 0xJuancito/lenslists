@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export const MAX_LISTS_COUNT = 10;
-export const MAX_MEMBERS_COUNT = 50;
+export const MAX_MEMBERS_COUNT = 100;
 
 export const MAX_LIST_NAME_LENGTH = 25;
 export const MAX_LIST_DESCRIPTION_LENGTH = 150;
