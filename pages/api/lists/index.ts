@@ -18,6 +18,7 @@ import { ListResponse } from 'models/listResponse';
  *       - apiKey:
  *         -
  *     summary: Create a new list
+ *     description: Create a new list owned by the user. The current limit is 10 lists per user
  *     tags: [Lists]
  *     requestBody:
  *       required: true
