@@ -59,7 +59,7 @@ import { MemberResponse } from 'models/memberResponse';
  *       - apiKey:
  *         -
  *     summary: Add a user to a list
- *     description: Add a user to an specified list. The current limit is 100 users per list.
+ *     description: Add a user to an specified list. The current limit is 150 users per list.
  *     tags: [List Members]
  *     requestBody:
  *       required: true
