@@ -25,6 +25,12 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,200;0,300;0,400;0,500;0,700;1,400;1,500&family=Space+Grotesk:wght@300;400;700&display=swap"
           rel="stylesheet"
         />
+
+        <script
+          defer
+          data-domain="lists.inlens.xyz,lensverse.web"
+          src="https://plausible.io/js/script.js"
+        ></script>
       </head>
       <body className="font-space">
         <div className="flex h-full min-h-screen flex-col items-center text-zinc-600">
