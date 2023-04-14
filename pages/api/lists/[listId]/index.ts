@@ -15,6 +15,7 @@ import { getProfileId } from '@/lib/server/lens';
 import { ListResponse } from 'models/listResponse';
 import { DeleteResponse } from 'models/deleteResponse';
 import { List } from '@/lib/types';
+import { verify } from '@/lib/server/verify';
 
 /**
  * @swagger
@@ -142,6 +143,10 @@ async function updateListHandler(
 
   try {
     const token = req.headers['x-access-token'] as string;
+    const verifyResponse = await verify(token);
+    if (!verifyResponse.data.verify) {
+      throw new Error('Unauthorized');
+    }
     const ownerId = await getProfileId(token);
     if (list.ownedByProfileId !== ownerId) {
       return res.status(403).json({ message: 'Unauthorized.' });
@@ -183,6 +188,10 @@ async function deleteListHandler(
 
   try {
     const token = req.headers['x-access-token'] as string;
+    const verifyResponse = await verify(token);
+    if (!verifyResponse.data.verify) {
+      throw new Error('Unauthorized');
+    }
     const ownerId = await getProfileId(token);
     if (list.ownedByProfileId !== ownerId) {
       return res.status(403).json({ message: 'Unauthorized.' });

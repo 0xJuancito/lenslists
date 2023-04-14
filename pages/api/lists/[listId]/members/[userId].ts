@@ -4,6 +4,7 @@ import { ErrorResponse } from '@/lib/responses.types';
 import { listIdMemberIdSchema } from '@/lib/validations';
 import { getProfileId } from '@/lib/server/lens';
 import { DeleteResponse } from 'models/deleteResponse';
+import { verify } from '@/lib/server/verify';
 
 /**
  * @swagger
@@ -63,11 +64,16 @@ export default async function handler(
 
     try {
       const token = req.headers['x-access-token'] as string;
+      const verifyResponse = await verify(token);
+      if (!verifyResponse.data.verify) {
+        throw new Error('Unauthorized');
+      }
       const ownerId = await getProfileId(token);
       if (list.ownedByProfileId !== ownerId) {
         return res.status(403).json({ message: 'Unauthorized.' });
       }
     } catch (err) {
+      console.log(err);
       return res.status(403).json({ message: 'Unauthorized.' });
     }
 

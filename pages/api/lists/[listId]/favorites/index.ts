@@ -4,6 +4,7 @@ import { ErrorResponse } from '@/lib/responses.types';
 import { listIdSchema, listFavoriteSchema } from '@/lib/validations';
 import { getProfileId } from '@/lib/server/lens';
 import { FavoriteResponse } from 'models/favoriteResponse';
+import { verify } from '@/lib/server/verify';
 
 export default async function handler(
   req: NextApiRequest,
@@ -47,8 +48,11 @@ async function addListFavoriteHandler(
   let token;
   try {
     token = req.headers['x-access-token'] as string;
+    const verifyResponse = await verify(token);
+    if (!verifyResponse.data.verify) {
+      throw new Error('Unauthorized');
+    }
     const tokenProfileId = await getProfileId(token);
-    const list = await getListById(listId);
     if (body.profileId !== tokenProfileId) {
       return res.status(403).json({ message: 'Unauthorized.' });
     }

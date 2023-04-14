@@ -6,9 +6,10 @@ import {
   MAX_LISTS_COUNT,
   upsertListSchema,
 } from '@/lib/validations';
-import { getProfile, getProfileId } from '@/lib/server/lens';
+import { getProfile } from '@/lib/server/lens';
 import { NewList } from '@/lib/types';
 import { ListResponse } from 'models/listResponse';
+import { verify } from '@/lib/server/verify';
 
 /**
  * @swagger
@@ -47,6 +48,10 @@ export default async function handler(
   let profileId;
   let handle;
   try {
+    const verifyResponse = await verify(token);
+    if (!verifyResponse.data.verify) {
+      throw new Error('Unauthorized');
+    }
     const profile = await getProfile(token);
     profileId = profile.id;
     handle = profile.handle;

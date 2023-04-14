@@ -17,6 +17,7 @@ import { getProfile, getProfileId } from '@/lib/server/lens';
 import { Pagination } from '@/lib/types';
 import { MembersResponse } from 'models/membersResponse';
 import { MemberResponse } from 'models/memberResponse';
+import { verify } from '@/lib/server/verify';
 
 /**
  * @swagger
@@ -169,6 +170,10 @@ async function addListMemberHandler(
   let token;
   try {
     token = req.headers['x-access-token'] as string;
+    const verifyResponse = await verify(token);
+    if (!verifyResponse.data.verify) {
+      throw new Error('Unauthorized');
+    }
     const ownerId = await getProfileId(token);
     const list = await getListById(listId);
     if (list?.ownedByProfileId !== ownerId) {
@@ -188,6 +193,10 @@ async function addListMemberHandler(
   }
 
   try {
+    const verifyResponse = await verify(token);
+    if (!verifyResponse.data.verify) {
+      throw new Error('Unauthorized');
+    }
     const profile = await getProfile(token, body.profileId);
     if (!profile) {
       return res.status(404).json({ message: 'Profile does not exist.' });
